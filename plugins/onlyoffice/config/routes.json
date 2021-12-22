@@ -1,0 +1,20 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/",
+      "handler": "onlyoffice.index",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/callback",
+      "handler": "callback.entrypoint",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
