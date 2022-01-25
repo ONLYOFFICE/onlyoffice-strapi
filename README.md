@@ -1,3 +1,3 @@
-# Strapi application
+# Strapi plugin onlyoffice
 
-A quick description of your strapi application
+A quick description of onlyoffice.
