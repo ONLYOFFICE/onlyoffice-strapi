@@ -1,0 +1,22 @@
+{
+  "onlyoffice.files.list.files-search": "Search",
+  "onlyoffice.files.list.files-count": "files",
+  "onlyoffice.files.list.size.kb": "Kb",
+  "onlyoffice.files.list.size.mb": "Mb",
+  "onlyoffice.files.list.name": "Name",
+  "onlyoffice.files.list.size": "Size",
+  "onlyoffice.files.list.lastmodified": "Last modified",
+  "onlyoffice.files.list.type": "Type",
+  "onlyoffice.notification.success.submit": "Settings have been saved",
+  "onlyoffice.save": "Save",
+  "onlyoffice.settings.page.title": "ONLYOFFICE plugin settings",
+  "onlyoffice.settings.page.title-sub": "Configure the ONLYOFFICE plugin",
+  "onlyoffice.settings.page.back-button":  "Back",
+  "onlyoffice.settings.docserv-url": "Document Server Address",
+  "onlyoffice.settings.docserv-jwtsecret": "Document Server JWT Secret",
+  "onlyoffice.settings.docserv-jwtsecret-desc": "Secret key (leave blank to disable)",
+  "onlyoffice.notification.api.unreachable": "ONLYOFFICE cannot be reached",
+  "onlyoffice.files.empty.search": "No files match the search",
+  "onlyoffice.files.empty": "No available files",
+  "onlyoffice.settings.button.configure": "Configure the ONLYOFFICE editor settings"
+}
