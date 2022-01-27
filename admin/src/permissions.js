@@ -4,7 +4,6 @@
  **/
 const pluginPermissions = {
   settings: [
-    { action: 'plugin::onlyoffice.settings.read', subject: null },
     { action: 'plugin::onlyoffice.settings.update', subject: null },
   ],
 };

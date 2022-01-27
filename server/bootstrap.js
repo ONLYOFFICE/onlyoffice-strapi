@@ -11,13 +11,7 @@ const ONLYOFFICE_ACTIONS = [
     displayName: 'Set or update ONLYOFFICE plugin settings',
     uid: 'settings.update',
     pluginName: 'onlyoffice',
-  },
-  {
-    section: 'plugins',
-    displayName: 'Access the ONLYOFFICE plugin settings page',
-    uid: 'settings.read',
-    pluginName: 'onlyoffice',
-  },
+  }
 ];
 
 /**

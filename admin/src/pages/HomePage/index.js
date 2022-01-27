@@ -12,17 +12,15 @@ import React, {memo, useState, useEffect} from 'react';
 import {useHistory, useLocation} from 'react-router-dom';
 import {useIntl} from 'react-intl';
 import {
-  CheckPermissions,
   LoadingIndicatorPage,
   SearchURLQuery,
   useQueryParams,
   DynamicTable,
-  NoContent
+  NoContent,
+  useRBAC
 } from '@strapi/helper-plugin';
 import Editor from '../Editor';
 import {ContentLayout, ActionLayout} from '@strapi/design-system/Layout';
-import {Box} from '@strapi/design-system/Box';
-import {IconButton} from '@strapi/design-system/IconButton';
 import PaginationFooter from "../../components/PaginationFooter";
 import OnlyofficeLogo from "../../components/OnlyofficeLogo";
 import CenterActionLayout from '../../components/CenterActionLayout';
@@ -31,17 +29,9 @@ import pluginId from "../../pluginId";
 import axiosInstance from "../../utils/axiosInstance";
 import matchSorter from 'match-sorter';
 import tableHeaders from "./utils/tableHeaders";
-import Cog from '@strapi/icons/Cog';
-import styled from "styled-components";
 import permissions from "../../permissions";
+import TableRows from "./TableRows";
 
-const IconButtonCustom = styled(IconButton)`
-  svg {
-    path {
-      fill: ${({theme}) => theme.colors.neutral900};
-    }
-  }
-`;
 
 const HomePage = () => {
   const {formatMessage} = useIntl();
@@ -49,6 +39,7 @@ const HomePage = () => {
   const _q = query?._q || '';
   const {pathname} = useLocation();
   const {push} = useHistory();
+  const {allowedActions: {can0}} = useRBAC(permissions.settings); // check user has access to settings
 
   const [isLoading, setIsLoading] = useState(true);
   const [editorFile, setEditorFile] = useState(null);
@@ -56,17 +47,6 @@ const HomePage = () => {
   const [isEditor, setIsEditor] = useState(false);
   const [filesPagination, setFilesPagination] = useState(null);
   const [docServConfig, setDocServConfig] = useState(null);
-
-  const emptyLayout = {
-    files: {
-      id: 'onlyoffice.onlyoffice.files.empty',
-      defaultMessage: 'No available files',
-    },
-    search: {
-      id: 'onlyoffice.onlyoffice.files.empty.search',
-      defaultMessage: 'No files match the search',
-    }
-  };
 
   const getDocServConfig = async () => {
     if (docServConfig === null) {
@@ -78,12 +58,9 @@ const HomePage = () => {
   useEffect(() => {
     getDocServConfig()
       .then((result) => {
-        if (result && result.docServUrl === null) {
-          //check if admin
-          push({
-            pathname: `${pathname}/settings`
-          });
-        } else if (result && result.docServUrl !== null) setDocServConfig(result);
+        if (result) {
+          setDocServConfig(result);
+        }
       });
   }, []);
 
@@ -124,6 +101,17 @@ const HomePage = () => {
     return <LoadingIndicatorPage/>;
   }
 
+  if (!isLoading && docServConfig && docServConfig.docServUrl === null && !can0) {
+    return <NoContent content={{
+      id: 'onlyoffice.docserv-url.empty',
+      defaultMessage: 'Document Server Address is not set'
+    }}/>
+  } else if (can0 && docServConfig && docServConfig.docServUrl === null) {
+    push({
+      pathname: `${pathname.replace(`/plugins/${pluginId}`, `/settings/${pluginId}`)}`
+    });
+  }
+
   return (
     <>
       {isEditor && editorFile ? (
@@ -134,25 +122,8 @@ const HomePage = () => {
             startActions={
               <OnlyofficeLogo/>
             }
-            endActions={
-              <CheckPermissions permissions={permissions.settings}>
-                <Box paddingTop={1} paddingBottom={1}>
-                  <IconButtonCustom
-                    onClick={() => {
-                      push({
-                        pathname: `${pathname}/settings`
-                      });
-                    }}
-                    icon={<Cog/>}
-                    label={formatMessage({
-                      id: 'onlyoffice.settings.button.configure',
-                      defaultMessage: 'Configure the ONLYOFFICE editor settings',
-                    })}
-                  />
-                </Box>
-              </CheckPermissions>
-            }/>
-          {sortedFiles?.length ? (
+          />
+          {files?.length ? (
             <ActionLayout
               endActions={
                 <SearchURLQuery
@@ -165,22 +136,19 @@ const HomePage = () => {
             />
           ) : <></>}
           <ContentLayout>
-            {sortedFiles && sortedFiles?.length ?
-              (<>
-                <DynamicTable
-                  isLoading={isLoading}
-                  headers={tableHeaders}
-                  rows={files}
-                >
-                </DynamicTable>
-                <PaginationFooter pagination={filesPagination}/>
-              </>) :
-              (
-                <NoContent content={{
-                  id: emptyLayout[emptyContent].id,
-                  defaultMessage: emptyLayout[emptyContent].defaultMessage
-                }}/>
-              )}
+            {/*{sortedFiles && sortedFiles?.length ?*/}
+            {/*  (<>*/}
+            <DynamicTable
+              isLoading={isLoading}
+              headers={tableHeaders}
+              rows={sortedFiles}
+            >
+              {/*<TableRows*/}
+              {/*  headers={tableHeaders}*/}
+              {/*  rows={sortedFiles}*/}
+              {/*/>*/}
+            </DynamicTable>
+            <PaginationFooter pagination={filesPagination}/>
           </ContentLayout>
         </>
       )}

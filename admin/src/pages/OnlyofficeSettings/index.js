@@ -18,11 +18,10 @@ import {Main} from '@strapi/design-system/Main';
 import {Formik} from 'formik';
 import {Grid, GridItem} from '@strapi/design-system/Grid';
 import {Box} from '@strapi/design-system/Box';
-import {Link} from '@strapi/design-system/Link';
 import schema from "./utils/schema";
 import layout from "./utils/layout";
 import permissions from '../../permissions';
-import ArrowLeft from '@strapi/icons/ArrowLeft';
+import pluginId from '../../pluginId';
 import useReactQuery from "../utils/useReactQuery";
 import {useHistory, useLocation} from 'react-router-dom';
 import OnlyofficeLogo from "../../components/OnlyofficeLogo";
@@ -48,7 +47,7 @@ const OnlyofficeSettingsComponent = () => {
     });
 
     push({
-      pathname: `${pathname.replace('/settings', '')}`
+      pathname: `${pathname.replace(`/settings/${pluginId}`, `/plugins/${pluginId}`)}`
     });
   };
 
@@ -86,14 +85,6 @@ const OnlyofficeSettingsComponent = () => {
                           defaultMessage: 'Save',
                         })}
                       </Button>
-                    }
-                    navigationAction={data.docServConfig.docServUrl ?
-                      <Link startIcon={<ArrowLeft/>} to="/plugins/onlyoffice">
-                        {formatMessage({
-                          id: 'onlyoffice.settings.page.back-button',
-                          defaultMessage: 'Back',
-                        })}
-                      </Link> : null
                     }
                   />
                   <ContentLayout>

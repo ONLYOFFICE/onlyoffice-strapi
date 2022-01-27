@@ -7,6 +7,7 @@ import pluginPkg from '../../package.json';
 import pluginId from './pluginId';
 import Initializer from './components/Initializer';
 import PluginIcon from './components/PluginIcon';
+import pluginPermissions from "@strapi/plugin-upload/admin/src/permissions";
 
 
 const pluginDescription = pluginPkg.strapi.description || pluginPkg.description;
@@ -43,7 +44,21 @@ export default {
     });
   },
 
-  bootstrap(app) {},
+  bootstrap(app) {
+    app.addSettingsLink('global', {
+      id: `${pluginId}-settings`,
+      intlLabel: {
+        id: `${pluginId}.plugin.name`,
+        defaultMessage: name,
+      },
+      to: `/settings/${pluginId}`,
+      Component: async () => {
+        return await import('./pages/OnlyofficeSettings');
+      },
+      permissions: pluginPermissions.settings,
+    });
+  },
+
   async registerTrads({locales}) {
     const importedTrads = await Promise.all(
       locales.map(locale => {
