@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) Ascensio System SIA 2022. All rights reserved.
+ * http://www.onlyoffice.com
+ **/
 import { request } from '@strapi/helper-plugin';
 import pluginId from '../../pluginId';
 

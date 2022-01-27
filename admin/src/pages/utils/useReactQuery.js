@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) Ascensio System SIA 2022. All rights reserved.
+ * http://www.onlyoffice.com
+ **/
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { useNotification } from '@strapi/helper-plugin';
 import { fetchEditorSettings, updateEditorSettings } from './api';
