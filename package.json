@@ -20,7 +20,9 @@
     "react-query": "3.24.3",
     "yup": "^0.32.9",
     "formik": "^2.2.6",
-    "prop-types": "^15.7.2"
+    "prop-types": "^15.7.2",
+    "byte-size": "7.0.1",
+    "styled-components": "^5.2.3"
   },
   "author": {
     "name": "A Strapi developer",

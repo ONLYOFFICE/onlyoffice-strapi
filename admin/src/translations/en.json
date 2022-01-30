@@ -16,5 +16,13 @@
   "onlyoffice.settings.docserv-jwtsecret-desc": "Secret key (leave blank to disable)",
   "onlyoffice.notification.api.unreachable": "ONLYOFFICE cannot be reached",
   "onlyoffice.settings.button.configure": "Configure the ONLYOFFICE editor settings",
-  "onlyoffice.docserv-url.empty": "Document Server Address is not set"
+  "onlyoffice.docserv-url.empty": "Document Server Address is not set",
+  "onlyoffice.label.edit": "Edit in ONLYOFFICE",
+  "onlyoffice.label.open": "Open in ONLYOFFICE",
+  "onlyoffice.table.name": "Name",
+  "onlyoffice.table.ext": "Type",
+  "onlyoffice.table.size": "Size",
+  "onlyoffice.table.updatedAt": "Last modified",
+  "onlyoffice.content.files-multiple": "{number} files",
+  "onlyoffice.table.sort": "Sort on {label}"
 }

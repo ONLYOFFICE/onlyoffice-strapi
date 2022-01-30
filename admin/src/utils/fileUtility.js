@@ -9,6 +9,7 @@ import {
   SPREADSHEET_EXTS,
   PRESENTATION_EXTS
 } from '../constants/constants';
+import byteSize from 'byte-size';
 
 module.exports = {
   isFileEditable: (ext) => {
@@ -23,29 +24,11 @@ module.exports = {
     return DOCUMENT_EXTS.includes(ext) ? 'word' : SPREADSHEET_EXTS.includes(ext) ? 'cell' : PRESENTATION_EXTS.includes(ext) ? 'slide' : null;
   },
 
-  fileLastUpdated: (lastModified) => {
-    let modifiedTime = '';
-    lastModified = new Date(lastModified).getTime();
-    let timeDiff = Math.floor((new Date().getTime() - lastModified) / 1000 % 60);
-    switch (timeDiff) {
-      case timeDiff < 60: {
-        modifiedTime = `${timeDiff} seconds`;
-        break;
-      }
-      case timeDiff >= 60 && timeDiff < 60 * 60: {
-        modifiedTime = `${Math.floor(timeDiff / 60)} minutes`;
-        break;
-      }
-      case timeDiff >= 60*60 && timeDiff < 60 * 60: {
-        modifiedTime = `${Math.floor(timeDiff / (60*60))} hours`;
-        break;
-      }
-      case timeDiff >= 60*60*24 && timeDiff < 60*60*24*7: {
-        modifiedTime = `${Math.floor(timeDiff / (60*60*24))} days`;
-        break;
-      }
+  formatBytes: (receivedBytes, decimals = 0) => {
+    const {value, unit} = byteSize(receivedBytes * 1000, {precision: decimals});
+    if (!unit) {
+      return '0B';
     }
-    return `${modifiedTime} ago`;
+    return `${value}${unit.toUpperCase()}`;
   }
-
 }

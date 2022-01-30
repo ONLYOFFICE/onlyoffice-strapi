@@ -13,6 +13,7 @@ const StartBlockActions = styled(Flex)`
     margin-left: ${({ theme }) => theme.spaces[2]};
   }
   margin-left: ${({ pullRight }) => (pullRight ? 'auto' : undefined)};
+  color: #666687;
 `;
 
 const EndBlockActions = styled(StartBlockActions)`

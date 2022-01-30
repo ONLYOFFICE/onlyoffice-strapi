@@ -71,11 +71,11 @@ const OnlyofficeSettingsComponent = () => {
                 <Form noValidate onSubmit={handleSubmit}>
                   <HeaderLayout
                     title={formatMessage({
-                      id: getTrad('onlyoffice.onlyoffice.settings.page.title'),
+                      id: getTrad('onlyoffice.settings.page.title'),
                       defaultMessage: 'ONLYOFFICE plugin settings',
                     })}
                     subtitle={formatMessage({
-                      id: getTrad('onlyoffice.onlyoffice.settings.page.title-sub'),
+                      id: getTrad('onlyoffice.settings.page.title-sub'),
                       defaultMessage: 'Configure the ONLYOFFICE plugin',
                     })}
                     primaryAction={
