@@ -32,7 +32,6 @@ const layout = [
         col: 6,
         xs: 12,
       },
-      required: true
     },
   ]
 ];

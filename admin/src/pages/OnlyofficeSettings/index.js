@@ -79,7 +79,7 @@ const OnlyofficeSettingsComponent = () => {
                       defaultMessage: 'Configure the ONLYOFFICE plugin',
                     })}
                     primaryAction={
-                      <Button type="submit" disabled={!(!!values.docServUrl && !!values.docJwtSecret)}>
+                      <Button type="submit" disabled={!(!!values.docServUrl)}>
                         {formatMessage({
                           id: getTrad('onlyoffice.save'),
                           defaultMessage: 'Save',
