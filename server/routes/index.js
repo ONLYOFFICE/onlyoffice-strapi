@@ -7,6 +7,7 @@ module.exports = [
     method: 'POST',
     path: '/callback',
     handler: 'callbackController.entrypoint',
+    config: { auth: false },
   },
   {
     method: 'GET',

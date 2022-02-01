@@ -6,9 +6,6 @@
 const axios = require("axios");
 const mime = require("mime-types");
 const FormData = require("form-data");
-const _ = require("lodash");
-const fs = require("fs");
-const path = require('path');
 /**
  * callback.js controller
  *
@@ -22,21 +19,68 @@ module.exports = {
    * @return {Object}
    */
 
-  async entrypoint (ctx) {
+  async entrypoint(ctx) {
     const token = ctx.request.query.token;
+    try {
+      const {isValid, payload} = strapi.service(`admin::token`).decodeJwtToken(token);
+      const {id} = await strapi.plugins[
+        'users-permissions'
+        ].services.jwt.verify(token);
 
-    const payload = ctx.request.body;
-    if (payload.status === 2) {
-      const originalName = ctx.request.query.originalName;
-      const file = await axios({
-        method: "get",
-        responseType: "arraybuffer",
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': mime.lookup(payload.url),
-        },
-        url: payload.url,
-      });
+      if (!isValid || id !== payload.id) {
+        return ctx.unauthorized();
+      }
+
+      const fileInfo = JSON.parse(ctx.request.query.fileInfo);
+
+      const callbackPayload = ctx.request.body;
+      if (callbackPayload.status === 2) {
+        const file = await axios({
+          method: "get",
+          responseType: "arraybuffer",
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': mime.lookup(callbackPayload.url),
+          },
+          url: callbackPayload.url,
+        });
+
+        const formData = new FormData();
+        formData.append('files', file.data, {
+          contentType: mime.lookup(callbackPayload.url),
+          filename: fileInfo.name,
+        });
+
+        formData.append(
+          'fileInfo',
+          JSON.stringify({
+            alternativeText: fileInfo.alternativeText,
+            caption: fileInfo.caption,
+            name: fileInfo.name,
+          })
+        );
+
+        let proto = 'http:'
+        try {
+          await axios.get(`${proto}//${strapi.config.host}:${strapi.config.port}`);
+        } catch (e) {
+          proto = 'https:';
+        }
+
+        formData.submit({
+            host: strapi.config.host,
+            port: strapi.config.port,
+            protocol: proto,
+            path: `/upload?id=${fileInfo.id}`,
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
+      }
+
+    } catch (e) {
+      return ctx.unauthorized();
     }
 
     ctx.send({
