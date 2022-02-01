@@ -79,7 +79,7 @@ const HomePage = () => {
     }
   };
 
-  if (isFetching) {
+  if (isFetching || docServConfig === null) {
     return <LoadingIndicatorPage/>;
   }
 
@@ -108,7 +108,7 @@ const HomePage = () => {
   }
 
   if (isEditor && editorFile) {
-    return <Editor file={editorFile} docServConfig={docServConfig} canEdit={canUpdate} canRead={canRead}/>
+    return <Editor file={editorFile} docServConfig={docServConfig} canEdit={canUpdate}/>
   }
 
   return (

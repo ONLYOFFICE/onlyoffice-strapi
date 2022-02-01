@@ -43,7 +43,7 @@ const TableRows = ({headers, rows, openEditor}) => {
               fn: () => openEditor(file)
             })}>
             <Td>
-              <Flex justifyContent="flex-start">
+              <Flex justifyContent="flex-end">
                 {file.ext === '.pdf' ? <FilePdfIcon height={'2em'} width={'2em'} /> : <FileIcon height={'2em'} width={'2em'} />}
               </Flex>
             </Td>
