@@ -9,7 +9,6 @@ import {
   CheckPermissions,
   Form,
   useFocusWhenNavigate,
-  GenericInput,
   LoadingIndicatorPage
 } from '@strapi/helper-plugin';
 import {ContentLayout, HeaderLayout, ActionLayout} from '@strapi/design-system/Layout';
@@ -17,6 +16,7 @@ import {Button} from '@strapi/design-system/Button';
 import {Main} from '@strapi/design-system/Main';
 import {Formik} from 'formik';
 import {Grid, GridItem} from '@strapi/design-system/Grid';
+import { TextInput } from '@strapi/design-system/TextInput';
 import {Box} from '@strapi/design-system/Box';
 import schema from "./utils/schema";
 import layout from "./utils/layout";
@@ -102,8 +102,10 @@ const OnlyofficeSettingsComponent = () => {
                           return row.map(input => {
                             return (
                               <GridItem key={input.name} {...input.size}>
-                                <GenericInput
-                                  {...input}
+                                <TextInput
+                                  required={input.required}
+                                  label={formatMessage({id: getTrad(input.intlLabel.id), defaultMessage: input.intlLabel.defaultMessage })}
+                                  hint={input.description ? formatMessage({id: getTrad(input.description.id), defaultMessage: input.description.defaultMessage }) : ''}
                                   error={errors[input.name]}
                                   onChange={handleChange}
                                   value={values[input.name]}
