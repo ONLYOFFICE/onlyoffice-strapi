@@ -103,6 +103,7 @@ const OnlyofficeSettingsComponent = () => {
                             return (
                               <GridItem key={input.name} {...input.size}>
                                 <TextInput
+                                  name={input.name}
                                   required={input.required}
                                   label={formatMessage({id: getTrad(input.intlLabel.id), defaultMessage: input.intlLabel.defaultMessage })}
                                   hint={input.description ? formatMessage({id: getTrad(input.description.id), defaultMessage: input.description.defaultMessage }) : ''}

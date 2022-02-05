@@ -4,7 +4,7 @@
  **/
 import {request} from '@strapi/helper-plugin';
 import pluginId from '../../pluginId';
-import {axiosInstance} from "../../../../../../../.cache/admin/src/core/utils";
+import axiosInstance from "../../utils/axiosInstance";
 import {isFileEditable, isFileViewable} from "../../utils/fileUtility";
 
 const fetchEditorSettings = async toggleNotification => {

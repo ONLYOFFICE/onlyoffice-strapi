@@ -8,7 +8,6 @@
     "kind": "plugin"
   },
   "dependencies": {
-    "@buffetjs/custom": "^3.3.8",
     "axios": "^0.24.0",
     "form-data": "^4.0.0",
     "jsonwebtoken": "^8.5.1",
@@ -17,9 +16,7 @@
     "react": "^17.0.1",
     "react-intl": "5.24.3",
     "react-helmet": "^6.1.0",
-    "react-query": "3.24.3",
     "yup": "^0.32.9",
-    "formik": "^2.2.6",
     "prop-types": "^15.7.2",
     "byte-size": "7.0.1",
     "styled-components": "^5.2.3"
