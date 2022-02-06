@@ -18,6 +18,7 @@ import { Helmet } from 'react-helmet';
 import pluginId from '../../pluginId';
 // Containers
 import HomePage from '../HomePage';
+import Editor from '../Editor';
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
       <Helmet title={'ONLYOFFICE'} />
       <Switch>
         <Route path={`/plugins/${pluginId}`} component={HomePage} exact/>
+        <Route path={`/plugins/${pluginId}/editor`} component={Editor} exact/>
         <Route component={NotFound}/>
       </Switch>
     </>

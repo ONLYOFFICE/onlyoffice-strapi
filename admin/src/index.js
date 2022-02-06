@@ -7,7 +7,8 @@ import pluginPkg from '../../package.json';
 import pluginId from './pluginId';
 import Initializer from './components/Initializer';
 import PluginIcon from './components/PluginIcon';
-import pluginPermissions from "@strapi/plugin-upload/admin/src/permissions";
+import pluginPermissions from "./permissions";
+import reducers from "./reducers";
 
 
 const pluginDescription = pluginPkg.strapi.description || pluginPkg.description;
@@ -15,6 +16,7 @@ const name = pluginPkg.strapi.name;
 
 export default {
   register(app) {
+    app.addReducers(reducers);
 
     app.addMenuLink({
       to: `/plugins/${pluginId}`,

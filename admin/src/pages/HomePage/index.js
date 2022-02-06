@@ -8,7 +8,7 @@
  * http://www.onlyoffice.com
  **/
 
-import React, {memo, useState, useEffect} from 'react';
+import React, {memo, useEffect} from 'react';
 import {useHistory, useLocation} from 'react-router-dom';
 import {useIntl} from 'react-intl';
 import {
@@ -16,7 +16,6 @@ import {
   SearchURLQuery,
   useRBAC
 } from '@strapi/helper-plugin';
-import Editor from '../Editor';
 import {ContentLayout} from '@strapi/design-system/Layout';
 import PaginationFooter from "../../components/PaginationFooter";
 import OnlyofficeLogo from "../../components/OnlyofficeLogo";
@@ -33,13 +32,18 @@ import getTrad from '../../utils/getTrad';
 import DynamicTable from './DynamicTable';
 import {EmptyStateLayout} from '@strapi/design-system/EmptyStateLayout';
 import EmptyDocuments from '@strapi/icons/EmptyDocuments';
+import makeSelectOnlyofficeEditor from "./selectors";
+import {compose} from "redux";
+import PropTypes from "prop-types";
+import {connect, useDispatch} from 'react-redux';
+import {GET_EDITOR_SETTINGS_SUCCEEDED, RESET_EDITOR_FILE, SET_EDITOR_FILE, SET_EDITOR_PERMISSIONS} from "./constants";
 
 const uploadPluginPermissions = {
   read: [{action: 'plugin::upload.read', subject: null}],
   update: [{action: 'plugin::upload.assets.update', subject: null, fields: null}],
 };
 
-const HomePage = () => {
+const HomePage = ({isLoading, editorFile, docServConfig}) => {
   const {formatMessage} = useIntl();
   const {pathname, search} = useLocation();
   const {push} = useHistory();
@@ -52,38 +56,63 @@ const HomePage = () => {
   } = useQuery(queryName, () => fetchFiles(search));
   const filesCount = data?.pagination?.total || 0;
 
-  const [editorFile, setEditorFile] = useState(null);
-  const [isEditor, setIsEditor] = useState(false);
-  const [docServConfig, setDocServConfig] = useState(null);
+  const dispatch = useDispatch();
 
   const getDocServConfig = async () => {
-    if (docServConfig === null) {
-      const res = await axiosInstance.get(`/${pluginId}/getOnlyofficeSettings`);
-      return res.data.docServConfig;
-    }
+    const res = await axiosInstance.get(`/${pluginId}/getOnlyofficeSettings`);
+    const editorConfig = res.data.docServConfig;
+
+    dispatch({
+      type: GET_EDITOR_SETTINGS_SUCCEEDED,
+      docServConfig: editorConfig
+    });
+  };
+
+  const setEditorPermissions = () => {
+    const permissions = {
+      canEdit: canUpdate,
+      canRead: canRead
+    };
+    dispatch({
+      type: SET_EDITOR_PERMISSIONS,
+      editorPermissions: permissions
+    });
   };
 
   useEffect(() => {
-    getDocServConfig()
-      .then((result) => {
-        if (result) {
-          setDocServConfig(result);
-        }
-      });
+    setEditorPermissions();
+  }, [canRead, canUpdate]);
+
+  const resetEditorFile = () => {
+    dispatch({type: RESET_EDITOR_FILE});
+  }
+
+  useEffect(() => {
+    if (!docServConfig.docServUrl) {
+      getDocServConfig();
+    }
+    if (editorFile.name) {
+      resetEditorFile();
+    }
   }, []);
 
-  const openEditor = (file) => {
+  const openEditor = (editorFile) => {
     if (canRead || canUpdate) {
-      setEditorFile(file);
-      setIsEditor(true);
+      dispatch({
+        type: SET_EDITOR_FILE,
+        editorFile: editorFile,
+      });
+      push({
+        pathname: `${pathname}/editor`
+      });
     }
   };
 
-  if (isFetching || docServConfig === null) {
+  if (isFetching || isLoading) {
     return <LoadingIndicatorPage/>;
   }
 
-  if (docServConfig && docServConfig.docServUrl === null && !can0 && !isFetching) {
+  if (!isLoading && !can0 && !isFetching) {
   return (
     <Main>
       <CenterActionLayout
@@ -101,14 +130,10 @@ const HomePage = () => {
       </ContentLayout>
     </Main>
   );
-  } else if (can0 && docServConfig && docServConfig.docServUrl === null) {
+  } else if (can0 && !isLoading && !docServConfig.docServUrl) {
     push({
       pathname: `${pathname.replace(`/plugins/${pluginId}`, `/settings/${pluginId}`)}`
     });
-  }
-
-  if (isEditor && editorFile) {
-    return <Editor file={editorFile} docServConfig={docServConfig} canEdit={canUpdate}/>
   }
 
   return (
@@ -137,7 +162,7 @@ const HomePage = () => {
       />
       <ContentLayout>
         <DynamicTable
-          isLoading={isFetching}
+          isLoading={isFetching && isLoading}
           headers={tableHeaders}
           rows={data.results}
         >
@@ -153,4 +178,18 @@ const HomePage = () => {
   );
 };
 
-export default memo(HomePage);
+HomePage.defaultProps = {
+  editorFile: {},
+  docServConfig: {}
+};
+
+HomePage.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
+  editorFile: PropTypes.object,
+  docServConfig: PropTypes.object.isRequired
+};
+
+const mapStateToProps = makeSelectOnlyofficeEditor();
+const withConnect = connect(mapStateToProps, null);
+
+export default compose(withConnect)(memo(HomePage));

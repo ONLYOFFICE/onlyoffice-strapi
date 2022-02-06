@@ -10,30 +10,37 @@ import getTrad from "../../utils/getTrad";
 import {Helmet} from 'react-helmet';
 import PropTypes from "prop-types";
 import pluginId from '../../pluginId';
+import makeSelectOnlyofficeEditor from "../../pages/HomePage/selectors";
+import {compose} from "redux";
+import {connect} from 'react-redux';
+import {Redirect} from "react-router-dom";
 
-const EditorComponent = ({file, docServConfig, canEdit}) => {
+const EditorComponent = ({editorFile, docServConfig, editorPermissions}) => {
+  if (!docServConfig.docServUrl) {
+    return <Redirect to={`/plugins/${pluginId}`}/>
+  }
 
   const toggleNotification = useNotification();
   const fileDataForCallback = {
-    id: file.id,
-    caption: file.caption,
-    name: file.name,
-    alternativeText: file.alternativeText
+    id: editorFile.id,
+    caption: editorFile.caption,
+    name: editorFile.name,
+    alternativeText: editorFile.alternativeText
   }
 
   useEffect(() => {
-    const url = `${strapi.backendURL || window.location.origin}${file.url}?token=${auth.getToken()}`;
+    const url = `${strapi.backendURL || window.location.origin}${editorFile.url}?token=${auth.getToken()}`;
     const userData = auth.getUserInfo();
-    const userCanEdit = canEdit;
-    const fileEditable = isFileEditable(file.ext);
+    const userCanEdit = editorPermissions.canEdit;
+    const fileEditable = isFileEditable(editorFile.ext);
 
-    const docKey = file.hash + new Date(file.updatedAt).getTime().toString();
+    const docKey = editorFile.hash + new Date(editorFile.updatedAt).getTime().toString();
     const config = {
-      documentType: getFileType(file.ext),
+      documentType: getFileType(editorFile.ext),
       document: {
-        fileType: file.ext.replace('.', ''),
+        fileType: editorFile.ext.replace('.', ''),
         key: docKey,
-        title: file.name,
+        title: editorFile.name,
         url: url,
         permissions: {
           edit: userCanEdit && fileEditable
@@ -67,7 +74,7 @@ const EditorComponent = ({file, docServConfig, canEdit}) => {
         });
       }
     }, 100);
-  }, [file]);
+  }, [editorFile]);
 
   return (
     <>
@@ -86,13 +93,18 @@ const EditorComponent = ({file, docServConfig, canEdit}) => {
 };
 
 EditorComponent.defaultProps = {
-  canEdit: false
+  editorFile: {},
+  docServConfig: {},
+  editorPermissions: {}
 };
 
 EditorComponent.propTypes = {
-  file: PropTypes.object.isRequired,
+  editorFile: PropTypes.object.isRequired,
   docServConfig: PropTypes.object.isRequired,
-  canEdit: PropTypes.bool,
+  editorPermissions: PropTypes.object.isRequired
 };
 
-export default EditorComponent;
+const mapStateToProps = makeSelectOnlyofficeEditor();
+const withConnect = connect(mapStateToProps, null);
+
+export default compose(withConnect)(EditorComponent);
