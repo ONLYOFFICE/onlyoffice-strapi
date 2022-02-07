@@ -7,6 +7,10 @@
     "description": "Description of ONLYOFFICE plugin.",
     "kind": "plugin"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ONLYOFFICE/onlyoffice-strapi"
+  },
   "dependencies": {
     "axios": "^0.24.0",
     "form-data": "^4.0.0",
@@ -26,15 +30,15 @@
     "reselect": "^4.0.0"
   },
   "author": {
-    "name": "A Strapi developer",
-    "email": "",
-    "url": ""
+    "name": "Ascensio System SIA",
+    "email": "integration@onlyoffice.com",
+    "url": "http://www.onlyoffice.com"
   },
   "maintainers": [
     {
-      "name": "A Strapi developer",
-      "email": "",
-      "url": ""
+      "name": "Ascensio System SIA",
+      "email": "integration@onlyoffice.com",
+      "url": "http://www.onlyoffice.com"
     }
   ],
   "engines": {

@@ -22,9 +22,9 @@ module.exports = {
     title: 'ONLYOFFICE',
     description: '',
     contact: {
-      name: 'TEAM',
-      email: 'contact-email@something.io',
-      url: 'mywebsite.io',
+      name: 'Ascensio System SIA',
+      email: 'integration@onlyoffice.com',
+      url: 'http://www.onlyoffice.com',
     },
     license: {
       name: 'Apache 2.0',
@@ -38,7 +38,7 @@ module.exports = {
   servers: [],
   externalDocs: {
     description: 'Find out more',
-    url: 'https://docs.strapi.io/developer-docs/latest/getting-started/introduction.html',
+    url: 'http://www.onlyoffice.com',
   },
   security: [
     {
