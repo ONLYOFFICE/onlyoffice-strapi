@@ -1,0 +1,59 @@
+React-router-dom - The react-router-dom package contains bindings for using React Router in web applications. (https://github.com/remix-run/react-router)
+License:        MIT
+License File:   react-router-dom.license
+
+Axios          - Promise based HTTP client for the browser and node.js. (https://github.com/axios/axios)
+License:        MIT
+License File:   axios.license
+
+Form-data          - A library to create readable "multipart/form-data" streams. Can be used to submit forms and file uploads to other web applications. (https://github.com/form-data/form-data)
+License:        MIT
+License File:   form-data.license
+
+Jsonwebtoken          - An implementation of JSON Web Tokens. (https://github.com/auth0/node-jsonwebtoken)
+License:        MIT
+License File:   jsonwebtoken.license
+
+Mime-types          - The ultimate javascript content-type utility. (https://github.com/jshttp/mime-types)
+License:        MIT
+License File:   mime-types.license
+
+React          - React is a JavaScript library for building user interfaces. (https://github.com/facebook/react)
+License:        MIT
+License File:   react.license
+
+React-intl          - Library that help you setup internationalization in any project whether it's React or not. (https://github.com/formatjs/formatjs/tree/main/packages/react-intl)
+License:        BSD-3-Clause
+License File:   react-intl.license
+
+React-helmet          - This reusable React component will manage all of your changes to the document head. (https://github.com/nfl/react-helmet)
+License:        MIT
+License File:   react-helmet.license
+
+Yup          - Yup is a schema builder for runtime value parsing and validation. (https://github.com/jquense/yup)
+License:        MIT
+License File:   yup.license
+
+Prop-types          - Runtime type checking for React props and similar objects. (https://github.com/facebook/prop-types)
+License:        MIT
+License File:   prop-types.license
+
+Byte-size          - An isomorphic, load-anywhere function to convert a bytes value (e.g. 3456) to a human-readable string ('3.5 kB'). (https://github.com/75lb/byte-size)
+License:        MIT
+License File:   byte-size.license
+
+Styled-components          - Utilising tagged template literals (a recent addition to JavaScript) and the power of CSS, styled-components allows you to write actual CSS code to style your components. (https://github.com/styled-components/styled-components)
+License:        MIT
+License File:   styled-components.license
+
+React-redux          - React Redux is the official React UI bindings layer for Redux. It lets your React components read data from a Redux store, and dispatch actions to the store to update state. (https://github.com/reduxjs/react-redux)
+License:        MIT
+License File:   react-redux.license
+
+Redux          - Redux is a predictable state container for JavaScript apps. (https://github.com/reduxjs/redux)
+License:        MIT
+License File:   redux.license
+
+Reselect          - Reselect exports a createSelector API, which generates memoized selector functions. (https://github.com/reduxjs/reselect)
+License:        MIT
+License File:   reselect.license
