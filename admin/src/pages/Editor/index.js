@@ -25,11 +25,16 @@ import makeSelectOnlyofficeEditor from "../../pages/HomePage/selectors";
 import {compose} from "redux";
 import {connect} from 'react-redux';
 import {Redirect} from "react-router-dom";
+import cell from '../../assets/cell.ico';
+import word from '../../assets/word.ico';
+import slide from '../../assets/slide.ico';
 
 const EditorComponent = ({editorFile, docServConfig, editorPermissions}) => {
   if (!docServConfig.docServUrl) {
     return <Redirect to={`/plugins/${pluginId}`}/>
   }
+  const documentType = getFileType(editorFile.ext);
+  const favicon = documentType === 'cell' ? cell : documentType === 'slide' ? slide : word;
 
   const toggleNotification = useNotification();
   const fileDataForCallback = {
@@ -47,7 +52,7 @@ const EditorComponent = ({editorFile, docServConfig, editorPermissions}) => {
 
     const docKey = editorFile.hash + new Date(editorFile.updatedAt).getTime().toString();
     const config = {
-      documentType: getFileType(editorFile.ext),
+      documentType: documentType,
       document: {
         fileType: editorFile.ext.replace('.', ''),
         key: docKey,
@@ -90,6 +95,9 @@ const EditorComponent = ({editorFile, docServConfig, editorPermissions}) => {
   return (
     <>
       <Helmet
+        link={[
+          { rel: 'shortcut icon', type: 'image/x-icon', href: `${favicon}` }
+        ]}
         script={[
           {
             src: `${docServConfig.docServUrl}${docServConfig.docServUrl.charAt(docServConfig.docServUrl.length - 1) === '/' ? '' : '/'}web-apps/apps/api/documents/api.js`,
