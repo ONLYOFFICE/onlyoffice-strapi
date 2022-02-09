@@ -14,8 +14,31 @@
 * limitations under the License.
 */
 "use strict";
+const { getService } = require('../utils');
 
 module.exports = {
+  async editorApi(ctx) {
+    const type = ctx.params.type;
+    const data = ctx.request.body;
+    const { authorization } = ctx.request.header;
+    switch (type) {
+      case 'saveas': {
+        const fileInfo = {
+          alternativeText: data.title,
+          caption: data.title,
+          name: data.title,
+        };
+        try {
+          const formData = await getService('onlyoffice').generateFormData(fileInfo, data);
+          await getService('onlyoffice').submitFormData(formData, authorization);
+          ctx.send({ok: true});
+        } catch (e) {
+          ctx.badRequest(null, e.message);
+        }
+        break;
+      }
+    }
+  },
 
   async getEditorSettings(ctx) {
     try {

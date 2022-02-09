@@ -35,4 +35,9 @@ module.exports = [
       ]
     }
   },
+  {
+    method: 'POST',
+    path: '/editorApi/:type',
+    handler: 'onlyofficeController.editorApi'
+  },
 ];
