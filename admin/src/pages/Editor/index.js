@@ -28,8 +28,12 @@ import {Redirect} from "react-router-dom";
 import cell from '../../assets/cell.ico';
 import word from '../../assets/word.ico';
 import slide from '../../assets/slide.ico';
+import axiosInstance from "../../utils/axiosInstance";
+import {useIntl} from "react-intl";
 
 const EditorComponent = ({editorFile, docServConfig, editorPermissions}) => {
+  const {formatMessage} = useIntl();
+
   if (!docServConfig.docServUrl) {
     return <Redirect to={`/plugins/${pluginId}`}/>
   }
@@ -81,13 +85,62 @@ const EditorComponent = ({editorFile, docServConfig, editorPermissions}) => {
     }
 
     setTimeout(() => {
+      const innerAlert = (message, inEditor) => {
+        if (console && console.log)
+          console.log(message);
+        if (inEditor && docEditor)
+          docEditor.showMessage(message);
+      };
+      const onAppReady = () => {  // the application is loaded into the browser
+        innerAlert("Document editor ready");
+      };
+
+      const onError = (event) => {  // an error or some other specific event occurs
+        if (event)
+          innerAlert(event.data);
+      };
+
+      const onRequestSaveAs = (event) => {  //  the user is trying to save file by clicking Save Copy as... button
+        const data = {
+          url: event.data.url,
+          title: event.data.title
+        }
+        axiosInstance.post(`/${pluginId}/editorApi/saveas`, data)
+          .then(() => {
+            const message = formatMessage({
+                id: getTrad('onlyoffice.editor.save-as'),
+                defaultMessage: 'Document was successfully saved',
+              },
+              {filename: data.title}
+            )
+            toggleNotification({
+              type: 'success',
+              message: message,
+            });
+          })
+          .catch(() => {
+            toggleNotification({
+              type: 'warning',
+              message: {id: getTrad('onlyoffice.editor.save-as.error')},
+            });
+          });
+      };
+
+      config.events = {
+        'onAppReady': onAppReady,
+        'onError': onError
+      };
+
+      if (userCanEdit) config.events.onRequestSaveAs = onRequestSaveAs;
+
       try {
-        new window.DocsAPI.DocEditor('onlyoffice-editor', config);
+        let docEditor = new window.DocsAPI.DocEditor('onlyoffice-editor', config);
       } catch (e) {
         toggleNotification({
           type: 'warning',
           message: {id: getTrad('onlyoffice.notification.api.unreachable')},
         });
+        return <Redirect to={`/plugins/${pluginId}`}/>
       }
     }, 100);
   }, [editorFile]);

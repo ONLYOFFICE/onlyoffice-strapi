@@ -18,5 +18,7 @@
   "onlyoffice.table.size": "Size",
   "onlyoffice.table.updatedAt": "Last modified",
   "onlyoffice.content.files-multiple": "{number} files",
-  "onlyoffice.table.sort": "Sort on {label}"
+  "onlyoffice.table.sort": "Sort on {label}",
+  "onlyoffice.editor.save-as": "Document was successfully saved as {filename}",
+  "onlyoffice.editor.save-as.error": "Something went wrong"
 }
