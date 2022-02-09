@@ -18,7 +18,7 @@ const layout = [
     {
       intlLabel: {
         id: 'onlyoffice.settings.docserv-url',
-        defaultMessage: 'Document Server Address',
+        defaultMessage: 'Document server address',
       },
       name: 'docServUrl',
       type: 'text',
@@ -31,7 +31,7 @@ const layout = [
     {
       intlLabel: {
         id: 'onlyoffice.settings.docserv-jwtsecret',
-        defaultMessage: 'Document Server JWT Secret',
+        defaultMessage: 'Document server JWT secret',
       },
       description: {
         id: 'onlyoffice.settings.docserv-jwtsecret-desc',

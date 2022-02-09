@@ -135,7 +135,7 @@ const HomePage = ({isLoading, editorFile, docServConfig}) => {
         <EmptyStateLayout
           icon={<EmptyDocuments width="10rem"/>}
           content={formatMessage(
-            {id: getTrad('onlyoffice.docserv-url.empty'), defaultMessage: 'Document Server Address is not set'}
+            {id: getTrad('onlyoffice.docserv-url.empty'), defaultMessage: 'Something wrong with your settings/token. Please try again later or contact your administrator.'}
           )}
         />
       </ContentLayout>
