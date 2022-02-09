@@ -15,16 +15,8 @@
 */
 'use strict';
 
-const controllers = require('./controllers');
-const routes = require('./routes');
-const bootstrap = require('./bootstrap');
-const config = require('./config');
-const services = require('./services');
+const onlyofficeService = require('./onlyoffice');
 
 module.exports = {
-  config,
-  controllers,
-  routes,
-  bootstrap,
-  services,
+  onlyoffice: onlyofficeService
 };

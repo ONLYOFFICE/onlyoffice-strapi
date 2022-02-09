@@ -15,8 +15,7 @@
 */
 "use strict";
 const axios = require("axios");
-const mime = require("mime-types");
-const FormData = require("form-data");
+const { getService } = require('../utils');
 /**
  * callback.js controller
  *
@@ -46,48 +45,8 @@ module.exports = {
 
       const callbackPayload = ctx.request.body;
       if (callbackPayload.status === 2) {
-        const file = await axios({
-          method: "get",
-          responseType: "arraybuffer",
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': mime.lookup(callbackPayload.url),
-          },
-          url: callbackPayload.url,
-        });
-
-        const formData = new FormData();
-        formData.append('files', file.data, {
-          contentType: mime.lookup(callbackPayload.url),
-          filename: fileInfo.name,
-        });
-
-        formData.append(
-          'fileInfo',
-          JSON.stringify({
-            alternativeText: fileInfo.alternativeText,
-            caption: fileInfo.caption,
-            name: fileInfo.name,
-          })
-        );
-
-        let proto = 'http:'
-        try {
-          await axios.get(`${proto}//${strapi.config.host}:${strapi.config.port}`);
-        } catch (e) {
-          proto = 'https:';
-        }
-
-        formData.submit({
-            host: strapi.config.host,
-            port: strapi.config.port,
-            protocol: proto,
-            path: `/upload?id=${fileInfo.id}`,
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          }
-        );
+        const formData = await getService('onlyoffice').generateFormData(fileInfo, callbackPayload);
+        await getService('onlyoffice').submitFormData(formData, `Bearer ${token}`, fileInfo.id);
       }
 
     } catch (e) {

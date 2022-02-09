@@ -15,16 +15,10 @@
 */
 'use strict';
 
-const controllers = require('./controllers');
-const routes = require('./routes');
-const bootstrap = require('./bootstrap');
-const config = require('./config');
-const services = require('./services');
+const getService = name => {
+  return strapi.plugin('onlyoffice').service(name);
+};
 
 module.exports = {
-  config,
-  controllers,
-  routes,
-  bootstrap,
-  services,
+  getService,
 };
