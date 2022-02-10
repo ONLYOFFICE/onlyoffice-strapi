@@ -49,6 +49,7 @@ const EditorComponent = ({editorFile, docServConfig, editorPermissions}) => {
   }
 
   useEffect(() => {
+    let docEditor = null;
     const url = `${strapi.backendURL || window.location.origin}${editorFile.url}?token=${auth.getToken()}`;
     const userData = auth.getUserInfo();
     const userCanEdit = editorPermissions.canEdit;
@@ -134,7 +135,7 @@ const EditorComponent = ({editorFile, docServConfig, editorPermissions}) => {
       if (userCanEdit) config.events.onRequestSaveAs = onRequestSaveAs;
 
       try {
-        let docEditor = new window.DocsAPI.DocEditor('onlyoffice-editor', config);
+        docEditor = new window.DocsAPI.DocEditor('onlyoffice-editor', config);
       } catch (e) {
         toggleNotification({
           type: 'warning',
@@ -143,6 +144,11 @@ const EditorComponent = ({editorFile, docServConfig, editorPermissions}) => {
         return <Redirect to={`/plugins/${pluginId}`}/>
       }
     }, 100);
+    return () => {
+      if (docEditor !== null) {
+        docEditor.destroyEditor();
+      }
+    }
   }, [editorFile]);
 
   return (
