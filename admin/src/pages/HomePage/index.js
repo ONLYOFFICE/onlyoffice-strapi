@@ -99,9 +99,7 @@ const HomePage = ({isLoading, editorFile, docServConfig}) => {
   }
 
   useEffect(() => {
-    if (!docServConfig.docServUrl) {
-      getDocServConfig();
-    }
+    getDocServConfig();
     if (editorFile.name) {
       resetEditorFile();
     }
