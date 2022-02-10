@@ -71,4 +71,9 @@ module.exports = {
 
     return ctx.send({ok: true});
   },
+
+  async findAllFiles(ctx) {
+    const allFiles = await getService('onlyoffice').findAllFiles(ctx.query);
+    return ctx.send(allFiles);
+  }
 };

@@ -70,4 +70,8 @@ module.exports = ({ strapi }) => ({
       }
     );
   },
+
+  findAllFiles(query) {
+    return strapi.entityService.findMany('plugin::upload.file', query);
+  },
 });

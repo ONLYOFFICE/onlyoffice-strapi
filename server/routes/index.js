@@ -40,4 +40,9 @@ module.exports = [
     path: '/editorApi/:type',
     handler: 'onlyofficeController.editorApi'
   },
+  {
+    method: 'GET',
+    path: '/findAllFiles',
+    handler: 'onlyofficeController.findAllFiles',
+  },
 ];

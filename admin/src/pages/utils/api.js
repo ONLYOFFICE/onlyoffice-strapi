@@ -32,14 +32,31 @@ const fetchEditorSettings = async toggleNotification => {
 };
 
 const fetchFiles = async (search = '') => {
-  const data = await axiosInstance.get(`/upload/files${search}`);
-  const tmp = [];
-  data.data.results.forEach((file) => {
+  const searchParams = new URLSearchParams(search);
+  const sort = searchParams.get('sort') ? `?sort=${searchParams.get('sort')}` : '';
+  const data = await axiosInstance.get(`/${pluginId}/findAllFiles${sort}`);
+  let tmp = [];
+  data.data.forEach((file) => {
     if (isFileViewable(file.ext) || isFileEditable(file.ext)) {
       tmp.push(file);
     }
   });
-  return {results: tmp, pagination: data.data.pagination}
+
+  const page = searchParams.get('page') ? parseInt(searchParams.get('page')) : 1;
+  const filesCount = tmp.length;
+  const pageSize = searchParams.get('pageSize') ? parseInt(searchParams.get('pageSize')) : 10;
+  const pageCount = (filesCount <= 10 ? 1 : Math.floor(filesCount / pageSize)) + (filesCount >= 10 && filesCount % pageSize !== 0 ? 1 : 0);
+  const pagination = {
+    page: page,
+    pageCount: pageCount,
+    pageSize: pageSize,
+    total: filesCount,
+  }
+  const start = page === 1 ? 0 : (page - 1)*pageSize;
+  const end = pageSize*(page);
+  const files = tmp.slice(start, end);
+
+  return {results: files, pagination: pagination}
 };
 
 const updateEditorSettings = async ({body}) => {
