@@ -1,10 +1,10 @@
 {
   "name": "onlyoffice",
-  "version": "0.0.0",
-  "description": "This is the description of the plugin.",
+  "version": "1.0.0",
+  "description": "The app which enables the users to edit office documents from Strapi using ONLYOFFICE Document Server, allows multiple users to collaborate in real time and to save back those changes to Strapi.",
   "strapi": {
     "name": "ONLYOFFICE",
-    "description": "Description of ONLYOFFICE plugin.",
+    "description": "The app which enables the users to edit office documents from Strapi using ONLYOFFICE Document Server, allows multiple users to collaborate in real time and to save back those changes to Strapi.",
     "kind": "plugin"
   },
   "repository": {
@@ -31,18 +31,18 @@
   "author": {
     "name": "Ascensio System SIA",
     "email": "integration@onlyoffice.com",
-    "url": "http://www.onlyoffice.com"
+    "url": "https://www.onlyoffice.com"
   },
   "maintainers": [
     {
       "name": "Ascensio System SIA",
       "email": "integration@onlyoffice.com",
-      "url": "http://www.onlyoffice.com"
+      "url": "https://www.onlyoffice.com"
     }
   ],
   "engines": {
     "node": ">=12.x. <=16.x.x",
     "npm": ">=6.0.0"
   },
-  "license": "MIT"
+  "license": "Apache 2.0"
 }

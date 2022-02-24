@@ -6,7 +6,7 @@
 
 /**
  * Copyright (c) Ascensio System SIA 2022. All rights reserved.
- * http://www.onlyoffice.com
+ * https://www.onlyoffice.com
 **/
 import React from 'react';
 

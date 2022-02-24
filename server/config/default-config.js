@@ -24,7 +24,7 @@ module.exports = {
     contact: {
       name: 'Ascensio System SIA',
       email: 'integration@onlyoffice.com',
-      url: 'http://www.onlyoffice.com',
+      url: 'https://www.onlyoffice.com',
     },
     license: {
       name: 'Apache 2.0',
@@ -38,7 +38,7 @@ module.exports = {
   servers: [],
   externalDocs: {
     description: 'Find out more',
-    url: 'http://www.onlyoffice.com',
+    url: 'https://www.onlyoffice.com',
   },
   security: [
     {
