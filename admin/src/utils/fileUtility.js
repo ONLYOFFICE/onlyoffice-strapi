@@ -15,7 +15,6 @@
 */
 import {
   EDIT_FORMATS,
-  VIEW_FORMATS,
   DOCUMENT_EXTS,
   SPREADSHEET_EXTS,
   PRESENTATION_EXTS
@@ -27,8 +26,8 @@ module.exports = {
     return EDIT_FORMATS.includes(ext);
   },
 
-  isFileViewable: (ext) => {
-    return VIEW_FORMATS.includes(ext);
+  isFileOpenable: (ext) => {
+    return DOCUMENT_EXTS.concat(SPREADSHEET_EXTS).concat(PRESENTATION_EXTS).includes(ext);
   },
 
   getFileType: (ext) => {
