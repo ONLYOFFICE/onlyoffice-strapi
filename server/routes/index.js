@@ -24,6 +24,11 @@ module.exports = [
     method: 'GET',
     path: '/getOnlyofficeSettings',
     handler: 'onlyofficeController.getEditorSettings',
+    config: {
+      policies: [
+        {name: 'admin::hasPermissions', config: {actions: ['plugin::onlyoffice.settings.update']}}
+      ]
+    }
   },
   {
     method: 'PUT',
@@ -34,6 +39,11 @@ module.exports = [
         {name: 'admin::hasPermissions', config: {actions: ['plugin::onlyoffice.settings.update']}}
       ]
     }
+  },
+  {
+    method: 'GET',
+    path: '/getEditorUrl',
+    handler: 'onlyofficeController.getEditorUrl',
   },
   {
     method: 'POST',

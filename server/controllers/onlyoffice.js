@@ -55,6 +55,19 @@ module.exports = {
     }
   },
 
+  async getEditorUrl(ctx) {
+    try {
+      const config = await getService('onlyoffice').getOnlyofficeData('editorConfig');
+
+      ctx.send({
+        docServUrl: config.docServConfig.docServUrl
+      });
+
+    } catch (e) {
+      ctx.badRequest(null, e.message);
+    }
+  },
+
   async updateEditorSettings(ctx) {
     const docServConfig = ctx.request.body;
     const pluginStore = strapi.store({type: 'plugin', name: 'onlyoffice'});
