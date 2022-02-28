@@ -18,8 +18,21 @@
 const axios = require("axios");
 const mime = require("mime-types");
 const FormData = require("form-data");
+const CryptoJS = require("crypto-js");
+
+const getOnlyofficeData = async (key) => {
+  return strapi.store({
+    environment: '',
+    type: 'plugin',
+    name: 'onlyoffice',
+    key: key,
+  })
+    .get();
+};
 
 module.exports = ({ strapi }) => ({
+  getOnlyofficeData,
+
   async generateFormData(fileInfo, payload) {
     const file = await axios({
       method: "get",
@@ -71,7 +84,38 @@ module.exports = ({ strapi }) => ({
     );
   },
 
-  findAllFiles(query) {
-    return strapi.entityService.findMany('plugin::upload.file', query);
+  async decodeToken(ctx) {
+    const encodedToken = ctx.request.query.token;
+    const uuid = await getOnlyofficeData('uuid');
+
+    const token = CryptoJS.AES.decrypt(encodedToken, uuid.onlyofficeKey).toString(CryptoJS.enc.Utf8);
+    try {
+      await strapi.plugins[
+        'users-permissions'
+        ].services.jwt.verify(token);
+
+      return token;
+    } catch (e) {
+      try {
+        const {isValid} = strapi.service(`admin::token`).decodeJwtToken(token);
+        if (!isValid) return null;
+        return token;
+      } catch (e) {
+        return null;
+      }
+    }
   },
+
+  getTokenFromRequest(ctx) {
+    if (ctx.request && ctx.request.header && ctx.request.header.authorization) {
+      const parts = ctx.request.header.authorization.split(/\s+/);
+
+      if (parts[0].toLowerCase() !== 'bearer' || parts.length !== 2) {
+        return null;
+      }
+      return parts[1];
+    }
+    return null;
+  },
+
 });

@@ -16,7 +16,7 @@
 module.exports = [
   {
     method: 'POST',
-    path: '/callback',
+    path: '/callback/:file',
     handler: 'callbackController.entrypoint',
     config: { auth: false },
   },
@@ -44,5 +44,15 @@ module.exports = [
     method: 'GET',
     path: '/findAllFiles',
     handler: 'onlyofficeController.findAllFiles',
+  },
+  {
+    method: 'GET',
+    path: '/getFile/:file',
+    handler: 'onlyofficeController.getFile',
+  },
+  {
+    method: 'GET',
+    path: '/editorConfig/:file',
+    handler: 'onlyofficeController.getConfig',
   },
 ];

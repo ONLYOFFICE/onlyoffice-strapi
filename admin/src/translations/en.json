@@ -20,5 +20,6 @@
   "onlyoffice.content.files-multiple": "{number} files",
   "onlyoffice.table.sort": "Sort on {label}",
   "onlyoffice.editor.save-as": "Document was successfully saved as {filename}",
-  "onlyoffice.editor.save-as.error": "Something went wrong"
+  "onlyoffice.editor.save-as.error": "Something went wrong",
+  "onlyoffice.editor.config.error": "Error getting editor config"
 }

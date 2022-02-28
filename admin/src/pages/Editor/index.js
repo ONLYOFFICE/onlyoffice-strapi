@@ -13,10 +13,8 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-import React, {useEffect} from "react";
-import {auth, useNotification} from "@strapi/helper-plugin";
-import jwt from "jsonwebtoken";
-import {isFileEditable, getFileType} from '../../utils/fileUtility';
+import React, {useEffect, useState} from "react";
+import {useNotification, LoadingIndicatorPage} from "@strapi/helper-plugin";
 import getTrad from "../../utils/getTrad";
 import {Helmet} from 'react-helmet';
 import PropTypes from "prop-types";
@@ -37,119 +35,105 @@ const EditorComponent = ({editorFile, docServConfig, editorPermissions}) => {
   if (!docServConfig.docServUrl) {
     return <Redirect to={`/plugins/${pluginId}`}/>
   }
-  const documentType = getFileType(editorFile.ext);
-  const favicon = documentType === 'cell' ? cell : documentType === 'slide' ? slide : word;
+  const [favicon, setFavicon] = useState(null);
+  const [config, setConfig] = useState(null);
 
   const toggleNotification = useNotification();
-  const fileDataForCallback = {
-    id: editorFile.id,
-    caption: editorFile.caption,
-    name: editorFile.name,
-    alternativeText: editorFile.alternativeText
-  }
+
+  useEffect(() => {
+    const getEditorConfig = async () => {
+      await axiosInstance.get(`/${pluginId}/editorConfig/${editorFile.id}`)
+        .then((res) => {
+          setConfig(res.data);
+          setFavicon(res.data.documentType === 'cell' ? cell : res.data.documentType === 'slide' ? slide : word);
+        })
+        .catch(() => {
+          const message = formatMessage({
+            id: getTrad('onlyoffice.editor.config.error'),
+            defaultMessage: 'Error getting editor config',
+          })
+          toggleNotification({
+            type: 'warning',
+            message: message,
+          });
+        });
+    };
+    getEditorConfig();
+  }, []);
 
   useEffect(() => {
     let docEditor = null;
-    const url = `${strapi.backendURL || window.location.origin}${editorFile.url}?token=${auth.getToken()}`;
-    const userData = auth.getUserInfo();
     const userCanEdit = editorPermissions.canEdit;
-    const fileEditable = isFileEditable(editorFile.ext);
 
-    const docKey = editorFile.hash + new Date(editorFile.updatedAt).getTime().toString();
-    const config = {
-      documentType: documentType,
-      document: {
-        fileType: editorFile.ext.replace('.', ''),
-        key: docKey,
-        title: editorFile.name,
-        url: url,
-        permissions: {
-          edit: userCanEdit && fileEditable
-        }
-      },
-      editorConfig: {
-        mode: userCanEdit && fileEditable ? 'edit' : 'view',
-        callbackUrl: `${strapi.backendURL || window.location.origin}/${pluginId}/callback?token=${auth.getToken()}&fileInfo=${JSON.stringify(fileDataForCallback)}`,
-        user: {
-          id: userData.id.toString(),
-          name: `${userData.firstname} ${userData.lastname}`
-        },
-        lang: auth.getUserInfo().preferedLanguage || 'en',
-        customization: {
-          forcesave: false
-        }
-      },
-    };
+    if (config) {
+      setTimeout(() => {
+        const innerAlert = (message, inEditor) => {
+          if (console && console.log)
+            console.log(message);
+          if (inEditor && docEditor)
+            docEditor.showMessage(message);
+        };
+        const onAppReady = () => {  // the application is loaded into the browser
+          innerAlert("Document editor ready");
+        };
 
-    if (docServConfig.docJwtSecret !== '') {
-      config.token = jwt.sign(config, docServConfig.docJwtSecret);
-    }
+        const onError = (event) => {  // an error or some other specific event occurs
+          if (event)
+            innerAlert(event.data);
+        };
 
-    setTimeout(() => {
-      const innerAlert = (message, inEditor) => {
-        if (console && console.log)
-          console.log(message);
-        if (inEditor && docEditor)
-          docEditor.showMessage(message);
-      };
-      const onAppReady = () => {  // the application is loaded into the browser
-        innerAlert("Document editor ready");
-      };
-
-      const onError = (event) => {  // an error or some other specific event occurs
-        if (event)
-          innerAlert(event.data);
-      };
-
-      const onRequestSaveAs = (event) => {  //  the user is trying to save file by clicking Save Copy as... button
-        const data = {
-          url: event.data.url,
-          title: event.data.title
-        }
-        axiosInstance.post(`/${pluginId}/editorApi/saveas`, data)
-          .then(() => {
-            const message = formatMessage({
-                id: getTrad('onlyoffice.editor.save-as'),
-                defaultMessage: 'Document was successfully saved',
-              },
-              {filename: data.title}
-            )
-            toggleNotification({
-              type: 'success',
-              message: message,
+        const onRequestSaveAs = (event) => {  //  the user is trying to save file by clicking Save Copy as... button
+          const data = {
+            url: event.data.url,
+            title: event.data.title
+          }
+          axiosInstance.post(`/${pluginId}/editorApi/saveas`, data)
+            .then(() => {
+              const message = formatMessage({
+                  id: getTrad('onlyoffice.editor.save-as'),
+                  defaultMessage: 'Document was successfully saved',
+                },
+                {filename: data.title}
+              )
+              toggleNotification({
+                type: 'success',
+                message: message,
+              });
+            })
+            .catch(() => {
+              toggleNotification({
+                type: 'warning',
+                message: {id: getTrad('onlyoffice.editor.save-as.error')},
+              });
             });
-          })
-          .catch(() => {
-            toggleNotification({
-              type: 'warning',
-              message: {id: getTrad('onlyoffice.editor.save-as.error')},
-            });
+        };
+
+        config.events = {
+          'onAppReady': onAppReady,
+          'onError': onError
+        };
+
+        if (userCanEdit) config.events.onRequestSaveAs = onRequestSaveAs;
+
+        try {
+          docEditor = new window.DocsAPI.DocEditor('onlyoffice-editor', config);
+        } catch (e) {
+          toggleNotification({
+            type: 'warning',
+            message: {id: getTrad('onlyoffice.notification.api.unreachable')},
           });
-      };
-
-      config.events = {
-        'onAppReady': onAppReady,
-        'onError': onError
-      };
-
-      if (userCanEdit) config.events.onRequestSaveAs = onRequestSaveAs;
-
-      try {
-        docEditor = new window.DocsAPI.DocEditor('onlyoffice-editor', config);
-      } catch (e) {
-        toggleNotification({
-          type: 'warning',
-          message: {id: getTrad('onlyoffice.notification.api.unreachable')},
-        });
-        return <Redirect to={`/plugins/${pluginId}`}/>
-      }
-    }, 100);
+          return <Redirect to={`/plugins/${pluginId}`}/>
+        }
+      }, 100);
+    }
     return () => {
       if (docEditor !== null) {
         docEditor.destroyEditor();
       }
     }
-  }, [editorFile]);
+  }, [editorFile, config]);
+
+  if (!config) return <LoadingIndicatorPage/>;
 
   return (
     <>

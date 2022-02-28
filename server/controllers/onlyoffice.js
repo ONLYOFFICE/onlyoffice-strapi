@@ -44,15 +44,8 @@ module.exports = {
 
   async getEditorSettings(ctx) {
     try {
-      const config = await strapi.store({
-        environment: '',
-        type: 'plugin',
-        name: 'onlyoffice',
-        key: 'editorConfig',
-      })
-        .get();
+      const config = await getService('onlyoffice').getOnlyofficeData('editorConfig');
 
-      delete config.docServConfig.docJwtSecret;
       ctx.send({
         docServConfig: config.docServConfig
       });
@@ -76,7 +69,9 @@ module.exports = {
   },
 
   async findAllFiles(ctx) {
-    const allFiles = await getService('onlyoffice').findAllFiles(ctx.query);
+    const allFiles = await strapi.plugins[
+      'upload'
+      ].services.upload.findMany(ctx.query);
     let tmp = [];
     allFiles.forEach((file) => {
       if (isFileOpenable(file.ext) || isFileEditable(file.ext)) {
@@ -86,4 +81,59 @@ module.exports = {
     });
     return ctx.send(tmp);
   },
+
+  async getFile(ctx) {
+    const token = await getService('onlyoffice').decodeToken(ctx);
+    if (token === null) ctx.unauthorized();
+  },
+
+  async getConfig(ctx) {
+    const ooConfig = await getService('onlyoffice').getOnlyofficeData('editorConfig');
+    const editorFile = await strapi.plugins[
+      'upload'
+      ].services.upload.findOne(ctx.params.file);
+
+    const authToken = await getService('onlyoffice').getTokenFromRequest(ctx);
+    if (authToken === null) ctx.unauthorized();
+    const uuid = await getService('onlyoffice').getOnlyofficeData('uuid');
+
+    const encodedToken = CryptoJS.AES.encrypt(authToken, uuid.onlyofficeKey).toString();
+    const userData = ctx.state.user;
+    const url = `${ctx.request.header.host}/onlyoffice/getFile/${editorFile.id}?token=${encodedToken}`;
+    const documentType = getFileType(editorFile.ext);
+    const userCanEdit = true;
+    const fileEditable = isFileEditable(editorFile.ext);
+
+    const docKey = editorFile.hash + new Date(editorFile.updatedAt).getTime().toString();
+    const config = {
+      documentType: documentType,
+      document: {
+        fileType: editorFile.ext.replace('.', ''),
+        key: docKey,
+        title: editorFile.name,
+        url: url,
+        permissions: {
+          edit: userCanEdit && fileEditable
+        }
+      },
+      editorConfig: {
+        mode: userCanEdit && fileEditable ? 'edit' : 'view',
+        callbackUrl: `${ctx.request.header.host}/onlyoffice/callback/${editorFile.id}?token=${encodedToken}`,
+        user: {
+          id: userData.id.toString(),
+          name: `${userData.firstname} ${userData.lastname}`
+        },
+        lang: userData.preferedLanguage || 'en',
+        customization: {
+          forcesave: false
+        }
+      },
+    };
+
+    if (ooConfig.docServConfig.docJwtSecret !== '') {
+      config.token = jwt.sign(config, ooConfig.docServConfig.docJwtSecret);
+    }
+    return ctx.send(config);
+  }
+
 };
