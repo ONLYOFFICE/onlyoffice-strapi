@@ -72,6 +72,7 @@ const HomePage = ({isLoading, editorFile, docServConfig}) => {
   const getDocServConfig = async () => {
     const res = await axiosInstance.get(`/${pluginId}/getOnlyofficeSettings`);
     const editorConfig = res.data.docServConfig;
+    delete editorConfig.docJwtSecret;
 
     dispatch({
       type: GET_EDITOR_SETTINGS_SUCCEEDED,
