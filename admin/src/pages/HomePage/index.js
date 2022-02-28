@@ -54,7 +54,7 @@ const uploadPluginPermissions = {
   update: [{action: 'plugin::upload.assets.update', subject: null, fields: null}],
 };
 
-const HomePage = ({isLoading, editorFile, docServConfig}) => {
+const HomePage = ({isLoading, editorFileId, editorUrl}) => {
   const {formatMessage} = useIntl();
   const {pathname, search} = useLocation();
   const {push} = useHistory();
@@ -69,14 +69,13 @@ const HomePage = ({isLoading, editorFile, docServConfig}) => {
 
   const dispatch = useDispatch();
 
-  const getDocServConfig = async () => {
-    const res = await axiosInstance.get(`/${pluginId}/getOnlyofficeSettings`);
-    const editorConfig = res.data.docServConfig;
-    delete editorConfig.docJwtSecret;
+  const getEditorUrl = async () => {
+    const res = await axiosInstance.get(`/${pluginId}/getEditorUrl`);
+    const editorUrl = res.data.docServUrl;
 
     dispatch({
       type: GET_EDITOR_SETTINGS_SUCCEEDED,
-      docServConfig: editorConfig
+      editorUrl: editorUrl
     });
   };
 
@@ -100,17 +99,17 @@ const HomePage = ({isLoading, editorFile, docServConfig}) => {
   }
 
   useEffect(() => {
-    getDocServConfig();
-    if (editorFile.name) {
+    getEditorUrl();
+    if (editorFileId) {
       resetEditorFile();
     }
   }, []);
 
-  const openEditor = (editorFile) => {
+  const openEditor = (editorFileId) => {
     if (canRead || canUpdate) {
       dispatch({
         type: SET_EDITOR_FILE,
-        editorFile: editorFile,
+        editorFileId: editorFileId,
       });
       push({
         pathname: `${pathname}/editor`
@@ -140,7 +139,7 @@ const HomePage = ({isLoading, editorFile, docServConfig}) => {
       </ContentLayout>
     </Main>
   );
-  } else if (can0 && !isLoading && !docServConfig.docServUrl) {
+  } else if (can0 && !isLoading && !editorUrl) {
     push({
       pathname: `${pathname.replace(`/plugins/${pluginId}`, `/settings/${pluginId}`)}`
     });
@@ -189,14 +188,14 @@ const HomePage = ({isLoading, editorFile, docServConfig}) => {
 };
 
 HomePage.defaultProps = {
-  editorFile: {},
-  docServConfig: {}
+  editorFileId: {},
+  editorUrl: {}
 };
 
 HomePage.propTypes = {
   isLoading: PropTypes.bool.isRequired,
-  editorFile: PropTypes.object,
-  docServConfig: PropTypes.object.isRequired
+  editorFileId: PropTypes.object,
+  editorUrl: PropTypes.object.isRequired
 };
 
 const mapStateToProps = makeSelectOnlyofficeEditor();

@@ -17,8 +17,8 @@ import produce from 'immer';
 import * as actions from './constants';
 
 const initialState = {
-  editorFile: {},
-  docServConfig: {},
+  editorFileId: null,
+  editorUrl: '',
   isLoading: true,
   editorPermissions: {}
 };
@@ -32,16 +32,16 @@ const reducer = (state = initialState, action) =>
         break;
       }
       case actions.GET_EDITOR_SETTINGS_SUCCEEDED: {
-        draftState.docServConfig = action.docServConfig;
+        draftState.editorUrl = action.editorUrl;
         draftState.isLoading = false;
         break;
       }
       case actions.SET_EDITOR_FILE: {
-        draftState.editorFile = action.editorFile;
+        draftState.editorFileId = action.editorFileId;
         break;
       }
       case actions.RESET_EDITOR_FILE: {
-        draftState.editorFile = {};
+        draftState.editorFileId = null;
         break;
       }
       default:

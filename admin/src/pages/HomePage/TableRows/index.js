@@ -51,7 +51,7 @@ const TableRows = ({headers, rows, openEditor}) => {
           <Tr
             key={file.id}
             {...onRowClick({
-              fn: () => openEditor(file)
+              fn: () => openEditor(file.id)
             })}>
             <Td>
               <Flex justifyContent="flex-end">
@@ -83,19 +83,19 @@ const TableRows = ({headers, rows, openEditor}) => {
           </Tr>
         );
       })}
-        </Tbody>
-        );
-      };
+    </Tbody>
+  );
+};
 
-      TableRows.defaultProps = {
-      rows: [],
-      openEditor: () => {},
-    };
+TableRows.defaultProps = {
+  rows: [],
+  openEditor: () => {},
+};
 
-      TableRows.propTypes = {
-      headers: PropTypes.array.isRequired,
-      rows: PropTypes.array,
-      openEditor: PropTypes.func,
-    };
+TableRows.propTypes = {
+  headers: PropTypes.array.isRequired,
+  rows: PropTypes.array,
+  openEditor: PropTypes.func,
+};
 
-      export default TableRows;
+export default TableRows;

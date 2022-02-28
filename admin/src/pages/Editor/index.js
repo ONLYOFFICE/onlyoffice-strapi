@@ -29,10 +29,10 @@ import slide from '../../assets/slide.ico';
 import axiosInstance from "../../utils/axiosInstance";
 import {useIntl} from "react-intl";
 
-const EditorComponent = ({editorFile, docServConfig, editorPermissions}) => {
+const EditorComponent = ({editorFileId, editorUrl, editorPermissions}) => {
   const {formatMessage} = useIntl();
 
-  if (!docServConfig.docServUrl) {
+  if (!editorUrl) {
     return <Redirect to={`/plugins/${pluginId}`}/>
   }
   const [favicon, setFavicon] = useState(null);
@@ -42,7 +42,7 @@ const EditorComponent = ({editorFile, docServConfig, editorPermissions}) => {
 
   useEffect(() => {
     const getEditorConfig = async () => {
-      await axiosInstance.get(`/${pluginId}/editorConfig/${editorFile.id}`)
+      await axiosInstance.get(`/${pluginId}/editorConfig/${editorFileId}`)
         .then((res) => {
           setConfig(res.data);
           setFavicon(res.data.documentType === 'cell' ? cell : res.data.documentType === 'slide' ? slide : word);
@@ -131,7 +131,7 @@ const EditorComponent = ({editorFile, docServConfig, editorPermissions}) => {
         docEditor.destroyEditor();
       }
     }
-  }, [editorFile, config]);
+  }, [editorFileId, config]);
 
   if (!config) return <LoadingIndicatorPage/>;
 
@@ -143,7 +143,7 @@ const EditorComponent = ({editorFile, docServConfig, editorPermissions}) => {
         ]}
         script={[
           {
-            src: `${docServConfig.docServUrl}${docServConfig.docServUrl.charAt(docServConfig.docServUrl.length - 1) === '/' ? '' : '/'}web-apps/apps/api/documents/api.js`,
+            src: `${editorUrl}${editorUrl.charAt(editorUrl.length - 1) === '/' ? '' : '/'}web-apps/apps/api/documents/api.js`,
           },
         ]}>
       </Helmet>
@@ -155,14 +155,14 @@ const EditorComponent = ({editorFile, docServConfig, editorPermissions}) => {
 };
 
 EditorComponent.defaultProps = {
-  editorFile: {},
-  docServConfig: {},
+  editorFileId: null,
+  editorUrl: '',
   editorPermissions: {}
 };
 
 EditorComponent.propTypes = {
-  editorFile: PropTypes.object.isRequired,
-  docServConfig: PropTypes.object.isRequired,
+  editorFileId: PropTypes.object.isRequired,
+  editorUrl: PropTypes.object.isRequired,
   editorPermissions: PropTypes.object.isRequired
 };
 
