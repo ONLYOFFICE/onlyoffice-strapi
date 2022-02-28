@@ -14,13 +14,15 @@
 * limitations under the License.
 */
 "use strict";
-const { getService } = require('../utils');
+const {getService, isFileEditable, isFileOpenable, getFileType} = require('../utils');
+const jwt = require('jsonwebtoken')
+const CryptoJS = require("crypto-js");
 
 module.exports = {
   async editorApi(ctx) {
     const type = ctx.params.type;
     const data = ctx.request.body;
-    const { authorization } = ctx.request.header;
+    const {authorization} = ctx.request.header;
     switch (type) {
       case 'saveas': {
         const fileInfo = {
@@ -50,6 +52,7 @@ module.exports = {
       })
         .get();
 
+      delete config.docServConfig.docJwtSecret;
       ctx.send({
         docServConfig: config.docServConfig
       });
@@ -74,6 +77,13 @@ module.exports = {
 
   async findAllFiles(ctx) {
     const allFiles = await getService('onlyoffice').findAllFiles(ctx.query);
-    return ctx.send(allFiles);
-  }
+    let tmp = [];
+    allFiles.forEach((file) => {
+      if (isFileOpenable(file.ext) || isFileEditable(file.ext)) {
+        file.edit = isFileEditable(file.ext);
+        tmp.push(file);
+      }
+    });
+    return ctx.send(tmp);
+  },
 };

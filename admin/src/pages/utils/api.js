@@ -16,7 +16,6 @@
 import {request} from '@strapi/helper-plugin';
 import pluginId from '../../pluginId';
 import axiosInstance from "../../utils/axiosInstance";
-import {isFileEditable, isFileOpenable} from "../../utils/fileUtility";
 
 const fetchEditorSettings = async toggleNotification => {
   try {
@@ -35,12 +34,7 @@ const fetchFiles = async (search = '') => {
   const searchParams = new URLSearchParams(search);
   const sort = searchParams.get('sort') ? `?sort=${searchParams.get('sort')}` : '';
   const data = await axiosInstance.get(`/${pluginId}/findAllFiles${sort}`);
-  let tmp = [];
-  data.data.forEach((file) => {
-    if (isFileOpenable(file.ext) || isFileEditable(file.ext)) {
-      tmp.push(file);
-    }
-  });
+  const tmp = data.data;
 
   const page = searchParams.get('page') ? parseInt(searchParams.get('page')) : 1;
   const filesCount = tmp.length;

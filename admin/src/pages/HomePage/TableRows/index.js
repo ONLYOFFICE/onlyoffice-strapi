@@ -26,7 +26,7 @@ import Eye from '@strapi/icons/Eye';
 import FileIcon from '@strapi/icons/File';
 import FilePdfIcon from '@strapi/icons/FilePdf';
 import getTrad from "../../../utils/getTrad";
-import {formatBytes, isFileEditable} from '../../../utils/fileUtility';
+import {formatBytes} from '../../../utils/utility';
 
 const TableRows = ({headers, rows, openEditor}) => {
   const {formatMessage} = useIntl();
@@ -71,12 +71,12 @@ const TableRows = ({headers, rows, openEditor}) => {
                   onClick={() => openEditor(file)}
                   style={{cursor: 'default'}}
                   label={formatMessage({
-                      id: getTrad(isFileEditable(file.ext) ? 'onlyoffice.label.edit' : 'onlyoffice.label.open'),
-                      defaultMessage: isFileEditable(file.ext) ? 'Edit in ONLYOFFICE' : 'Open in ONLYOFFICE'
+                      id: getTrad(file.edit ? 'onlyoffice.label.edit' : 'onlyoffice.label.open'),
+                      defaultMessage: file.edit ? 'Edit in ONLYOFFICE' : 'Open in ONLYOFFICE'
                     }
                   )}
                   noBorder
-                  icon={isFileEditable(file.ext) ? <Pencil/> : <Eye/>}
+                  icon={file.edit ? <Pencil/> : <Eye/>}
                 />
               </Flex>
             </Td>
