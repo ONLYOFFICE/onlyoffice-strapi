@@ -16,6 +16,8 @@
 /* eslint-disable no-unreachable */
 'use strict';
 
+const { v4: uuidv4 } = require('uuid');
+
 const ONLYOFFICE_ACTIONS = [
   {
     section: 'plugins',
@@ -39,10 +41,16 @@ module.exports = async ({strapi}) => {
   });
 
   const editorConfig = await pluginStore.get({key: 'editorConfig'});
+  const uuid = await pluginStore.get({key: 'uuid'});
 
+  const onlyofficeKey = uuidv4();
   const docServConfig = {
     docJwtSecret: '',
     docServUrl: null
+  }
+
+  if (!uuid) {
+    pluginStore.set({key: 'uuid', value: {onlyofficeKey: onlyofficeKey}});
   }
 
   if (!editorConfig) {

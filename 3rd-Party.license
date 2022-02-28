@@ -59,3 +59,11 @@ License File:   styled-components.license
 Yup           - Yup is a schema builder for runtime value parsing and validation. (https://github.com/jquense/yup)
 License:        MIT
 License File:   yup.license
+
+UUID           - For the creation of RFC4122 UUIDs. (https://github.com/uuidjs/uuid)
+License:        MIT
+License File:   uuid.license
+
+Crypto-JS           - JavaScript library of crypto standards. (https://github.com/brix/crypto-js)
+License:        MIT
+License File:   cryptojs.license
