@@ -1,1 +1,24 @@
-{}
+{
+    "onlyoffice.files.list.files-search": "Buscar",
+    "onlyoffice.files.list.size.kb": "KB",
+    "onlyoffice.files.list.size.mb": "MB",
+    "onlyoffice.notification.success.submit": "Los ajustes se han guardado con éxito",
+    "onlyoffice.save": "Guardar",
+    "onlyoffice.settings.page.title": "Ajustes del plugin de ONLYOFFICE",
+    "onlyoffice.settings.page.title-sub": "Configurar el plugin de ONLYOFFICE",
+    "onlyoffice.settings.docserv-url": "Dirección del Servidor de documentos",
+    "onlyoffice.settings.docserv-jwtsecret": "Clave secreta JWT del Servidor de documentos",
+    "onlyoffice.settings.docserv-jwtsecret-desc": "Clave secreta (deje en blanco o desactive)",
+    "onlyoffice.notification.api.unreachable": "No se puede establecer contacto con ONLYOFFICE",
+    "onlyoffice.docserv-url.empty": "Hay un problema con la configuración o con el token. Por favor, inténtelo de nuevo más tarde o póngase en contacto con su administrador.",
+    "onlyoffice.label.edit": "Editar en ONLYOFFICE",
+    "onlyoffice.label.open": "Abrir en ONLYOFFICE",
+    "onlyoffice.table.name": "Nombre",
+    "onlyoffice.table.ext": "Tipo",
+    "onlyoffice.table.size": "Tamaño",
+    "onlyoffice.table.updatedAt": "Ultima modificación",
+    "onlyoffice.content.files-multiple": "{number} archivos",
+    "onlyoffice.table.sort": "Ordenar en {label}",
+    "onlyoffice.editor.save-as": "El documento se ha guardado correctamente como {filename}",
+    "onlyoffice.editor.save-as.error": "Se ha producido un error"
+}

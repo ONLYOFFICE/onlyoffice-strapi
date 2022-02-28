@@ -1,1 +1,24 @@
-{}
+{
+    "onlyoffice.files.list.files-search": "Suchen",
+    "onlyoffice.files.list.size.kb": "KB",
+    "onlyoffice.files.list.size.mb": "MB",
+    "onlyoffice.notification.success.submit": "Die Einstellungen werden erfolgreich gespeichert",
+    "onlyoffice.save": "Speichern",
+    "onlyoffice.settings.page.title": "Einstellungen des ONLYOFFICE-Plugins",
+    "onlyoffice.settings.page.title-sub": "ONLYOFFICE-Plugin konfigurieren",
+    "onlyoffice.settings.docserv-url": "Adresse vom Document Server",
+    "onlyoffice.settings.docserv-jwtsecret": "Geheimer JWT-Schlüssel vom Document Server",
+    "onlyoffice.settings.docserv-jwtsecret-desc": "Geheimer Schlüssel (freilassen, um zu deaktivieren)",
+    "onlyoffice.notification.api.unreachable": "ONLYOFFICE ist nicht zugänglich",
+    "onlyoffice.docserv-url.empty": "Etwas ist bei den Einstellungen oder dem Token schiefgelaufen. Bitte später erneut versuchen oder sich an Ihren Administrator wenden.",
+    "onlyoffice.label.edit": "Mit ONLYOFFICE bearbeiten",
+    "onlyoffice.label.open": "In ONLYOFFICE öffnen",
+    "onlyoffice.table.name": "Name",
+    "onlyoffice.table.ext": "Typ",
+    "onlyoffice.table.size": "Größe",
+    "onlyoffice.table.updatedAt": "Zuletzt geändert",
+    "onlyoffice.content.files-multiple": "{number} Dateien",
+    "onlyoffice.table.sort": "Sortieren nach {label}",
+    "onlyoffice.editor.save-as": "Dokument wurde erfolgreich als {filename} gespeichert",
+    "onlyoffice.editor.save-as.error": "Ein Fehler ist aufgetreten"
+}
