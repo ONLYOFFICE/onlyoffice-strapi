@@ -14,53 +14,12 @@
 * limitations under the License.
 */
 "use strict";
-const { getService } = require('../utils');
-const jwt = require('jsonwebtoken');
+const { getService, readBody } = require('../utils');
 /**
  * callback.js controller
  *
  * @description: onlyoffice document server handlers
  */
-
-const readTokenFromBody = (token, secret) => {
-  try {
-    return jwt.verify(token, secret);
-  } catch (err) {
-    return null;
-  }
-};
-
-const readTokenFromHeader = (headers, secret) => {
-  const jwtHeader = 'Authorization';
-  const authorization = headers[jwtHeader.toLowerCase()];
-  const prefix = 'Bearer ';
-  if (authorization && authorization.startsWith(prefix)) {
-    const token = authorization.substring(prefix.length);
-    try {
-      return jwt.verify(token, secret);
-    } catch (err) {
-      return null;
-    }
-  }
-  return null;
-};
-
-const readBody = async (req) => {
-  const ooConfig = await getService('onlyoffice').getOnlyofficeData('editorConfig');
-  if (ooConfig.docServConfig.docJwtSecret !== '') {
-    if (req.body.token) {
-      return readTokenFromBody(req.body.token, ooConfig.docServConfig.docJwtSecret);
-    } else {
-      const checkJwtHeaderRes = readTokenFromHeader(req.header, ooConfig.docServConfig.docJwtSecret);
-      if (checkJwtHeaderRes) {
-        if (checkJwtHeaderRes.payload) {
-          return checkJwtHeaderRes.payload;
-        }
-      }
-    }
-  }
-  return req.body;
-};
 
 module.exports = {
   /**
@@ -74,9 +33,7 @@ module.exports = {
     if (token === null) return ctx.unauthorized();
 
     try {
-      const editorFile = await strapi.plugins[
-        'upload'
-        ].services.upload.findOne(ctx.params.file);
+      const editorFile = await getService('onlyoffice').findFileByHash(ctx.params.file);
 
       const fileInfo = {
         id: editorFile.id,

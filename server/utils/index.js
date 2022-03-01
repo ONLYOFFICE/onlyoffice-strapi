@@ -14,6 +14,7 @@
 * limitations under the License.
 */
 'use strict';
+const jwt = require('jsonwebtoken');
 
 const EDIT_FORMATS = ['.docx', '.pptx', '.xlsx'];
 
@@ -24,9 +25,51 @@ const PRESENTATION_EXTS = ['.pps', '.ppsx', '.ppsm', '.ppt', '.pptx', '.pptm', '
 const getService = name => {
   return strapi.plugin('onlyoffice').service(name);
 };
+const readTokenFromBody = (token, secret) => {
+  try {
+    return jwt.verify(token, secret);
+  } catch (err) {
+    return null;
+  }
+};
+
+const readTokenFromHeader = (headers, secret) => {
+  const jwtHeader = 'Authorization';
+  const authorization = headers[jwtHeader.toLowerCase()];
+  const prefix = 'Bearer ';
+  if (authorization && authorization.startsWith(prefix)) {
+    const token = authorization.substring(prefix.length);
+    try {
+      return jwt.verify(token, secret);
+    } catch (err) {
+      return null;
+    }
+  }
+  return null;
+};
+
+const readBody = async (req) => {
+  const ooConfig = await getService('onlyoffice').getOnlyofficeData('editorConfig');
+  if (ooConfig.docServConfig.docJwtSecret !== '') {
+    if (req.body.token) {
+      return readTokenFromBody(req.body.token, ooConfig.docServConfig.docJwtSecret);
+    } else {
+      const checkJwtHeaderRes = readTokenFromHeader(req.header, ooConfig.docServConfig.docJwtSecret);
+      if (checkJwtHeaderRes) {
+        if (checkJwtHeaderRes.payload) {
+          return checkJwtHeaderRes.payload;
+        }
+      }
+    }
+  }
+  return req.body;
+};
 
 module.exports = {
   getService,
+  readBody,
+  readTokenFromHeader,
+  readTokenFromBody,
 
   isFileEditable: (ext) => {
     return EDIT_FORMATS.includes(ext);
