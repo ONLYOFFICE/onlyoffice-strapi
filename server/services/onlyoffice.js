@@ -118,4 +118,7 @@ module.exports = ({ strapi }) => ({
     return null;
   },
 
+  findFileByHash(hash) {
+    return strapi.query('plugin::upload.file').findOne({ where: { hash: hash } });
+  },
 });

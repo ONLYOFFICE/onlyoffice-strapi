@@ -14,9 +14,10 @@
 * limitations under the License.
 */
 "use strict";
-const {getService, isFileEditable, isFileOpenable, getFileType} = require('../utils');
+const {getService, isFileEditable, isFileOpenable, getFileType, readTokenFromHeader} = require('../utils');
 const jwt = require('jsonwebtoken')
 const CryptoJS = require("crypto-js");
+const axios = require('axios');
 
 module.exports = {
   async editorApi(ctx) {
@@ -35,7 +36,7 @@ module.exports = {
           await getService('onlyoffice').submitFormData(formData, authorization);
           ctx.send({ok: true});
         } catch (e) {
-          ctx.badRequest(null, e.message);
+          return ctx.badRequest(null, e.message);
         }
         break;
       }
@@ -51,7 +52,7 @@ module.exports = {
       });
 
     } catch (e) {
-      ctx.badRequest(null, e.message);
+      return ctx.badRequest(null, e.message);
     }
   },
 
@@ -64,7 +65,7 @@ module.exports = {
       });
 
     } catch (e) {
-      ctx.badRequest(null, e.message);
+      return ctx.badRequest(null, e.message);
     }
   },
 
@@ -97,10 +98,32 @@ module.exports = {
 
   async getFile(ctx) {
     const token = await getService('onlyoffice').decodeToken(ctx);
-    if (token === null) ctx.unauthorized();
+    if (token === null) return ctx.unauthorized();
+
+    const ooConfig = await getService('onlyoffice').getOnlyofficeData('editorConfig');
+    if (ooConfig.docServConfig.docJwtSecret !== '') {
+        const checkJwtHeaderRes = readTokenFromHeader(ctx.request.header, ooConfig.docServConfig.docJwtSecret);
+        if (!checkJwtHeaderRes) {
+          return ctx.badRequest(403, 'Validation error');
+      }
+    }
+
+    try {
+      const editorFile = await getService('onlyoffice').findFileByHash(ctx.params.file);
+      ctx.response.redirect(editorFile.url);
+    } catch (err) {
+      return ctx.badRequest(null, 'File not found');
+    }
   },
 
   async getConfig(ctx) {
+    let proto = 'http:'
+    try {
+      await axios.get(`${proto}//${ctx.request.header.host}`);
+    } catch (e) {
+      proto = 'https:';
+    }
+
     const ooConfig = await getService('onlyoffice').getOnlyofficeData('editorConfig');
     const editorFile = await strapi.plugins[
       'upload'
@@ -110,9 +133,9 @@ module.exports = {
     if (authToken === null) ctx.unauthorized();
     const uuid = await getService('onlyoffice').getOnlyofficeData('uuid');
 
-    const encodedToken = CryptoJS.AES.encrypt(authToken, uuid.onlyofficeKey).toString();
+    const encodedToken = encodeURIComponent(CryptoJS.AES.encrypt(authToken, uuid.onlyofficeKey).toString());
     const userData = ctx.state.user;
-    const url = `${ctx.request.header.host}/onlyoffice/getFile/${editorFile.id}?token=${encodedToken}`;
+    const url = `${proto}//${ctx.request.header.host}/onlyoffice/getFile/${editorFile.hash}?token=${encodedToken}`;
     const documentType = getFileType(editorFile.ext);
     const userCanEdit = true;
     const fileEditable = isFileEditable(editorFile.ext);
@@ -131,7 +154,7 @@ module.exports = {
       },
       editorConfig: {
         mode: userCanEdit && fileEditable ? 'edit' : 'view',
-        callbackUrl: `${ctx.request.header.host}/onlyoffice/callback/${editorFile.id}?token=${encodedToken}`,
+        callbackUrl: `${proto}//${ctx.request.header.host}/onlyoffice/callback/${editorFile.hash}?token=${encodedToken}`,
         user: {
           id: userData.id.toString(),
           name: `${userData.firstname} ${userData.lastname}`
