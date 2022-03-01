@@ -85,7 +85,7 @@ module.exports = ({ strapi }) => ({
   },
 
   async decodeToken(ctx) {
-    const encodedToken = ctx.request.query.token;
+    const encodedToken = decodeURIComponent(ctx.request.query.token);
     const uuid = await getOnlyofficeData('uuid');
 
     const token = CryptoJS.AES.decrypt(encodedToken, uuid.onlyofficeKey).toString(CryptoJS.enc.Utf8);

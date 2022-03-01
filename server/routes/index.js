@@ -59,6 +59,7 @@ module.exports = [
     method: 'GET',
     path: '/getFile/:file',
     handler: 'onlyofficeController.getFile',
+    config: { auth: false },
   },
   {
     method: 'GET',
