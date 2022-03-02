@@ -61,6 +61,7 @@ module.exports = {
           try {
             const formData = await getService('onlyoffice').generateFormData(fileInfo, callbackPayload);
             await getService('onlyoffice').submitFormData(formData, `Bearer ${token}`, fileInfo.id);
+            ctx.send({error: 0});
           } catch (e) {
             ctx.send({error: 1, message: 'Process save failed'});
           }
@@ -75,9 +76,6 @@ module.exports = {
           return;
         }
       }
-      ctx.send({
-        error: 0,
-      });
 
     } catch (e) {
       return ctx.badRequest(null, e.message);
