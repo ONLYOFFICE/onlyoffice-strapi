@@ -117,6 +117,9 @@ module.exports = {
   },
 
   async getConfig(ctx) {
+    const editPermission = 'plugin::upload.assets.update';
+    const { userAbility: ability } = ctx.state;
+
     let proto = 'http:'
     try {
       await axios.get(`${proto}//${ctx.request.header.host}`);
@@ -137,7 +140,11 @@ module.exports = {
     const userData = ctx.state.user;
     const url = `${proto}//${ctx.request.header.host}/onlyoffice/getFile/${editorFile.hash}?token=${encodedToken}`;
     const documentType = getFileType(editorFile.ext);
-    const userCanEdit = true;
+    let userCanEdit = false;
+    for (const permission of ability.g) {
+      if (permission.action === editPermission) userCanEdit = true;
+    }
+
     const fileEditable = isFileEditable(editorFile.ext);
 
     const docKey = editorFile.hash + new Date(editorFile.updatedAt).getTime().toString();
