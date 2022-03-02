@@ -30,6 +30,9 @@
     "uuid": "^8.3.2",
     "yup": "^0.32.9"
   },
+  "peerDependencies": {
+    "@strapi/strapi": "4.x"
+  },
   "author": {
     "name": "Ascensio System SIA",
     "email": "integration@onlyoffice.com",
