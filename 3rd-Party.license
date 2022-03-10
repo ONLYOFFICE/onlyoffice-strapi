@@ -8,6 +8,10 @@ Byte-size     - An isomorphic, load-anywhere function to convert a bytes value (
 License:        MIT
 License File:   byte-size.license
 
+Crypto-JS     - JavaScript library of crypto standards. (https://github.com/brix/crypto-js)
+License:        MIT
+License File:   cryptojs.license
+
 Form-data     - A library to create readable "multipart/form-data" streams. Can be used to submit forms and file uploads to other web applications. (https://github.com/form-data/form-data)
 License:        MIT
 License File:   form-data.license
@@ -56,14 +60,10 @@ Styled-components - Utilising tagged template literals (a recent addition to Jav
 License:        MIT
 License File:   styled-components.license
 
-Yup           - Yup is a schema builder for runtime value parsing and validation. (https://github.com/jquense/yup)
-License:        MIT
-License File:   yup.license
-
-UUID           - For the creation of RFC4122 UUIDs. (https://github.com/uuidjs/uuid)
+UUID          - For the creation of RFC4122 UUIDs. (https://github.com/uuidjs/uuid)
 License:        MIT
 License File:   uuid.license
 
-Crypto-JS           - JavaScript library of crypto standards. (https://github.com/brix/crypto-js)
+Yup           - Yup is a schema builder for runtime value parsing and validation. (https://github.com/jquense/yup)
 License:        MIT
-License File:   cryptojs.license
+License File:   yup.license
