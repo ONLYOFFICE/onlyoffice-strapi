@@ -32,8 +32,7 @@ const fetchEditorSettings = async toggleNotification => {
 
 const fetchFiles = async (search = '') => {
   const searchParams = new URLSearchParams(search);
-  const sort = searchParams.get('sort') ? `?sort=${searchParams.get('sort')}` : '';
-  const data = await axiosInstance.get(`/${pluginId}/findAllFiles${sort}`);
+  const data = await axiosInstance.get(`/${pluginId}/findAllFiles${search}`);
   const tmp = data.data;
 
   const page = searchParams.get('page') ? parseInt(searchParams.get('page')) : 1;
@@ -50,7 +49,7 @@ const fetchFiles = async (search = '') => {
   const end = pageSize*(page);
   const files = tmp.slice(start, end);
 
-  return {results: files, pagination: pagination}
+  return {results: files, pagination: pagination};
 };
 
 const updateEditorSettings = async ({body}) => {

@@ -25,7 +25,8 @@ import {useIntl} from 'react-intl';
 import {
   LoadingIndicatorPage,
   SearchURLQuery,
-  useRBAC
+  useRBAC,
+  NoPermissions
 } from '@strapi/helper-plugin';
 import {ContentLayout} from '@strapi/design-system/Layout';
 import PaginationFooter from "../../components/PaginationFooter";
@@ -64,7 +65,8 @@ const HomePage = ({isLoading, editorFileId, editorUrl}) => {
   const {
     data,
     isFetching
-  } = useQuery(queryName, () => fetchFiles(search));
+  } = useQuery(queryName, () => fetchFiles(search), {enabled: canRead});
+  const files = data?.results;
   const filesCount = data?.pagination?.total || 0;
 
   const dispatch = useDispatch();
@@ -170,18 +172,22 @@ const HomePage = ({isLoading, editorFileId, editorUrl}) => {
         }
       />
       <ContentLayout>
-        <DynamicTable
-          isLoading={isFetching && isLoading}
-          headers={tableHeaders}
-          rows={data.results}
-        >
-          <TableRows
-            headers={tableHeaders}
-            rows={data.results}
-            openEditor={openEditor}
-          />
-        </DynamicTable>
-        <PaginationFooter pagination={data.pagination}/>
+        {!canRead && <NoPermissions/>}
+        {canRead && files  && (
+          <>
+            <DynamicTable
+              isLoading={isFetching && isLoading}
+              headers={tableHeaders}
+              rows={files}
+            >
+              <TableRows
+                headers={tableHeaders}
+                rows={files}
+                openEditor={openEditor}
+              />
+            </DynamicTable>
+            {data?.pagination && files.length > 0 && <PaginationFooter pagination={data.pagination}/>}
+          </>)}
       </ContentLayout>
     </Main>
   );

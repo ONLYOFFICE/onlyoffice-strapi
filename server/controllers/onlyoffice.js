@@ -19,6 +19,8 @@ const jwt = require('jsonwebtoken')
 const CryptoJS = require("crypto-js");
 const axios = require('axios');
 
+const fileModel = 'plugin::upload.file';
+
 module.exports = {
   async editorApi(ctx) {
     const type = ctx.params.type;
@@ -83,11 +85,26 @@ module.exports = {
   },
 
   async findAllFiles(ctx) {
-    const allFiles = await strapi.plugins[
+    const { userAbility: ability } = ctx.state;
+
+    const pm = strapi.admin.services.permission.createPermissionsManager({
+      ability: ability,
+      action: 'plugin::upload.read',
+      model: fileModel,
+    });
+
+    if (!pm.isAllowed) {
+      return ctx.forbidden();
+    }
+
+    const query = pm.addPermissionsQueryTo(ctx.query);
+    const {results} = await strapi.plugins[
       'upload'
-      ].services.upload.findMany(ctx.query);
+      ].services.upload.findPage(query);
+    const sanitized = await pm.sanitizeOutput(results);
+
     let tmp = [];
-    allFiles.forEach((file) => {
+    sanitized.forEach((file) => {
       if (isFileOpenable(file.ext) || isFileEditable(file.ext)) {
         file.edit = isFileEditable(file.ext);
         tmp.push(file);
@@ -138,12 +155,17 @@ module.exports = {
 
     const encodedToken = encodeURIComponent(CryptoJS.AES.encrypt(authToken, uuid.onlyofficeKey).toString());
     const userData = ctx.state.user;
+
+    const pm = strapi.admin.services.permission.createPermissionsManager({
+      ability: ability,
+      action: editPermission,
+      model: fileModel,
+    });
+
     const url = `${proto}//${ctx.request.header.host}/onlyoffice/getFile/${editorFile.hash}?token=${encodedToken}`;
     const documentType = getFileType(editorFile.ext);
-    let userCanEdit = false;
-    for (const permission of ability.g) {
-      if (permission.action === editPermission) userCanEdit = true;
-    }
+
+    let userCanEdit = pm.isAllowed;
 
     const fileEditable = isFileEditable(editorFile.ext);
 
