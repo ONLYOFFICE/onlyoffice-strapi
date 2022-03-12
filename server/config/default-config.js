@@ -20,7 +20,7 @@ module.exports = {
   info: {
     version: '1.0.0',
     title: 'ONLYOFFICE',
-    description: '',
+    description: 'The integration app allows users to view, edit, and co-author office documents, spreadsheets, and presentations added to the Strapi Media Library using ONLYOFFICE Docs.',
     contact: {
       name: 'Ascensio System SIA',
       email: 'integration@onlyoffice.com',

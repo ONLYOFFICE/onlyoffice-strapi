@@ -1,10 +1,10 @@
 {
   "name": "onlyoffice",
   "version": "1.0.0",
-  "description": "The app which enables the users to edit office documents from Strapi using ONLYOFFICE Document Server, allows multiple users to collaborate in real time and to save back those changes to Strapi.",
+  "description": "The integration app allows users to view, edit, and co-author office documents, spreadsheets, and presentations added to the Strapi Media Library using ONLYOFFICE Docs.",
   "strapi": {
     "name": "ONLYOFFICE",
-    "description": "The app which enables the users to edit office documents from Strapi using ONLYOFFICE Document Server, allows multiple users to collaborate in real time and to save back those changes to Strapi.",
+    "description": "The integration app allows users to view, edit, and co-author office documents, spreadsheets, and presentations added to the Strapi Media Library using ONLYOFFICE Docs.",
     "kind": "plugin"
   },
   "repository": {
