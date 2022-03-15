@@ -114,7 +114,10 @@ const HomePage = ({isLoading, editorFileId, editorUrl}) => {
         editorFileId: editorFileId,
       });
       push({
-        pathname: `${pathname}/editor`
+        pathname: `${pathname}/editor`,
+        state: {
+          mediaUrl: window.location.href
+        }
       });
     }
   };

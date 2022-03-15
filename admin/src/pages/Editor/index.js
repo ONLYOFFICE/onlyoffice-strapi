@@ -29,7 +29,8 @@ import slide from '../../assets/slide.ico';
 import axiosInstance from "../../utils/axiosInstance";
 import {useIntl} from "react-intl";
 
-const EditorComponent = ({editorFileId, editorUrl, editorPermissions}) => {
+const EditorComponent = (props) => {
+  const {editorFileId, editorUrl, editorPermissions} = props;
   const {formatMessage} = useIntl();
 
   if (!editorUrl) {
@@ -112,6 +113,8 @@ const EditorComponent = ({editorFileId, editorUrl, editorPermissions}) => {
           'onAppReady': onAppReady,
           'onError': onError
         };
+
+        config.editorConfig.customization.goback.url = props.location.state.mediaUrl;
 
         if (userCanEdit) config.events.onRequestSaveAs = onRequestSaveAs;
 

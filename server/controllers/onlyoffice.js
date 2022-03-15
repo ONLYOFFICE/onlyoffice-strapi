@@ -191,7 +191,10 @@ module.exports = {
         },
         lang: userData.preferedLanguage || 'en',
         customization: {
-          forcesave: false
+          forcesave: false,
+          goback: {
+            url: ''
+          }
         }
       },
     };
