@@ -106,6 +106,13 @@ module.exports = ({ strapi }) => ({
     }
   },
 
+  async decodeCallbackToken(token) {
+    const encodedToken = decodeURIComponent(token);
+    const uuid = await getOnlyofficeData('uuid');
+
+    return  CryptoJS.AES.decrypt(encodedToken, uuid.onlyofficeKey).toString(CryptoJS.enc.Utf8);
+  },
+
   getTokenFromRequest(ctx) {
     if (ctx.request && ctx.request.header && ctx.request.header.authorization) {
       const parts = ctx.request.header.authorization.split(/\s+/);

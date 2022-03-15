@@ -48,6 +48,10 @@ module.exports = {
         return;
       }
 
+      const decodedCallbackToken = await getService('onlyoffice').decodeCallbackToken(ctx.request.query.calltoken);
+      const searchParams = new URLSearchParams(decodedCallbackToken);
+      if (parseInt(searchParams.get('id')) !== editorFile.id) return ctx.unauthorized();
+
       switch (callbackPayload.status) {
         case 0: {
           ctx.send({error: 1, message: 'ONLYOFFICE has reported that no doc with the specified key can be found'});
@@ -59,6 +63,8 @@ module.exports = {
         }
         case 2: {
           try {
+            if (searchParams.get('edit') === 'false') return ctx.unauthorized();
+
             const formData = await getService('onlyoffice').generateFormData(fileInfo, callbackPayload);
             await getService('onlyoffice').submitFormData(formData, `Bearer ${token}`, fileInfo.id);
             ctx.send({error: 0});

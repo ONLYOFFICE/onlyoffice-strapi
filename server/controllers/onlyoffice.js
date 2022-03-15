@@ -166,6 +166,7 @@ module.exports = {
     const documentType = getFileType(editorFile.ext);
 
     let userCanEdit = pm.isAllowed;
+    const callbackToken = userCanEdit ? encodeURIComponent(CryptoJS.AES.encrypt(`?edit=${userCanEdit ? 'can' : 'false'}&id=${editorFile.id}`, uuid.onlyofficeKey).toString())  : '';
 
     const fileEditable = isFileEditable(editorFile.ext);
 
@@ -183,7 +184,7 @@ module.exports = {
       },
       editorConfig: {
         mode: userCanEdit && fileEditable ? 'edit' : 'view',
-        callbackUrl: `${proto}//${ctx.request.header.host}/onlyoffice/callback/${editorFile.hash}?token=${encodedToken}`,
+        callbackUrl: `${proto}//${ctx.request.header.host}/onlyoffice/callback/${editorFile.hash}?token=${encodedToken}&calltoken=${callbackToken}`,
         user: {
           id: userData.id.toString(),
           name: `${userData.firstname} ${userData.lastname}`
