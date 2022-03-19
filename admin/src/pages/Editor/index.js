@@ -43,9 +43,6 @@ const EditorComponent = (props) => {
   const toggleNotification = useNotification();
 
   useEffect(() => {
-    setInterval(() => {
-      if (window.DocsAPI) setScriptLoaded(true);
-    }, 100);
     const getEditorConfig = async () => {
       await axiosInstance.get(`/${pluginId}/editorConfig/${editorFileId}`)
         .then((res) => {
@@ -65,6 +62,16 @@ const EditorComponent = (props) => {
     };
     getEditorConfig();
   }, []);
+
+  useEffect(() => {
+    let interval;
+    if (!scriptLoaded) {
+      interval = setInterval(() => {
+        if (window.DocsAPI) setScriptLoaded(true);
+      }, 100);
+    }
+    return () => clearInterval(interval);
+  }, [scriptLoaded]);
 
   useEffect(() => {
     let docEditor = null;
