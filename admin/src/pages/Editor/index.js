@@ -38,10 +38,14 @@ const EditorComponent = (props) => {
   }
   const [favicon, setFavicon] = useState(null);
   const [config, setConfig] = useState(null);
+  const [scriptLoaded, setScriptLoaded] = useState(false);
 
   const toggleNotification = useNotification();
 
   useEffect(() => {
+    setInterval(() => {
+      if (window.DocsAPI) setScriptLoaded(true);
+    }, 100);
     const getEditorConfig = async () => {
       await axiosInstance.get(`/${pluginId}/editorConfig/${editorFileId}`)
         .then((res) => {
@@ -66,80 +70,77 @@ const EditorComponent = (props) => {
     let docEditor = null;
     const userCanEdit = editorPermissions.canEdit;
 
-    if (config) {
-      setTimeout(() => {
-        const innerAlert = (message, inEditor) => {
-          if (console && console.log)
-            console.log(message);
-          if (inEditor && docEditor)
-            docEditor.showMessage(message);
-        };
-        const onAppReady = () => {  // the application is loaded into the browser
-          innerAlert("Document editor ready");
-        };
+    if (config && scriptLoaded) {
+      const innerAlert = (message, inEditor) => {
+        if (console && console.log)
+          console.log(message);
+        if (inEditor && docEditor)
+          docEditor.showMessage(message);
+      };
+      const onAppReady = () => {  // the application is loaded into the browser
+        innerAlert("Document editor ready");
+      };
 
-        const onError = (event) => {  // an error or some other specific event occurs
-          if (event)
-            innerAlert(event.data);
-        };
+      const onError = (event) => {  // an error or some other specific event occurs
+        if (event)
+          innerAlert(event.data);
+      };
 
-        const onRequestSaveAs = (event) => {  //  the user is trying to save file by clicking Save Copy as... button
-          const data = {
-            url: event.data.url,
-            title: event.data.title
-          }
-          axiosInstance.post(`/${pluginId}/editorApi/saveas`, data)
-            .then(() => {
-              const message = formatMessage({
-                  id: getTrad('onlyoffice.editor.save-as'),
-                  defaultMessage: 'Document was successfully saved',
-                },
-                {filename: data.title}
-              )
-              toggleNotification({
-                type: 'success',
-                message: message,
-              });
-            })
-            .catch(() => {
-              toggleNotification({
-                type: 'warning',
-                message: {id: getTrad('onlyoffice.editor.save-as.error')},
-              });
-            });
-        };
-
-        config.events = {
-          'onAppReady': onAppReady,
-          'onError': onError
-        };
-
-        config.editorConfig.customization.goback.url = props.location.state.mediaUrl;
-
-        if (userCanEdit) config.events.onRequestSaveAs = onRequestSaveAs;
-
-        try {
-          docEditor = new window.DocsAPI.DocEditor('onlyoffice-editor', config);
-        } catch (e) {
-          toggleNotification({
-            type: 'warning',
-            message: {id: getTrad('onlyoffice.notification.api.unreachable')},
-          });
-          return <Redirect to={`/plugins/${pluginId}`}/>
+      const onRequestSaveAs = (event) => {  //  the user is trying to save file by clicking Save Copy as... button
+        const data = {
+          url: event.data.url,
+          title: event.data.title
         }
-      }, 100);
+        axiosInstance.post(`/${pluginId}/editorApi/saveas`, data)
+          .then(() => {
+            const message = formatMessage({
+                id: getTrad('onlyoffice.editor.save-as'),
+                defaultMessage: 'Document was successfully saved',
+              },
+              {filename: data.title}
+            )
+            toggleNotification({
+              type: 'success',
+              message: message,
+            });
+          })
+          .catch(() => {
+            toggleNotification({
+              type: 'warning',
+              message: {id: getTrad('onlyoffice.editor.save-as.error')},
+            });
+          });
+      };
+
+      config.events = {
+        'onAppReady': onAppReady,
+        'onError': onError
+      };
+
+      config.editorConfig.customization.goback.url = props.location.state.mediaUrl;
+
+      if (userCanEdit) config.events.onRequestSaveAs = onRequestSaveAs;
+
+      try {
+        docEditor = new window.DocsAPI.DocEditor('onlyoffice-editor', config);
+      } catch (e) {
+        toggleNotification({
+          type: 'warning',
+          message: {id: getTrad('onlyoffice.notification.api.unreachable')},
+        });
+        return <Redirect to={`/plugins/${pluginId}`}/>
+      }
     }
     return () => {
       if (docEditor !== null) {
         docEditor.destroyEditor();
       }
     }
-  }, [editorFileId, config]);
-
-  if (!config) return <LoadingIndicatorPage/>;
+  }, [editorFileId, config, scriptLoaded]);
 
   return (
     <>
+      {!config || !scriptLoaded && <LoadingIndicatorPage/>}
       <Helmet
         link={[
           { rel: 'shortcut icon', type: 'image/x-icon', href: `${favicon}` }
