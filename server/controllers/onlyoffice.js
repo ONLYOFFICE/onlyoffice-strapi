@@ -98,9 +98,7 @@ module.exports = {
     }
 
     const query = pm.addPermissionsQueryTo(ctx.query);
-    const {results} = await strapi.plugins[
-      'upload'
-      ].services.upload.findPage(query);
+    const results = await strapi.entityService.findMany('plugin::upload.file', query);
     const sanitized = await pm.sanitizeOutput(results);
 
     let tmp = [];
