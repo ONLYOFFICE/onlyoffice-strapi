@@ -187,6 +187,7 @@ const HomePage = ({isLoading, editorFileId, editorUrl}) => {
                 headers={tableHeaders}
                 rows={files}
                 openEditor={openEditor}
+                canEdit={canUpdate}
               />
             </DynamicTable>
             {data?.pagination && files.length > 0 && <PaginationFooter pagination={data.pagination}/>}

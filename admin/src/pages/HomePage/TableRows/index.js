@@ -28,7 +28,7 @@ import FilePdfIcon from '@strapi/icons/FilePdf';
 import getTrad from "../../../utils/getTrad";
 import {formatBytes} from '../../../utils/utility';
 
-const TableRows = ({headers, rows, openEditor}) => {
+const TableRows = ({headers, rows, openEditor, canEdit}) => {
   const {formatMessage} = useIntl();
 
   const getFileAttr = (file, attr) => {
@@ -70,12 +70,12 @@ const TableRows = ({headers, rows, openEditor}) => {
                 <IconButton
                   onClick={() => openEditor(file)}
                   label={formatMessage({
-                      id: getTrad(file.edit ? 'onlyoffice.label.edit' : 'onlyoffice.label.open'),
-                      defaultMessage: file.edit ? 'Edit in ONLYOFFICE' : 'Open in ONLYOFFICE'
+                      id: getTrad(file.edit && canEdit ? 'onlyoffice.label.edit' : 'onlyoffice.label.open'),
+                      defaultMessage: file.edit && canEdit ? 'Edit in ONLYOFFICE' : 'Open in ONLYOFFICE'
                     }
                   )}
                   noBorder
-                  icon={file.edit ? <Pencil/> : <Eye/>}
+                  icon={file.edit && canEdit ? <Pencil/> : <Eye/>}
                 />
               </Flex>
             </Td>
@@ -87,11 +87,13 @@ const TableRows = ({headers, rows, openEditor}) => {
 };
 
 TableRows.defaultProps = {
+  canEdit: false,
   rows: [],
   openEditor: () => {},
 };
 
 TableRows.propTypes = {
+  canEdit: PropTypes.bool,
   headers: PropTypes.array.isRequired,
   rows: PropTypes.array,
   openEditor: PropTypes.func,
