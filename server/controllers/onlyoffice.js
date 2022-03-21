@@ -187,7 +187,7 @@ module.exports = {
           id: userData.id.toString(),
           name: `${userData.firstname} ${userData.lastname}`
         },
-        lang: userData.preferedLanguage || 'en',
+        lang: userData.preferedLanguage || ctx.params.locale,
         customization: {
           forcesave: false,
           goback: {

@@ -63,7 +63,7 @@ module.exports = [
   },
   {
     method: 'GET',
-    path: '/editorConfig/:file',
+    path: '/editorConfig/:file/:locale',
     handler: 'onlyofficeController.getConfig',
   },
 ];

@@ -31,7 +31,7 @@ import {useIntl} from "react-intl";
 
 const EditorComponent = (props) => {
   const {editorFileId, editorUrl, editorPermissions} = props;
-  const {formatMessage} = useIntl();
+  const {formatMessage, locale} = useIntl();
 
   if (!editorUrl) {
     return <Redirect to={`/plugins/${pluginId}`}/>
@@ -44,7 +44,7 @@ const EditorComponent = (props) => {
 
   useEffect(() => {
     const getEditorConfig = async () => {
-      await axiosInstance.get(`/${pluginId}/editorConfig/${editorFileId}`)
+      await axiosInstance.get(`/${pluginId}/editorConfig/${editorFileId}/${locale}`)
         .then((res) => {
           setConfig(res.data);
           setFavicon(res.data.documentType === 'cell' ? cell : res.data.documentType === 'slide' ? slide : word);
