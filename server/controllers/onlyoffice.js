@@ -132,6 +132,19 @@ module.exports = {
   },
 
   async getConfig(ctx) {
+    const ooConfig = await getService('onlyoffice').getOnlyofficeData('editorConfig');
+
+    const editorUrl = ooConfig.docServConfig.docServUrl;
+    try {
+      await axios({
+        method: "get",
+        timeout: 5*1000,
+        url: editorUrl,
+      });
+    } catch (e) {
+      return ctx.badRequest(null, 'Docs API unreachable');
+    }
+
     const editPermission = 'plugin::upload.assets.update';
     const { userAbility: ability } = ctx.state;
 
@@ -142,7 +155,6 @@ module.exports = {
       proto = 'https:';
     }
 
-    const ooConfig = await getService('onlyoffice').getOnlyofficeData('editorConfig');
     const editorFile = await strapi.plugins[
       'upload'
       ].services.upload.findOne(ctx.params.file);

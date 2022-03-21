@@ -22,56 +22,73 @@ import pluginId from '../../pluginId';
 import makeSelectOnlyofficeEditor from "../../pages/HomePage/selectors";
 import {compose} from "redux";
 import {connect} from 'react-redux';
-import {Redirect} from "react-router-dom";
 import cell from '../../assets/cell.ico';
 import word from '../../assets/word.ico';
 import slide from '../../assets/slide.ico';
 import axiosInstance from "../../utils/axiosInstance";
 import {useIntl} from "react-intl";
+import {useHistory} from "react-router";
 
 const EditorComponent = (props) => {
   const {editorFileId, editorUrl, editorPermissions} = props;
   const {formatMessage, locale} = useIntl();
+  const {goBack} = useHistory();
 
   if (!editorUrl) {
-    return <Redirect to={`/plugins/${pluginId}`}/>
+    goBack();
   }
   const [favicon, setFavicon] = useState(null);
   const [config, setConfig] = useState(null);
   const [scriptLoaded, setScriptLoaded] = useState(false);
+  const [editorIsReachable, setEditorIsReachable] = useState(false);
 
   const toggleNotification = useNotification();
+
+  const showErrorAndRedirect = () => {
+    toggleNotification({
+      type: 'warning',
+      message: {id: getTrad('onlyoffice.notification.api.unreachable')},
+    });
+    goBack();
+  };
 
   useEffect(() => {
     const getEditorConfig = async () => {
       await axiosInstance.get(`/${pluginId}/editorConfig/${editorFileId}/${locale}`)
         .then((res) => {
+          setEditorIsReachable(true);
           setConfig(res.data);
           setFavicon(res.data.documentType === 'cell' ? cell : res.data.documentType === 'slide' ? slide : word);
         })
-        .catch(() => {
-          const message = formatMessage({
-            id: getTrad('onlyoffice.editor.config.error'),
-            defaultMessage: 'Error getting editor config',
-          })
-          toggleNotification({
-            type: 'warning',
-            message: message,
-          });
+        .catch((er) => {
+          if (er.response.data.error.details === 'Docs API unreachable') {
+            showErrorAndRedirect();
+          } else {
+            const message = formatMessage({
+              id: getTrad('onlyoffice.editor.config.error'),
+              defaultMessage: 'Error getting editor config',
+            })
+            toggleNotification({
+              type: 'warning',
+              message: message,
+            });
+          }
         });
     };
     getEditorConfig();
   }, []);
 
   useEffect(() => {
-    let interval;
-    if (!scriptLoaded) {
-      interval = setInterval(() => {
-        if (window.DocsAPI) setScriptLoaded(true);
-      }, 100);
+    if (editorIsReachable) {
+      let interval;
+      if (!scriptLoaded) {
+        interval = setInterval(() => {
+          if (window.DocsAPI) setScriptLoaded(true);
+        }, 100);
+      }
+      return () => clearInterval(interval);
     }
-    return () => clearInterval(interval);
-  }, [scriptLoaded]);
+  }, [scriptLoaded, editorIsReachable]);
 
   useEffect(() => {
     let docEditor = null;
@@ -135,11 +152,7 @@ const EditorComponent = (props) => {
       try {
         docEditor = new window.DocsAPI.DocEditor('onlyoffice-editor', config);
       } catch (e) {
-        toggleNotification({
-          type: 'warning',
-          message: {id: getTrad('onlyoffice.notification.api.unreachable')},
-        });
-        return <Redirect to={`/plugins/${pluginId}`}/>
+        showErrorAndRedirect();
       }
     }
     return () => {
@@ -148,6 +161,8 @@ const EditorComponent = (props) => {
       }
     }
   }, [editorFileId, config, scriptLoaded]);
+
+  if (!editorIsReachable) return <LoadingIndicatorPage/>;
 
   return (
     <>
