@@ -68,7 +68,6 @@ const TableRows = ({headers, rows, openEditor, canEdit}) => {
             <Td>
               <Flex justifyContent="end">
                 <IconButton
-                  onClick={() => openEditor(file)}
                   label={formatMessage({
                       id: getTrad(file.edit && canEdit ? 'onlyoffice.label.edit' : 'onlyoffice.label.open'),
                       defaultMessage: file.edit && canEdit ? 'Edit in ONLYOFFICE' : 'Open in ONLYOFFICE'
