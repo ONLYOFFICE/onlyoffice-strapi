@@ -203,6 +203,7 @@ module.exports = {
         customization: {
           forcesave: false,
           goback: {
+            blank: false,
             url: ''
           }
         }
