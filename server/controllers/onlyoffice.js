@@ -139,7 +139,7 @@ module.exports = {
       await axios({
         method: "get",
         timeout: 5*1000,
-        url: editorUrl,
+        url: `${editorUrl}${editorUrl.charAt(editorUrl.length - 1) === '/' ? '' : '/'}web-apps/apps/api/documents/api.js`,
       });
     } catch (e) {
       return ctx.badRequest(null, 'Docs API unreachable');
