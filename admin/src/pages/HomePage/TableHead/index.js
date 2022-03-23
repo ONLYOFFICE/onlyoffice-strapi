@@ -71,7 +71,6 @@ const TableHead = ({headers}) => {
                 <Typography
                   textColor="neutral600"
                   as={!isSorted && isSortable ? 'button' : 'span'}
-                  label={intlLabel}
                   onClick={() => handleClickSort(!isSorted)}
                   variant="sigma"
                 >

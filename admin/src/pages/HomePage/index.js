@@ -177,7 +177,7 @@ const HomePage = ({isLoading, editorFileId, editorUrl}) => {
       <ContentLayout>
         {!canRead && <NoPermissions/>}
         {canRead && files  && (
-          <>
+          <div style={{display: 'grid'}}>
             <DynamicTable
               isLoading={isFetching && isLoading}
               headers={tableHeaders}
@@ -191,7 +191,7 @@ const HomePage = ({isLoading, editorFileId, editorUrl}) => {
               />
             </DynamicTable>
             {data?.pagination && files.length > 0 && <PaginationFooter pagination={data.pagination}/>}
-          </>)}
+          </div>)}
       </ContentLayout>
     </Main>
   );
