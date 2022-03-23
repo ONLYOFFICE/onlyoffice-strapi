@@ -28,14 +28,16 @@ import slide from '../../assets/slide.ico';
 import axiosInstance from "../../utils/axiosInstance";
 import {useIntl} from "react-intl";
 import {useHistory} from "react-router";
+import {Redirect} from "react-router-dom";
 
 const EditorComponent = (props) => {
   const {editorFileId, editorUrl, editorPermissions} = props;
   const {formatMessage, locale} = useIntl();
   const {goBack} = useHistory();
+  const {mediaUrl} = props.location.state;
 
   if (!editorUrl) {
-    goBack();
+    return <Redirect to={mediaUrl.substring(mediaUrl.indexOf(`/plugins/${pluginId}`))}/>
   }
   const [favicon, setFavicon] = useState(null);
   const [config, setConfig] = useState(null);
@@ -141,7 +143,7 @@ const EditorComponent = (props) => {
         'onError': onError
       };
 
-      config.editorConfig.customization.goback.url = props.location.state.mediaUrl;
+      config.editorConfig.customization.goback.url = mediaUrl;
       if (/android|avantgo|playbook|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od|ad)|iris|kindle|lge |maemo|midp|mmp|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\\|plucker|pocket|psp|symbian|treo|up\\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i
         .test(navigator.userAgent)) {
         config.type='mobile';
@@ -177,7 +179,7 @@ const EditorComponent = (props) => {
           },
         ]}>
       </Helmet>
-      <div className="onlyoffice-custom" style={{width: '100%', height: '99.9vh', position: 'relative', zIndex: '1'}}>
+      <div className="onlyoffice-custom" style={{width: '100%', height: '99.9vh', position: 'absolute', zIndex: '2', left: '0'}}>
         <div id="onlyoffice-editor"/>
       </div>
     </>
