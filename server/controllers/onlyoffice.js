@@ -18,7 +18,6 @@ const {getService, isFileEditable, isFileOpenable, getFileType, readTokenFromHea
 const jwt = require('jsonwebtoken')
 const CryptoJS = require("crypto-js");
 const axios = require('axios');
-const {nameToSlug} = require('@strapi/utils');
 const fileModel = 'plugin::upload.file';
 
 module.exports = {
@@ -98,9 +97,6 @@ module.exports = {
     }
 
     let query = pm.addPermissionsQueryTo(ctx.query);
-    if (query._q) {
-      query._q = nameToSlug(query._q, {lowercase: false});
-    }
     const results = await strapi.entityService.findMany('plugin::upload.file', query);
     const sanitized = await pm.sanitizeOutput(results);
 
