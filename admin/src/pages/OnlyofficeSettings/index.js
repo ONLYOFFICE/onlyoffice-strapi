@@ -82,17 +82,17 @@ const OnlyofficeSettingsComponent = () => {
                 <Form noValidate onSubmit={handleSubmit}>
                   <HeaderLayout
                     title={formatMessage({
-                      id: getTrad('onlyoffice.settings.page.title'),
+                      id: getTrad('onlyoffice-strapi.settings.page.title'),
                       defaultMessage: 'ONLYOFFICE plugin settings',
                     })}
                     subtitle={formatMessage({
-                      id: getTrad('onlyoffice.settings.page.title-sub'),
+                      id: getTrad('onlyoffice-strapi.settings.page.title-sub'),
                       defaultMessage: 'Configure the ONLYOFFICE plugin',
                     })}
                     primaryAction={
                       <Button type="submit" disabled={!(!!values.docServUrl)}>
                         {formatMessage({
-                          id: getTrad('onlyoffice.save'),
+                          id: getTrad('onlyoffice-strapi.save'),
                           defaultMessage: 'Save',
                         })}
                       </Button>

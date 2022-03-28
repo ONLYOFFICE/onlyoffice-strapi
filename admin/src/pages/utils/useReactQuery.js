@@ -41,7 +41,7 @@ const useReactQuery = () => {
   };
 
   const submitMutation = useMutation(updateEditorSettings, {
-    onSuccess: () => handleSuccess('success', 'onlyoffice.notification.success.submit'),
+    onSuccess: () => handleSuccess('success', 'onlyoffice-strapi.notification.success.submit'),
     onError: handleError,
   });
 

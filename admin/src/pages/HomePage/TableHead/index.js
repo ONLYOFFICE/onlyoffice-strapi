@@ -37,10 +37,10 @@ const TableHead = ({headers}) => {
           const isSorted = sortBy === name;
           const isUp = sortOrder === 'ASC';
           const sortLabel = formatMessage(
-            {id: getTrad('onlyoffice.table.sort'), defaultMessage: 'Sort on {label}'},
+            {id: getTrad('onlyoffice-strapi.table.sort'), defaultMessage: 'Sort on {label}'},
             {label}
           );
-          const intlLabel = formatMessage({id: getTrad(`onlyoffice.table.${name}`), defaultMessage: label});
+          const intlLabel = formatMessage({id: getTrad(`onlyoffice-strapi.table.${name}`), defaultMessage: label});
 
           const handleClickSort = (shouldAllowClick = true) => {
             if (isSortable && shouldAllowClick) {

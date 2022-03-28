@@ -17,7 +17,7 @@ const layout = [
   [
     {
       intlLabel: {
-        id: 'onlyoffice.settings.docserv-url',
+        id: 'onlyoffice-strapi.settings.docserv-url',
         defaultMessage: 'Document server address',
       },
       name: 'docServUrl',
@@ -30,11 +30,11 @@ const layout = [
     },
     {
       intlLabel: {
-        id: 'onlyoffice.settings.docserv-jwtsecret',
+        id: 'onlyoffice-strapi.settings.docserv-jwtsecret',
         defaultMessage: 'Document server JWT secret',
       },
       description: {
-        id: 'onlyoffice.settings.docserv-jwtsecret-desc',
+        id: 'onlyoffice-strapi.settings.docserv-jwtsecret-desc',
         defaultMessage: 'Secret key (leave blank to disable)',
       },
       name: 'docJwtSecret',

@@ -23,7 +23,7 @@ const SPREADSHEET_EXTS = ['.xls', '.xlsx', '.xlsm', '.xlt', '.xltx', '.xltm', '.
 const PRESENTATION_EXTS = ['.pps', '.ppsx', '.ppsm', '.ppt', '.pptx', '.pptm', '.pot', '.potx', '.potm', '.odp', '.fodp', '.otp'];
 
 const getService = name => {
-  return strapi.plugin('onlyoffice').service(name);
+  return strapi.plugin('onlyoffice-strapi').service(name);
 };
 const readTokenFromBody = (token, secret) => {
   try {

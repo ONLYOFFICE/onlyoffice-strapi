@@ -15,7 +15,7 @@
 */
 const pluginPermissions = {
   settings: [
-    { action: 'plugin::onlyoffice.settings.update', subject: null },
+    { action: 'plugin::onlyoffice-strapi.settings.update', subject: null },
   ],
 };
 
