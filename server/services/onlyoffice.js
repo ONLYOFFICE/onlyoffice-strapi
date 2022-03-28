@@ -24,13 +24,13 @@ const getOnlyofficeData = async (key) => {
   return strapi.store({
     environment: '',
     type: 'plugin',
-    name: 'onlyoffice',
+    name: 'onlyoffice-strapi',
     key: key,
   })
     .get();
 };
 
-module.exports = ({ strapi }) => ({
+module.exports = ({strapi}) => ({
   getOnlyofficeData,
 
   async generateFormData(fileInfo, payload) {
@@ -110,7 +110,7 @@ module.exports = ({ strapi }) => ({
     const encodedToken = decodeURIComponent(token);
     const uuid = await getOnlyofficeData('uuid');
 
-    return  CryptoJS.AES.decrypt(encodedToken, uuid.onlyofficeKey).toString(CryptoJS.enc.Utf8);
+    return CryptoJS.AES.decrypt(encodedToken, uuid.onlyofficeKey).toString(CryptoJS.enc.Utf8);
   },
 
   getTokenFromRequest(ctx) {
@@ -126,6 +126,52 @@ module.exports = ({ strapi }) => ({
   },
 
   findFileByHash(hash) {
-    return strapi.query('plugin::upload.file').findOne({ where: { hash: hash } });
+    return strapi.query('plugin::upload.file').findOne({where: {hash: hash}});
   },
+
+  async incrementIndex(filename) {
+    const reg = new RegExp(/( \((([0-9])+)\)(\.[^\/.]*)?)$/);
+    const resReg = reg.test(filename);
+    const ext = filename.substring(filename.lastIndexOf('.'));
+    const basename = resReg ? filename.replace(filename.match(reg)[0], '') : filename.replace(ext, '');
+
+    let files = await strapi.entityService.findMany('plugin::upload.file', {
+      filters: {
+        name: {
+          $startsWith: basename
+        },
+        ext: ext
+      }
+    });
+
+    if (files.length !== 0) {
+      const elemToDelete = [];
+      for (let i = 0; i < files.length; i++) {
+        let matchedFilename = files[i].name.match(reg);
+        matchedFilename = matchedFilename ? files[i].name.replace(matchedFilename[0], ext) : files[i].name;
+        if (matchedFilename !== `${basename}${ext}`) {
+          elemToDelete.push(i);
+        }
+      }
+      for (let index of elemToDelete) {
+        files.splice(index, 1);
+      }
+      const fileIndexes = [];
+      for (let i = 0; i < files.length; i++) {
+        const match = files[i].name.match(reg);
+        if (match && match[2]) {
+          fileIndexes.push(parseInt(match[2]));
+        }
+      }
+      for (let i = 0; i < fileIndexes.length + 1; i++) {
+        if (!fileIndexes.includes(i + 1)) {
+          filename = `${basename} (${i + 1})${ext}`;
+          break;
+        }
+      }
+    }
+
+    return filename;
+  },
+
 });

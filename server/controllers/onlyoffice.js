@@ -27,15 +27,16 @@ module.exports = {
     const {authorization} = ctx.request.header;
     switch (type) {
       case 'saveas': {
+        const title = await getService('onlyoffice').incrementIndex(data.title);
         const fileInfo = {
-          alternativeText: data.title,
-          caption: data.title,
-          name: data.title,
+          alternativeText: title,
+          caption: title,
+          name: title,
         };
         try {
           const formData = await getService('onlyoffice').generateFormData(fileInfo, data);
           await getService('onlyoffice').submitFormData(formData, authorization);
-          ctx.send({ok: true});
+          ctx.send({ok: true, title: title});
         } catch (e) {
           return ctx.badRequest(null, e.message);
         }
@@ -72,7 +73,7 @@ module.exports = {
 
   async updateEditorSettings(ctx) {
     const docServConfig = ctx.request.body;
-    const pluginStore = strapi.store({type: 'plugin', name: 'onlyoffice'});
+    const pluginStore = strapi.store({type: 'plugin', name: 'onlyoffice-strapi'});
 
     const config = {
       docServConfig: Object(docServConfig)
@@ -97,7 +98,7 @@ module.exports = {
     }
 
     let query = pm.addPermissionsQueryTo(ctx.query);
-    const results = await strapi.entityService.findMany('plugin::upload.file', query);
+    const results = await strapi.entityService.findMany(fileModel, query);
     const sanitized = await pm.sanitizeOutput(results);
 
     let tmp = [];
@@ -171,7 +172,7 @@ module.exports = {
       model: fileModel,
     });
 
-    const url = `${proto}//${ctx.request.header.host}/onlyoffice/getFile/${editorFile.hash}?token=${encodedToken}`;
+    const url = `${proto}//${ctx.request.header.host}/onlyoffice-strapi/getFile/${editorFile.hash}?token=${encodedToken}`;
     const documentType = getFileType(editorFile.ext);
 
     let userCanEdit = pm.isAllowed;
@@ -193,7 +194,7 @@ module.exports = {
       },
       editorConfig: {
         mode: userCanEdit && fileEditable ? 'edit' : 'view',
-        callbackUrl: `${proto}//${ctx.request.header.host}/onlyoffice/callback/${editorFile.hash}?token=${encodedToken}&calltoken=${callbackToken}`,
+        callbackUrl: `${proto}//${ctx.request.header.host}/onlyoffice-strapi/callback/${editorFile.hash}?token=${encodedToken}&calltoken=${callbackToken}`,
         user: {
           id: userData.id.toString(),
           name: `${userData.firstname} ${userData.lastname}`

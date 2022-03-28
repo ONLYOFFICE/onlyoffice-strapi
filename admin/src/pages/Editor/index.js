@@ -49,7 +49,7 @@ const EditorComponent = (props) => {
   const showErrorAndRedirect = () => {
     toggleNotification({
       type: 'warning',
-      message: {id: getTrad('onlyoffice.notification.api.unreachable')},
+      message: {id: getTrad('onlyoffice-strapi.notification.api.unreachable')},
     });
     goBack();
   };
@@ -67,7 +67,7 @@ const EditorComponent = (props) => {
             showErrorAndRedirect();
           } else {
             const message = formatMessage({
-              id: getTrad('onlyoffice.editor.config.error'),
+              id: getTrad('onlyoffice-strapi.editor.config.error'),
               defaultMessage: 'Error getting editor config',
             })
             toggleNotification({
@@ -118,12 +118,12 @@ const EditorComponent = (props) => {
           title: event.data.title
         }
         axiosInstance.post(`/${pluginId}/editorApi/saveas`, data)
-          .then(() => {
+          .then((response) => {
             const message = formatMessage({
-                id: getTrad('onlyoffice.editor.save-as'),
+                id: getTrad('onlyoffice-strapi.editor.save-as'),
                 defaultMessage: 'Document was successfully saved',
               },
-              {filename: data.title}
+              {filename: response.data.title}
             )
             toggleNotification({
               type: 'success',
@@ -133,7 +133,7 @@ const EditorComponent = (props) => {
           .catch(() => {
             toggleNotification({
               type: 'warning',
-              message: {id: getTrad('onlyoffice.editor.save-as.error')},
+              message: {id: getTrad('onlyoffice-strapi.editor.save-as.error')},
             });
           });
       };
