@@ -46,7 +46,7 @@ Community Edition vs Enterprise Edition comparison can be found [here](#onlyoffi
 
    ```
    module.exports = {
-  'onlyoffice-strapi': {
+   'onlyoffice-strapi': {
     enabled: true,
     resolve: './src/plugins/onlyoffice-strapi'
     },
