@@ -27,18 +27,18 @@ Community Edition vs Enterprise Edition comparison can be found [here](#onlyoffi
 
    ```
    {
-    name: "strapi::security",
-    config: {
-      contentSecurityPolicy: {
-        useDefaults: true,
-        directives: {
-          "script-src": ["'self'", "https:", "http:"],
-          "frame-src": ["'self'", "https:", "http:"],
-          },
-        },
-      },
-    },
-    ```
+     name: "strapi::security",
+     config: {
+       contentSecurityPolicy: {
+         useDefaults: true,
+         directives: {
+           "script-src": ["'self'", "https:", "http:"],
+           "frame-src": ["'self'", "https:", "http:"],
+         },
+       },
+     },
+   },
+   ```
 
    If such a config already exists, you just need to add `directives`.
 
@@ -46,10 +46,10 @@ Community Edition vs Enterprise Edition comparison can be found [here](#onlyoffi
 
    ```
    module.exports = {
-   'onlyoffice-strapi': {
-    enabled: true,
-    resolve: './src/plugins/onlyoffice-strapi'
-    },
+     'onlyoffice-strapi': {
+        enabled: true,
+        resolve: './src/plugins/onlyoffice-strapi'
+     },
    }
    ```
    
@@ -57,8 +57,8 @@ Community Edition vs Enterprise Edition comparison can be found [here](#onlyoffi
 
    ```
    'onlyoffice-strapi': {
-    enabled: true,
-    resolve: './src/plugins/onlyoffice-strapi'
+     enabled: true,
+     resolve: './src/plugins/onlyoffice-strapi'
    },
    ```
 
