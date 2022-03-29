@@ -51,7 +51,6 @@ Community Edition vs Enterprise Edition comparison can be found [here](#onlyoffi
     resolve: './src/plugins/onlyoffice-strapi'
     },
    }
-
    ```
    
    If the `module.exports = {...}` element already exists, add the following inside it:
