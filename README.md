@@ -19,6 +19,54 @@ To install Enterprise Edition, follow the instructions [here](https://helpcenter
 
 Community Edition vs Enterprise Edition comparison can be found [here](#onlyoffice-docs-editions).
 
+## Installing Strapi ONLYOFFICE integration plugin
+
+1. You need to change the Strapi middlewares file: `strapi/config/middlewares.js`.
+   
+   To allow inserting a frame with the editor and loading api.js, replace the `strapi::security` line in this file with the following:
+
+   ```
+   {
+    name: "strapi::security",
+    config: {
+      contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+          "script-src": ["'self'", "https:", "http:"],
+          "frame-src": ["'self'", "https:", "http:"],
+          },
+        },
+      },
+    },
+    ```
+
+   If such a config already exists, you just need to add `directives`.
+
+2. In the same strapi/config folder, add the following to plugins.js:
+
+   ```
+   module.exports = {
+  'onlyoffice-strapi': {
+    enabled: true,
+    resolve: './src/plugins/onlyoffice-strapi'
+    },
+   }
+
+   ```
+   
+   If the `module.exports = {...}` element already exists, add the following inside it:
+
+   ```
+   'onlyoffice-strapi': {
+    enabled: true,
+    resolve: './src/plugins/onlyoffice-strapi'
+   },
+   ```
+
+3. Add the Strapi ONLYOFFICE integration plugin to the **strapi/src/plugins** folder. The plugin folder should be named as **onlyoffice-strapi**. Then, run the `yarn install` command in this folder.
+
+4. Run `yarn install` and `yarn build` in the Strapi root. To launch it, run `yarn develop` or `yarn start`.  
+
 ## Configuring Strapi ONLYOFFICE integration plugin
 
 You can configure ONLYOFFICE app via Strapi Dashboard -> Settings -> Global settings -> ONLYOFFICE. On the settings page, enter:
