@@ -146,6 +146,7 @@ module.exports = {
     }
 
     const editPermission = 'plugin::upload.assets.update';
+    const downloadPermission = 'plugin::upload.assets.download';
     const { userAbility: ability } = ctx.state;
 
     let proto = 'http:'
@@ -172,6 +173,12 @@ module.exports = {
       model: fileModel,
     });
 
+    const pmDownload = strapi.admin.services.permission.createPermissionsManager({
+      ability: ability,
+      action: downloadPermission,
+      model: fileModel,
+    });
+
     const url = `${proto}//${ctx.request.header.host}/onlyoffice-strapi/getFile/${editorFile.hash}?token=${encodedToken}`;
     const documentType = getFileType(editorFile.ext);
 
@@ -189,7 +196,8 @@ module.exports = {
         title: editorFile.name,
         url: url,
         permissions: {
-          edit: userCanEdit && fileEditable
+          edit: userCanEdit && fileEditable,
+          download: pmDownload.isAllowed
         }
       },
       editorConfig: {

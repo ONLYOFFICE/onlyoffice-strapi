@@ -94,7 +94,7 @@ const EditorComponent = (props) => {
 
   useEffect(() => {
     let docEditor = null;
-    const userCanEdit = editorPermissions.canEdit;
+    const userCanCreate = editorPermissions.canCreate;
 
     if (config && scriptLoaded) {
       const innerAlert = (message, inEditor) => {
@@ -149,7 +149,7 @@ const EditorComponent = (props) => {
         config.type='mobile';
       }
 
-      if (userCanEdit) config.events.onRequestSaveAs = onRequestSaveAs;
+      if (userCanCreate) config.events.onRequestSaveAs = onRequestSaveAs;
 
       try {
         docEditor = new window.DocsAPI.DocEditor('onlyoffice-editor', config);

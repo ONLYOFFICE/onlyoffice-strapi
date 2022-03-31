@@ -53,6 +53,7 @@ import {GET_EDITOR_SETTINGS_SUCCEEDED, RESET_EDITOR_FILE, SET_EDITOR_FILE, SET_E
 const uploadPluginPermissions = {
   read: [{action: 'plugin::upload.read', subject: null}],
   update: [{action: 'plugin::upload.assets.update', subject: null, fields: null}],
+  create: [{action: 'plugin::upload.assets.create', subject: null}]
 };
 
 const HomePage = ({isLoading, editorFileId, editorUrl}) => {
@@ -60,7 +61,7 @@ const HomePage = ({isLoading, editorFileId, editorUrl}) => {
   const {pathname, search} = useLocation();
   const {push} = useHistory();
   const {allowedActions: {can0}} = useRBAC(permissions.settings); // check user has access to settings
-  const {allowedActions: {canRead, canUpdate}} = useRBAC(uploadPluginPermissions);
+  const {allowedActions: {canRead, canUpdate, canCreate}} = useRBAC(uploadPluginPermissions);
   const queryName = ['files', search];
   const {
     data,
@@ -84,7 +85,8 @@ const HomePage = ({isLoading, editorFileId, editorUrl}) => {
   const setEditorPermissions = () => {
     const permissions = {
       canEdit: canUpdate,
-      canRead: canRead
+      canRead: canRead,
+      canCreate: canCreate
     };
     dispatch({
       type: SET_EDITOR_PERMISSIONS,
@@ -94,7 +96,7 @@ const HomePage = ({isLoading, editorFileId, editorUrl}) => {
 
   useEffect(() => {
     setEditorPermissions();
-  }, [canRead, canUpdate]);
+  }, [canRead, canUpdate, canCreate]);
 
   const resetEditorFile = () => {
     dispatch({type: RESET_EDITOR_FILE});
