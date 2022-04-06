@@ -26,7 +26,7 @@ module.exports = [
     handler: 'onlyofficeController.getEditorSettings',
     config: {
       policies: [
-        {name: 'admin::hasPermissions', config: {actions: ['plugin::onlyoffice-strapi.settings.update']}}
+        {name: 'admin::hasPermissions', config: {actions: ['plugin::onlyoffice.settings.update']}}
       ]
     }
   },
@@ -36,7 +36,7 @@ module.exports = [
     handler: 'onlyofficeController.updateEditorSettings',
     config: {
       policies: [
-        {name: 'admin::hasPermissions', config: {actions: ['plugin::onlyoffice-strapi.settings.update']}}
+        {name: 'admin::hasPermissions', config: {actions: ['plugin::onlyoffice.settings.update']}}
       ]
     }
   },

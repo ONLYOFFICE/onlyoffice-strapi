@@ -23,7 +23,7 @@ const ONLYOFFICE_ACTIONS = [
     section: 'plugins',
     displayName: 'Set or update ONLYOFFICE plugin settings',
     uid: 'settings.update',
-    pluginName: 'onlyoffice-strapi',
+    pluginName: 'onlyoffice',
   }
 ];
 
@@ -37,7 +37,7 @@ module.exports = async ({strapi}) => {
   const pluginStore = strapi.store({
     environment: '',
     type: 'plugin',
-    name: 'onlyoffice-strapi',
+    name: 'onlyoffice',
   });
 
   const editorConfig = await pluginStore.get({key: 'editorConfig'});

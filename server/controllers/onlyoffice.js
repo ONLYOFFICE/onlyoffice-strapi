@@ -73,7 +73,7 @@ module.exports = {
 
   async updateEditorSettings(ctx) {
     const docServConfig = ctx.request.body;
-    const pluginStore = strapi.store({type: 'plugin', name: 'onlyoffice-strapi'});
+    const pluginStore = strapi.store({type: 'plugin', name: 'onlyoffice'});
 
     const config = {
       docServConfig: Object(docServConfig)
@@ -179,7 +179,7 @@ module.exports = {
       model: fileModel,
     });
 
-    const url = `${proto}//${ctx.request.header.host}/onlyoffice-strapi/getFile/${editorFile.hash}?token=${encodedToken}`;
+    const url = `${proto}//${ctx.request.header.host}/onlyoffice/getFile/${editorFile.hash}?token=${encodedToken}`;
     const documentType = getFileType(editorFile.ext);
 
     let userCanEdit = pm.isAllowed;
@@ -202,7 +202,7 @@ module.exports = {
       },
       editorConfig: {
         mode: userCanEdit && fileEditable ? 'edit' : 'view',
-        callbackUrl: `${proto}//${ctx.request.header.host}/onlyoffice-strapi/callback/${editorFile.hash}?token=${encodedToken}&calltoken=${callbackToken}`,
+        callbackUrl: `${proto}//${ctx.request.header.host}/onlyoffice/callback/${editorFile.hash}?token=${encodedToken}&calltoken=${callbackToken}`,
         user: {
           id: userData.id.toString(),
           name: `${userData.firstname} ${userData.lastname}`

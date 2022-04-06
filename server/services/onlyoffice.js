@@ -24,7 +24,7 @@ const getOnlyofficeData = async (key) => {
   return strapi.store({
     environment: '',
     type: 'plugin',
-    name: 'onlyoffice-strapi',
+    name: 'onlyoffice',
     key: key,
   })
     .get();

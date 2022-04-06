@@ -32,7 +32,7 @@ module.exports = {
     },
   },
   'x-strapi-config': {
-    path: '/onlyoffice-strapi',
+    path: '/onlyoffice',
     showGeneratedFiles: true,
   },
   servers: [],
