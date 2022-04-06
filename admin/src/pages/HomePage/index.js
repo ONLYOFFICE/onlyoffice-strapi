@@ -140,7 +140,7 @@ const HomePage = ({isLoading, editorFileId, editorUrl}) => {
         <EmptyStateLayout
           icon={<EmptyDocuments width="10rem"/>}
           content={formatMessage(
-            {id: getTrad('onlyoffice-strapi.docserv-url.empty'), defaultMessage: 'Something wrong with your settings/token. Please try again later or contact your administrator.'}
+            {id: getTrad('onlyoffice.docserv-url.empty'), defaultMessage: 'Something wrong with your settings/token. Please try again later or contact your administrator.'}
           )}
         />
       </ContentLayout>
@@ -162,7 +162,7 @@ const HomePage = ({isLoading, editorFileId, editorUrl}) => {
       <CenterActionLayout
         startActions={
           formatMessage({
-              id: getTrad('onlyoffice-strapi.content.files-multiple'),
+              id: getTrad('onlyoffice.content.files-multiple'),
               defaultMessage: '0 files',
             },
             {number: filesCount}
@@ -170,7 +170,7 @@ const HomePage = ({isLoading, editorFileId, editorUrl}) => {
         endActions={
           <SearchURLQuery
             label={formatMessage({
-              id: getTrad('onlyoffice-strapi.files.list.files-search'),
+              id: getTrad('onlyoffice.files.list.files-search'),
               defaultMessage: 'Search',
             })}
           />

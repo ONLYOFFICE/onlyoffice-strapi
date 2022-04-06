@@ -14,9 +14,6 @@
 * limitations under the License.
 */
 const pluginPkg = require('../../package.json');
-const pluginId = pluginPkg.name.replace(
-  /^strapi-plugin-/i,
-  ''
-);
+const pluginId = pluginPkg.strapi.name;
 
 module.exports = pluginId;
