@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.2
+## Changed
+- change plugin name
+
 ## 1.0.1
 ## Changed
 - fix package name

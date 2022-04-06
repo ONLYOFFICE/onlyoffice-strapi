@@ -1,6 +1,6 @@
 {
   "name": "onlyoffice-strapi",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "The integration app allows users to view, edit, and co-author office documents, spreadsheets, and presentations added to the Strapi Media Library using ONLYOFFICE Docs.",
   "strapi": {
     "displayName": "ONLYOFFICE",
