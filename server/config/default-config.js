@@ -18,7 +18,7 @@
 module.exports = {
   openapi: "3.0.0",
   info: {
-    version: '1.0.0',
+    version: '1.0.1',
     title: 'ONLYOFFICE',
     description: 'The integration app allows users to view, edit, and co-author office documents, spreadsheets, and presentations added to the Strapi Media Library using ONLYOFFICE Docs.',
     contact: {
