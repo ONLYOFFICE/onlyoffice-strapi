@@ -42,29 +42,22 @@ Community Edition vs Enterprise Edition comparison can be found [here](#onlyoffi
 
    If such a config already exists, you just need to add `directives`.
 
-2. In the same strapi/config folder, add the following to plugins.js:
+2. Install the plugin in your Strapi project:
 
    ```
-   module.exports = {
-     'onlyoffice-strapi': {
-        enabled: true,
-        resolve: './src/plugins/onlyoffice-strapi'
-     },
-   }
+   npm install onlyoffice-stapi --save
    ```
-   
-   If the `module.exports = {...}` element already exists, add the following inside it:
+3. After successful installation you have to rebuild the admin UI so it'll include this plugin. To rebuild and restart Strapi run:
 
    ```
-   'onlyoffice-strapi': {
-     enabled: true,
-     resolve: './src/plugins/onlyoffice-strapi'
-   },
+   # using yarn
+   yarn build
+   yarn develop
+
+   # using npm
+   npm run build
+   npm run develop
    ```
-
-3. Add the Strapi ONLYOFFICE integration plugin to the **strapi/src/plugins** folder. The plugin folder should be named as **onlyoffice-strapi**. Then, run the `yarn install` command in this folder.
-
-4. Run `yarn install` and `yarn build` in the Strapi root. To launch it, run `yarn develop` or `yarn start`.  
 
 ## Configuring Strapi ONLYOFFICE integration plugin
 

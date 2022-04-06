@@ -24,6 +24,7 @@ import reducers from "./reducers";
 
 const pluginDescription = pluginPkg.strapi.description || pluginPkg.description;
 const name = pluginPkg.strapi.name;
+const displayName = pluginPkg.strapi.displayName;
 
 export default {
   register(app) {
@@ -34,7 +35,7 @@ export default {
       icon: PluginIcon,
       intlLabel: {
         id: `${pluginId}.plugin.name`,
-        defaultMessage: name,
+        defaultMessage: displayName,
       },
       Component: async () => {
         return await import('./pages/App');
@@ -62,7 +63,7 @@ export default {
       id: `${pluginId}-settings`,
       intlLabel: {
         id: `${pluginId}.plugin.name`,
-        defaultMessage: name,
+        defaultMessage: displayName,
       },
       to: `/settings/${pluginId}`,
       Component: async () => {
