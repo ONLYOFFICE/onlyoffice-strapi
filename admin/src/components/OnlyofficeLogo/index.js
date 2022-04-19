@@ -1,6 +1,6 @@
 /**
  *
- * Onlyoffice Logo
+ * ONLYOFFICE Logo
  *
  */
 /*

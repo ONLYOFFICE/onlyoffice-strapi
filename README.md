@@ -45,7 +45,7 @@ Community Edition vs Enterprise Edition comparison can be found [here](#onlyoffi
 2. Install the plugin in your Strapi project:
 
    ```
-   npm install onlyoffice-stapi --save
+   npm install onlyoffice-strapi --save
    ```
 3. After successful installation you have to rebuild the admin UI so it'll include this plugin. To rebuild and restart Strapi run:
 
