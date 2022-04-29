@@ -42,7 +42,7 @@
     "node": ">=12.x. <=16.x.x",
     "npm": ">=6.0.0"
   },
-  "license": "Apache-2.0",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/ONLYOFFICE/onlyoffice-strapi/issues"
   },
