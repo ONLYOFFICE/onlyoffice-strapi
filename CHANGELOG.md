@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.5
+## Changed
+- remove unnecessary dependencies
+
 ## 1.0.4
 ## Changed
 - mit license
