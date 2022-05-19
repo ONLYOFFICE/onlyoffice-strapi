@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.6
+## Changed
+- fix module export
+
 ## 1.0.5
 ## Changed
 - remove unnecessary dependencies

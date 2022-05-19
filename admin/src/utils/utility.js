@@ -5,13 +5,10 @@
 */
 import byteSize from 'byte-size';
 
-module.exports = {
-
-  formatBytes: (receivedBytes, decimals = 0) => {
+export const formatBytes = (receivedBytes, decimals = 0) => {
     const {value, unit} = byteSize(receivedBytes * 1000, {precision: decimals});
     if (!unit) {
       return '0B';
     }
     return `${value}${unit.toUpperCase()}`;
   }
-}
