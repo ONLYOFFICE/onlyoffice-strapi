@@ -1,86 +1,123 @@
 /*
-* (c) Copyright Ascensio System SIA 2022
-*
-* MIT Licensed
-*/
-import React from "react";
-import {useIntl} from 'react-intl';
-import getTrad from '../../utils/getTrad';
+ * (c) Copyright Ascensio System SIA 2022
+ *
+ * MIT Licensed
+ */
+import React from 'react';
+import axios from 'axios';
+import { Helmet } from 'react-helmet';
+import { useIntl } from 'react-intl';
+import { Formik } from 'formik';
+import {
+  Main,
+  HeaderLayout,
+  Button,
+  Typography,
+  Link,
+} from '@strapi/design-system';
+import { Check } from '@strapi/icons';
 import {
   CheckPermissions,
-  Form,
   useFocusWhenNavigate,
-  LoadingIndicatorPage
+  LoadingIndicatorPage,
+  useNotification,
 } from '@strapi/helper-plugin';
-import {ContentLayout, HeaderLayout, ActionLayout} from '@strapi/design-system/Layout';
-import {Button} from '@strapi/design-system/Button';
-import {Main} from '@strapi/design-system/Main';
-import {Formik} from 'formik';
-import {Grid, GridItem} from '@strapi/design-system/Grid';
-import { TextInput } from '@strapi/design-system/TextInput';
-import {Box} from '@strapi/design-system/Box';
-import schema from "./utils/schema";
-import layout from "./utils/layout";
+
+import { OnlyofficeSettingsForm } from '../../components/Settings';
+
 import permissions from '../../permissions';
-import pluginId from '../../pluginId';
-import useReactQuery from "../utils/useReactQuery";
-import {useHistory, useLocation} from 'react-router-dom';
-import OnlyofficeLogo from "../../components/OnlyofficeLogo";
+import { fetchOnlyofficeSettings, useAuthentication } from '../../hooks';
+import { getTrad, sanitizeURL } from '../../utils';
+import { validateSettings } from '../../data/validation';
+import { SettingsInputScheme } from '../../data/layout';
+import { pluginDisplayName } from '../../pluginId';
 
-
-const OnlyofficeSettingsComponent = () => {
+const OnlyofficeSettings = () => {
   useFocusWhenNavigate();
+  const dispatchNotification = useNotification();
+  const { formatMessage } = useIntl();
+  const { data, isLoading, isError } = fetchOnlyofficeSettings();
 
-  const {formatMessage} = useIntl();
-  const {pathname} = useLocation();
-  const {push} = useHistory();
-
-  const {submitMutation, data, isLoading} = useReactQuery();
-
-  const initialValues = {
-    docServUrl: data?.docServConfig.docServUrl || '',
-    docJwtSecret: data?.docServConfig.docJwtSecret || ''
+  const handleSubmit = async (data) => {
+    data.dsURL = sanitizeURL(data.dsURL);
+    try {
+      await axios.post('/onlyoffice/settings', data, {
+        headers: useAuthentication(),
+      });
+      dispatchNotification({
+        type: 'success',
+        message: formatMessage({
+          id: getTrad('onlyoffice.notification.success.submit'),
+          defaultMessage: 'Settings saved successfully',
+        }),
+      });
+      return true;
+    } catch {
+      dispatchNotification({
+        type: 'warning',
+        message: formatMessage({
+          id: getTrad('onlyoffice.docserv-url.empty'),
+          defaultMessage:
+            'Something wrong with your settings/token. Please try again later or contact your administrator.',
+        }),
+      });
+      return false;
+    }
   };
 
-  const saveSettings = (body) => {
-    submitMutation.mutate({
-      body,
+  if (isError) {
+    dispatchNotification({
+      type: 'warning',
+      message: formatMessage({
+        id: getTrad('onlyoffice.notification.api.unreachable'),
+        defaultMessage: 'ONLYOFFICE cannot be reached',
+      }),
     });
-
-    push({
-      pathname: `${pathname.replace(`/settings/${pluginId}`, `/plugins/${pluginId}`)}`
-    });
-  };
+  }
 
   return (
     <Main>
-      {isLoading ?
-        <LoadingIndicatorPage/>
-        :
+      <Helmet
+        title={formatMessage({
+          id: getTrad('onlyoffice.settings.page.title'),
+          defaultMessage: 'ONLYOFFICE plugin settings',
+        })}
+      />
+      {isLoading && <LoadingIndicatorPage />}
+      {!isLoading && !isError && (
         <CheckPermissions permissions={permissions.settings}>
-          <ActionLayout startActions={
-            <OnlyofficeLogo/>
-          }/>
           <Formik
-            initialValues={initialValues}
-            onSubmit={saveSettings}
-            validationSchema={schema}
+            initialValues={data}
+            onSubmit={handleSubmit}
+            validate={validateSettings}
             validateOnChange={false}
           >
-            {({handleSubmit, values, handleChange, errors}) => {
-              return (
-                <Form noValidate onSubmit={handleSubmit}>
+            {({
+              values,
+              errors,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              isSubmitting,
+            }) => (
+              <OnlyofficeSettingsForm
+                header={
                   <HeaderLayout
-                    title={formatMessage({
-                      id: getTrad('onlyoffice.settings.page.title'),
-                      defaultMessage: 'ONLYOFFICE plugin settings',
-                    })}
+                    title={pluginDisplayName}
                     subtitle={formatMessage({
                       id: getTrad('onlyoffice.settings.page.title-sub'),
-                      defaultMessage: 'Configure the ONLYOFFICE plugin',
+                      defaultMessage:
+                        'Configure the ONLYOFFICE plugin',
                     })}
                     primaryAction={
-                      <Button type="submit" disabled={!(!!values.docServUrl)}>
+                      <Button
+                        type='submit'
+                        startIcon={<Check />}
+                        aria-disabled={
+                          !!Object.keys(errors).length || isSubmitting
+                        }
+                        loading={isSubmitting}
+                      >
                         {formatMessage({
                           id: getTrad('onlyoffice.save'),
                           defaultMessage: 'Save',
@@ -88,45 +125,47 @@ const OnlyofficeSettingsComponent = () => {
                       </Button>
                     }
                   />
-                  <ContentLayout>
-                    <Box
-                      background="neutral0"
-                      hasRadius
-                      shadow="filterShadow"
-                      paddingTop={6}
-                      paddingBottom={6}
-                      paddingLeft={7}
-                      paddingRight={7}
-                    >
-                      <Grid gap={4}>
-                        {layout.map(row => {
-                          return row.map(input => {
-                            return (
-                              <GridItem key={input.name} {...input.size}>
-                                <TextInput
-                                  name={input.name}
-                                  required={input.required}
-                                  label={formatMessage({id: getTrad(input.intlLabel.id), defaultMessage: input.intlLabel.defaultMessage })}
-                                  hint={input.description ? formatMessage({id: getTrad(input.description.id), defaultMessage: input.description.defaultMessage }) : ''}
-                                  error={errors[input.name]}
-                                  onChange={handleChange}
-                                  value={values[input.name]}
-                                />
-                              </GridItem>
-                            );
-                          });
+                }
+                info={
+                  <>
+                    <Typography variant="delta" as="h2">
+                      {formatMessage({
+                        id: getTrad('onlyoffice.settings.page.content.header'),
+                        defaultMessage: 'Document server configuration',
+                      })}
+                    </Typography>
+                    <Typography>
+                      {formatMessage({
+                        id: getTrad('onlyoffice.settings.page.content.subheader'),
+                        defaultMessage:
+                          'The plugin which enables the users to edit office documents from Strapi using ONLYOFFICE Document Server,' +
+                          'allows multiple users to collaborate in real time and to save back those changes to Strapi.',
+                      })}
+                    </Typography>
+                    <div>
+                      <Link href='https://github.com/ONLYOFFICE/onlyoffice-strapi'>
+                        {formatMessage({
+                          id: getTrad('onlyoffice.settings.page.content.more'),
+                          defaultMessage: 'LEARN MORE',
                         })}
-                      </Grid>
-                    </Box>
-                  </ContentLayout>
-                </Form>
-              )
-            }}
+                      </Link>
+                    </div>
+                  </>
+                }
+                scheme={SettingsInputScheme}
+                values={values}
+                errors={errors}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                handleSubmit={handleSubmit}
+                isSubmitting={isSubmitting}
+              />
+            )}
           </Formik>
         </CheckPermissions>
-      }
+      )}
     </Main>
   );
 };
 
-export default OnlyofficeSettingsComponent;
+export default OnlyofficeSettings;

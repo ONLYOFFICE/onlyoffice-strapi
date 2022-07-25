@@ -1,206 +1,105 @@
 /*
+ * (c) Copyright Ascensio System SIA 2022
  *
- * HomePage
- *
+ * MIT Licensed
  */
-/*
-* (c) Copyright Ascensio System SIA 2022
-*
-* MIT Licensed
-*/
-
-import React, {memo, useEffect} from 'react';
-import {useHistory, useLocation} from 'react-router-dom';
-import {useIntl} from 'react-intl';
+import React, { memo } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useIntl } from 'react-intl';
 import {
-  LoadingIndicatorPage,
+  Layout,
+  HeaderLayout,
+  ContentLayout,
+} from '@strapi/design-system/Layout';
+import {
   SearchURLQuery,
-  useRBAC,
-  NoPermissions
+  LoadingIndicatorPage,
+  NoPermissions,
 } from '@strapi/helper-plugin';
-import {ContentLayout} from '@strapi/design-system/Layout';
-import PaginationFooter from "../../components/PaginationFooter";
-import OnlyofficeLogo from "../../components/OnlyofficeLogo";
-import CenterActionLayout from '../../components/CenterActionLayout';
-import pluginId from "../../pluginId";
-import axiosInstance from "../../utils/axiosInstance";
-import tableHeaders from "./utils/tableHeaders";
-import permissions from "../../permissions";
-import TableRows from "./TableRows";
-import {useQuery} from 'react-query';
-import {fetchFiles} from '../utils/api';
-import {Main} from '@strapi/design-system/Main';
-import getTrad from '../../utils/getTrad';
-import DynamicTable from './DynamicTable';
-import {EmptyStateLayout} from '@strapi/design-system/EmptyStateLayout';
-import EmptyDocuments from '@strapi/icons/EmptyDocuments';
-import makeSelectOnlyofficeEditor from "./selectors";
-import {compose} from "redux";
-import PropTypes from "prop-types";
-import {connect, useDispatch} from 'react-redux';
-import {GET_EDITOR_SETTINGS_SUCCEEDED, RESET_EDITOR_FILE, SET_EDITOR_FILE, SET_EDITOR_PERMISSIONS} from "./constants";
+import { Main } from '@strapi/design-system';
 
-const uploadPluginPermissions = {
-  read: [{action: 'plugin::upload.read', subject: null}],
-  update: [{action: 'plugin::upload.assets.update', subject: null, fields: null}],
-  create: [{action: 'plugin::upload.assets.create', subject: null}]
-};
+import { DynamicTable, PaginationFooter } from '../../components/DynamicTable';
 
-const HomePage = ({isLoading, editorFileId, editorUrl}) => {
-  const {formatMessage} = useIntl();
-  const {pathname, search} = useLocation();
-  const {push} = useHistory();
-  const {allowedActions: {can0}} = useRBAC(permissions.settings); // check user has access to settings
-  const {allowedActions: {canRead, canUpdate, canCreate}} = useRBAC(uploadPluginPermissions);
-  const queryName = ['files', search];
-  const {
-    data,
-    isFetching
-  } = useQuery(queryName, () => fetchFiles(search), {enabled: canRead});
-  const files = data?.results;
-  const filesCount = data?.pagination?.total || 0;
+import { useSearch, usePermissions } from '../../hooks';
+import { getTrad, sanitizeFile, Maybe, STRAPI_FILE_FILTER } from '../../utils';
+import { FileHeaders } from '../../data/layout';
+import { pluginDisplayName } from '../../pluginId';
 
-  const dispatch = useDispatch();
+const HomePage = () => {
+  const { search } = useLocation();
+  const { canRead } = usePermissions();
+  const { formatMessage } = useIntl();
+  const fetchStrapiFiles = useSearch(
+    `${process.env.STRAPI_ADMIN_BACKEND_URL}/upload/files`,
+    { enabled: canRead },
+  );
 
-  const getEditorUrl = async () => {
-    const res = await axiosInstance.get(`/${pluginId}/getEditorUrl`);
-    const editorUrl = res.data.docServUrl;
+  const searchParams = Object.fromEntries(
+    new URLSearchParams(search + STRAPI_FILE_FILTER)
+  );
 
-    dispatch({
-      type: GET_EDITOR_SETTINGS_SUCCEEDED,
-      editorUrl: editorUrl
-    });
-  };
-
-  const setEditorPermissions = () => {
-    const permissions = {
-      canEdit: canUpdate,
-      canRead: canRead,
-      canCreate: canCreate
-    };
-    dispatch({
-      type: SET_EDITOR_PERMISSIONS,
-      editorPermissions: permissions
-    });
-  };
-
-  useEffect(() => {
-    setEditorPermissions();
-  }, [canRead, canUpdate, canCreate]);
-
-  const resetEditorFile = () => {
-    dispatch({type: RESET_EDITOR_FILE});
+  if (!searchParams?.page && !searchParams.pageSize) {
+    searchParams.page = 1;
   }
 
-  useEffect(() => {
-    getEditorUrl();
-    if (editorFileId) {
-      resetEditorFile();
-    }
-  }, []);
+  const { isFetching, data } = new Maybe(searchParams)
+    .bind(fetchStrapiFiles)
+    .bind((response) => {
+      const done = !response?.isFetching && !response?.isError;
+      if (done && response?.data?.results) {
+        response.data.results = response.data.results.map((file) =>
+          sanitizeFile(file)
+        );
+      }
+      return response;
+    }).value;
 
-  const openEditor = (editorFileId) => {
-    if (canRead || canUpdate) {
-      dispatch({
-        type: SET_EDITOR_FILE,
-        editorFileId: editorFileId,
-      });
-      push({
-        pathname: `${pathname}/editor`,
-        state: {
-          mediaUrl: window.location.href
-        }
-      });
-    }
-  };
+  const totalFiles = data?.pagination?.total || 0;
 
-  if (isFetching || isLoading) {
-    return <LoadingIndicatorPage/>;
-  }
-
-  if (!isLoading && !can0 && !isFetching) {
   return (
-    <Main>
-      <CenterActionLayout
-        startActions={
-          <OnlyofficeLogo/>
-        }
-      />
-      <ContentLayout>
-        <EmptyStateLayout
-          icon={<EmptyDocuments width="10rem"/>}
-          content={formatMessage(
-            {id: getTrad('onlyoffice.docserv-url.empty'), defaultMessage: 'Something wrong with your settings/token. Please try again later or contact your administrator.'}
+    <Layout>
+      <Main>
+        <HeaderLayout
+          title={pluginDisplayName}
+          primaryAction={
+            <SearchURLQuery
+              label={formatMessage({
+                id: getTrad('onlyoffice.files.list.files-search'),
+                defaultMessage: 'Search',
+              })}
+            />
+          }
+          subtitle={formatMessage(
+            {
+              id: getTrad(
+                `onlyoffice.content.files-${
+                  totalFiles === 1 ? 'single' : 'multiple'
+                }`
+              ),
+              defaultMessage: `${totalFiles} ${totalFiles === 1 ? 'file' : 'files'}`,
+            },
+            { number: totalFiles }
           )}
         />
-      </ContentLayout>
-    </Main>
-  );
-  } else if (can0 && !isLoading && !editorUrl) {
-    push({
-      pathname: `${pathname.replace(`/plugins/${pluginId}`, `/settings/${pluginId}`)}`
-    });
-  }
-
-  return (
-    <Main>
-      <CenterActionLayout
-        startActions={
-          <OnlyofficeLogo/>
-        }
-      />
-      <CenterActionLayout
-        startActions={
-          formatMessage({
-              id: getTrad('onlyoffice.content.files-multiple'),
-              defaultMessage: '0 files',
-            },
-            {number: filesCount}
-          )}
-        endActions={
-          <SearchURLQuery
-            label={formatMessage({
-              id: getTrad('onlyoffice.files.list.files-search'),
-              defaultMessage: 'Search',
-            })}
-          />
-        }
-      />
-      <ContentLayout>
-        {!canRead && <NoPermissions/>}
-        {canRead && files  && (
-          <div style={{display: 'grid'}}>
-            <DynamicTable
-              isLoading={isFetching && isLoading}
-              headers={tableHeaders}
-              rows={files}
-            >
-              <TableRows
-                headers={tableHeaders}
-                rows={files}
-                openEditor={openEditor}
-                canEdit={canUpdate}
-              />
-            </DynamicTable>
-            {data?.pagination && files.length > 0 && <PaginationFooter pagination={data.pagination}/>}
-          </div>)}
-      </ContentLayout>
-    </Main>
+        {isFetching && <LoadingIndicatorPage />}
+        {!isFetching && (
+          <ContentLayout>
+            {!canRead && <NoPermissions />}
+            {canRead && data?.results && (
+              <>
+                <DynamicTable
+                  headers={FileHeaders}
+                  isLoading={isFetching}
+                  rows={data.results}
+                />
+                <PaginationFooter pagination={data.pagination} />
+              </>
+            )}
+          </ContentLayout>
+        )}
+      </Main>
+    </Layout>
   );
 };
 
-HomePage.defaultProps = {
-  editorFileId: {},
-  editorUrl: {}
-};
-
-HomePage.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
-  editorFileId: PropTypes.object,
-  editorUrl: PropTypes.object.isRequired
-};
-
-const mapStateToProps = makeSelectOnlyofficeEditor();
-const withConnect = connect(mapStateToProps, null);
-
-export default compose(withConnect)(memo(HomePage));
+export default memo(HomePage);

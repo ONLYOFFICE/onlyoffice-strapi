@@ -4,13 +4,33 @@ Byte-size     - An isomorphic, load-anywhere function to convert a bytes value (
 License:        MIT
 License File:   byte-size.license
 
-Crypto-JS     - JavaScript library of crypto standards. (https://github.com/brix/crypto-js)
+Commitizen    - The commitizen command line utility. (https://github.com/commitizen/cz-cli)
 License:        MIT
-License File:   cryptojs.license
+License File:   commitizen.license
 
-Form-data     - A library to create readable "multipart/form-data" streams. Can be used to submit forms and file uploads to other web applications. (https://github.com/form-data/form-data)
+Commitlint    - Lint commit messages. (https://github.com/conventional-changelog/commitlint)
 License:        MIT
-License File:   form-data.license
+License File:   commitlint.license
+
+Cz-conventional-changelog - Part of the commitizen family. Prompts for conventional changelog standard. (https://github.com/commitizen/cz-conventional-changelog)
+License:        MIT
+License File:   cz.license
+
+Eslint        - ESLint is a tool for identifying and reporting on patterns found in ECMAScript/JavaScript code. (https://github.com/eslint/eslint)
+License:        MIT
+License File:   eslint.license
+
+Husky         - Husky improves your commits and more. (https://github.com/typicode/husky)
+License:        MIT
+License File:   husky.license
+
+Jest          - Delightful JavaScript Testing. (https://github.com/facebook/jest)
+License:        MIT
+License File:   jest.license
+
+Lint-staged   - Run linters against staged git files. (https://github.com/okonet/lint-staged)
+License:        MIT
+License File:   lint.license
 
 Mime-types    - The ultimate javascript content-type utility. (https://github.com/jshttp/mime-types)
 License:        MIT

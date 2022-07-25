@@ -1,13 +1,8 @@
-/**
- *
- * Initializer
- *
- */
 /*
-* (c) Copyright Ascensio System SIA 2022
-*
-* MIT Licensed
-*/
+ * (c) Copyright Ascensio System SIA 2022
+ *
+ * MIT Licensed
+ */
 import { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import pluginId from '../../pluginId';
