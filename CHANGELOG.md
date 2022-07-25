@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.1.0
+
+## Changed
+
+- refactoring using core methods and components
+
 ## 1.0.6
 
 ## Changed
