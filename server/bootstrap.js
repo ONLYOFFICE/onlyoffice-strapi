@@ -1,50 +1,24 @@
 /*
-* (c) Copyright Ascensio System SIA 2022
-*
-* MIT Licensed
-*/
-/* eslint-disable no-unreachable */
+ * (c) Copyright Ascensio System SIA 2022
+ *
+ * MIT Licensed
+ */
 'use strict';
-
-const { v4: uuidv4 } = require('uuid');
-
-const ONLYOFFICE_ACTIONS = [
-  {
-    section: 'plugins',
-    displayName: 'Set or update ONLYOFFICE plugin settings',
-    uid: 'settings.update',
-    pluginName: 'onlyoffice',
-  }
-];
-
 /**
  *
  * @param {{strapi: import("@strapi/strapi").Strapi}} args
  */
-module.exports = async ({strapi}) => {
-  await strapi.admin.services.permission.actionProvider.registerMany(ONLYOFFICE_ACTIONS);
-
+module.exports = async ({ strapi }) => {
   const pluginStore = strapi.store({
     environment: '',
     type: 'plugin',
     name: 'onlyoffice',
   });
 
-  const editorConfig = await pluginStore.get({key: 'editorConfig'});
-  const uuid = await pluginStore.get({key: 'uuid'});
+  const editor = await pluginStore.get({ key: 'editor' });
 
-  const onlyofficeKey = uuidv4();
-  const docServConfig = {
-    docJwtSecret: '',
-    docServUrl: null
+  if (!editor) {
+    const ds = { dsURL: '', dsSecret: '' };
+    pluginStore.set({ key: 'editor', value: ds });
   }
-
-  if (!uuid) {
-    pluginStore.set({key: 'uuid', value: {onlyofficeKey: onlyofficeKey}});
-  }
-
-  if (!editorConfig) {
-    pluginStore.set({key: 'editorConfig', value: {docServConfig: docServConfig}});
-  }
-
 };

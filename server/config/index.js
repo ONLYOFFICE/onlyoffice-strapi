@@ -1,16 +1,14 @@
 /*
-* (c) Copyright Ascensio System SIA 2022
-*
-* MIT Licensed
-*/
+ * (c) Copyright Ascensio System SIA 2022
+ *
+ * MIT Licensed
+ */
 'use strict';
 
-const defaultOnlyofficeConfig = require('./default-config');
-
-const defaultConfig = {
-  ...defaultOnlyofficeConfig,
-};
+const defaultConfig = require('./default');
 
 module.exports = {
-  default: defaultConfig,
+  default: {
+    ...defaultConfig,
+  },
 };

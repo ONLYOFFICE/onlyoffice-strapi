@@ -1,6 +1,6 @@
 {
   "name": "onlyoffice-strapi",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "description": "The integration app allows users to view, edit, and co-author office documents, spreadsheets, and presentations added to the Strapi Media Library using ONLYOFFICE Docs.",
   "strapi": {
     "displayName": "ONLYOFFICE",
@@ -12,21 +12,56 @@
     "type": "git",
     "url": "git+https://github.com/ONLYOFFICE/onlyoffice-strapi.git"
   },
+  "scripts": {
+    "prepare": "husky install",
+    "prepush": "npm run lint",
+    "lint": "npx eslint .",
+    "test:unit": "jest --verbose"
+  },
   "dependencies": {
-    "byte-size": "7.0.1",
-    "crypto-js": "^4.1.1",
-    "form-data": "^4.0.0",
-    "mime-types": "^2.1.34"
+    "byte-size": "^7.0.1",
+    "mime-types": "^2.1.35"
   },
   "peerDependencies": {
     "@strapi/strapi": "4.x"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
+    "commitizen": "^4.2.4",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^8.19.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.2.4",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.30.1",
+    "husky": "^7.0.0",
+    "jest": "^28.1.3",
+    "lint-staged": "^13.0.3"
+  },
+  "lint-staged": {
+    "*.{css,less,scss,html,json,jsx,js}": [
+      "npx eslint . --fix"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
+    }
   },
   "author": "Ascensio System SIA <integration@onlyoffice.com> (https://www.onlyoffice.com)",
   "maintainers": [
     "Ascensio System SIA <integration@onlyoffice.com> (https://www.onlyoffice.com)"
   ],
   "engines": {
-    "node": ">=12.x. <=16.x.x",
+    "node": ">=14.19.1 <=16.x.x",
     "npm": ">=6.0.0"
   },
   "license": "MIT",

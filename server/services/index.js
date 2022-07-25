@@ -1,12 +1,16 @@
 /*
-* (c) Copyright Ascensio System SIA 2022
-*
-* MIT Licensed
-*/
+ * (c) Copyright Ascensio System SIA 2022
+ *
+ * MIT Licensed
+ */
 'use strict';
 
-const onlyofficeService = require('./onlyoffice');
+const file = require('./file');
+const settings = require('./settings');
+const jwt = require('./jwt');
 
 module.exports = {
-  onlyoffice: onlyofficeService
+  file,
+  settings,
+  jwt,
 };
