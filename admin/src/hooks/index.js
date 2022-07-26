@@ -7,7 +7,8 @@ import useSearch from './useSearch';
 import usePermissions from './usePermissions';
 import useAuthentication from './useAuthentication';
 import useQueryParams from './useQueryParams';
+import { pluginId } from '../pluginId';
 
-const fetchOnlyofficeSettings = useSearch('/onlyoffice/settings', { cacheTime: 0 });
+const fetchOnlyofficeSettings = useSearch(`/${pluginId}/settings`, { cacheTime: 0 });
 
 export { fetchOnlyofficeSettings, useSearch, usePermissions, useAuthentication, useQueryParams };

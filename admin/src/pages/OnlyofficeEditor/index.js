@@ -13,6 +13,7 @@ import { useNotification, LoadingIndicatorPage, NoPermissions } from '@strapi/he
 
 import { useSearch, useQueryParams, usePermissions } from '../../hooks';
 
+import { pluginId } from '../../pluginId';
 import { getFileFavicon, omitExt, getTrad } from '../../utils';
 import { onAppReady, onError, buildOnRequestSave } from '../../utils/editor';
 
@@ -33,7 +34,7 @@ const OnlyofficeEditor = () => {
   const dispatchNotification = useNotification();
   const { formatMessage } = useIntl();
   const { canCreate } = usePermissions();
-  const { data, isLoading, isError } = useSearch(`/onlyoffice/editor/${params.file}`, { cacheTimeout: 0 })();
+  const { data, isLoading, isError } = useSearch(`/${pluginId}/editor/${params.file}`, { cacheTimeout: 0 })();
 
   useEffect(() => {
     if (!data?.server) return;

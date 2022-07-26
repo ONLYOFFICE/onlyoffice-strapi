@@ -33,7 +33,7 @@ import { fetchOnlyofficeSettings, useAuthentication } from '../../hooks';
 import { getTrad, sanitizeURL } from '../../utils';
 import { validateSettings } from '../../data/validation';
 import { SettingsInputScheme } from '../../data/layout';
-import { pluginDisplayName } from '../../pluginId';
+import { pluginId, pluginDisplayName } from '../../pluginId';
 
 const OnlyofficeSettings = () => {
   useFocusWhenNavigate();
@@ -44,7 +44,7 @@ const OnlyofficeSettings = () => {
   const handleSubmit = async (data) => {
     data.dsURL = sanitizeURL(data.dsURL);
     try {
-      await axios.post('/onlyoffice/settings', data, {
+      await axios.post(`/${pluginId}/settings`, data, {
         headers: useAuthentication(),
       });
       dispatchNotification({
