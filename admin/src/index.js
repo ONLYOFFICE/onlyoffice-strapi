@@ -23,7 +23,7 @@ export default {
         id: pluginId,
         intlLabel: {
           id: `${pluginId}.plugin.name`,
-          defaultMessage: 'ONLYOFFICE',
+          defaultMessage: 'ONLYOFFICE PLUGIN',
         },
       },
       [
