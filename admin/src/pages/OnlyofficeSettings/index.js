@@ -10,6 +10,8 @@ import { useIntl } from 'react-intl';
 import { Formik } from 'formik';
 import {
   Main,
+  Flex,
+  ContentLayout,
   HeaderLayout,
   Button,
   Typography,
@@ -18,6 +20,7 @@ import {
 import { Check } from '@strapi/icons';
 import {
   CheckPermissions,
+  NoPermissions,
   useFocusWhenNavigate,
   LoadingIndicatorPage,
   useNotification,
@@ -65,16 +68,6 @@ const OnlyofficeSettings = () => {
     }
   };
 
-  if (isError) {
-    dispatchNotification({
-      type: 'warning',
-      message: formatMessage({
-        id: getTrad('onlyoffice.notification.api.unreachable'),
-        defaultMessage: 'ONLYOFFICE cannot be reached',
-      }),
-    });
-  }
-
   return (
     <Main>
       <Helmet
@@ -83,6 +76,17 @@ const OnlyofficeSettings = () => {
           defaultMessage: 'ONLYOFFICE plugin settings',
         })}
       />
+      {isError && (
+        <Flex
+          alignItems='center'
+          justifyContent='center'
+          height='100vh'
+        >
+          <ContentLayout>
+            <NoPermissions />
+          </ContentLayout>
+        </Flex>
+      )}
       {isLoading && <LoadingIndicatorPage />}
       {!isLoading && !isError && (
         <CheckPermissions permissions={permissions.settings}>
