@@ -99,7 +99,16 @@ TableHead.defaultProps = {
 };
 
 TableHead.propTypes = {
-  headers: PropTypes.array,
+  headers: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      key: PropTypes.string.isRequired,
+      metadatas: PropTypes.shape({
+        label: PropTypes.string.isRequired,
+        sortable: PropTypes.bool,
+      }).isRequired,
+    })
+  ),
 };
 
 export default TableHead;

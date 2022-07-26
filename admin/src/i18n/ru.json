@@ -10,7 +10,7 @@
   "onlyoffice.settings.page.content.subheader": "The plugin which enables the users to edit office documents from Strapi using ONLYOFFICE Document Server, allows multiple users to collaborate in real time and to save back those changes to Strapi.",
   "onlyoffice.settings.page.content.more": "LEARN MORE",
   "onlyoffice.settings.docserv-url": "Адрес сервера документов",
-  "onlyoffice.settings.docserv-jwtsecret": "Секретный JWT ключ сервера документов",
+  "onlyoffice.settings.docserv-jwtsecret": "Секретный JWT ключ",
   "onlyoffice.notification.api.unreachable": "ONLYOFFICE недоступен",
   "onlyoffice.docserv-url.empty": "Что-то не так с вашими настройками/токеном. Пожалуйста, попробуйте позже или сообщите об ошибке администратору.",
   "onlyoffice.label.edit": "Редактировать в ONLYOFFICE",

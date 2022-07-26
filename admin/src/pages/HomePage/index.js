@@ -18,7 +18,7 @@ import {
 } from '@strapi/helper-plugin';
 import { Main } from '@strapi/design-system';
 
-import { DynamicTable, PaginationFooter } from '../../components/DynamicTable';
+import { FileTable, PaginationFooter } from '../../components/DynamicTable';
 
 import { useSearch, usePermissions } from '../../hooks';
 import { getTrad, sanitizeFile, Maybe, STRAPI_FILE_FILTER } from '../../utils';
@@ -87,7 +87,7 @@ const HomePage = () => {
             {!canRead && <NoPermissions />}
             {canRead && data?.results && (
               <>
-                <DynamicTable
+                <FileTable
                   headers={FileHeaders}
                   isLoading={isFetching}
                   rows={data.results}

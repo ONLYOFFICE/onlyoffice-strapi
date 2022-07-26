@@ -3,9 +3,9 @@
  *
  * MIT Licensed
  */
-import DynamicTable from './Table';
+import FileTable from './FileTable';
 import PaginationFooter from './Footer';
-import DynamicTableRow from './Row';
-import DynamicTableHeader from './Header';
+import TableRow from './Row';
+import TableHeader from './Header';
 
-export { DynamicTable, DynamicTableRow, DynamicTableHeader, PaginationFooter };
+export { FileTable, TableRow, TableHeader, PaginationFooter };
