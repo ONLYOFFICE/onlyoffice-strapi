@@ -9,6 +9,8 @@ import PropTypes from 'prop-types';
 import { RelativeTime } from '@strapi/helper-plugin';
 import { Flex, Typography, Tr, Td } from '@strapi/design-system';
 
+import { Maybe } from '../../utils/func';
+
 const TableRow = ({ icon, file, headers, action }) => {
   return (
     <Tr>
@@ -18,12 +20,21 @@ const TableRow = ({ icon, file, headers, action }) => {
         </Flex>
       </Td>
       {headers.map(({ key }) => {
-        const Payload = Date.parse(file[key])
-          ? <RelativeTime timestamp={new Date(file[key])} />
-          : file[key];
+        const timestamp = new Maybe(file[key])
+          .bind((value) => Date.parse(value))
+          .bind((date) => isNaN(date) ? null : new Date(date))
+          .bind((valid) => valid ? (valid.setSeconds(valid.getSeconds() - 1), valid) : null)
+          .value;
+
         return (
           <Td key={key}>
-            <Typography textColor='neutral800'>{Payload}</Typography>
+            <Typography textColor='neutral800'>
+              {
+                timestamp
+                  ? <RelativeTime timestamp={timestamp} />
+                  : file[key]
+              }
+            </Typography>
           </Td>
         );
       })}
