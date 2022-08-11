@@ -77,14 +77,16 @@ const TableHead = ({ headers }) => {
               }
             >
               <Tooltip label={isSortable ? sortLabel : intlLabel}>
-                <Typography
-                  textColot='neutral600'
-                  as={!isSortable && isSortable ? 'button' : 'span'}
-                  onClick={() => handleClickSort(!isSorted)}
-                  variant='sigma'
-                >
-                  {intlLabel}
-                </Typography>
+                <button>
+                  <Typography
+                    textColot='neutral600'
+                    as={!isSortable && isSortable ? 'button' : 'span'}
+                    onClick={() => handleClickSort(!isSorted)}
+                    variant='sigma'
+                  >
+                    {intlLabel}
+                  </Typography>
+                </button>
               </Tooltip>
             </Th>
           );
