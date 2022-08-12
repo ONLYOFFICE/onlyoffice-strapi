@@ -47,18 +47,18 @@ const TableHead = ({ headers }) => {
             }
           };
 
+          const intlLabel = formatMessage({
+            id: getTrad(`onlyoffice.table.${name}`),
+            defaultMessage: label,
+          });
+
           const sortLabel = formatMessage(
             {
               id: getTrad('onlyoffice.table.sort'),
               defaultMessage: 'Sort on {label}',
             },
-            { label }
+            { label: intlLabel }
           );
-
-          const intlLabel = formatMessage({
-            id: getTrad(`onlyoffice.table.${name}`),
-            defaultMessage: label,
-          });
 
           return (
             <Th
