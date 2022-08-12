@@ -1,4 +1,5 @@
 {
+  "onlyoffice.plugin.name": "ПЛАГИН ONLYOFFICE",
   "onlyoffice.plugin.configuration": "Конфигурация",
   "onlyoffice.files.list.files-search": "Поиск",
   "onlyoffice.files.list.size.kb": "Кб",
