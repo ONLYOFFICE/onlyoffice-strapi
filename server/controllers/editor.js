@@ -24,8 +24,10 @@ module.exports = {
         url: `${host}/onlyoffice/file?token=${dtoken}`,
         callback: `${host}/onlyoffice/callback`,
         user,
-        userCanEdit: await strapi.plugin('onlyoffice').service('file').allowedFileAccess(ability, 'plugin::upload.assets.update'),
-        userCanDownload: await strapi.plugin('onlyoffice').service('file').allowedFileAccess(ability, 'plugin::upload.assets.download'),
+        userCanEdit: await strapi.plugin('onlyoffice').service('file')
+          .allowedFileAccess(ability, 'plugin::upload.assets.update'),
+        userCanDownload: await strapi.plugin('onlyoffice').service('file')
+          .allowedFileAccess(ability, 'plugin::upload.assets.download'),
         lang: ctx.state.user.preferedLanguage || ctx.params.locale,
         docKey: `${ctx.params.file}_${file.hash}${file.updatedAt}`,
         type: detectAgent(ctx.header['user-agent']) || 'desktop',

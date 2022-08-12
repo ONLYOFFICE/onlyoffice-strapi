@@ -57,7 +57,7 @@ module.exports = ({ strapi }) => ({
       model: fileModel,
     });
 
-    return pm.isAllowed;
+    return pm.isAllowed; // pm.ability.p.conditionsMatcher(conditions)()
   },
 
   /**
