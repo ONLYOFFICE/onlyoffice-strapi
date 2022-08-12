@@ -31,8 +31,8 @@ module.exports = function buildMakeConfig({ getFileType, generateDocKey, isValid
     if (!user?.id) {
       throw new Error('ONLYOFFICE Config expects a valid user id');
     }
-    if (!user?.firstname || !user?.lastname) {
-      throw new Error('ONLYOFFICE Config expects valid first and last names');
+    if (!user?.firstname) {
+      throw new Error('ONLYOFFICE Config expects valid firstname');
     }
 
     return Object.freeze({
@@ -52,7 +52,7 @@ module.exports = function buildMakeConfig({ getFileType, generateDocKey, isValid
         callbackUrl: callback,
         user: {
           id: user.id,
-          name: `${user.firstname} ${user.lastname}`,
+          name: `${user.firstname} ${user?.lastname}`,
         },
         lang,
         customization: {
