@@ -32,9 +32,9 @@ const OnlyofficeEditor = () => {
 
   const [accessible, setAccessible] = useState(false);
   const dispatchNotification = useNotification();
-  const { formatMessage } = useIntl();
+  const { formatMessage, locale } = useIntl();
   const { canCreate } = usePermissions();
-  const { data, isLoading, isError } = useSearch(`/${pluginId}/editor/${params.file}`, { cacheTimeout: 0 })();
+  const { data, isLoading, isError } = useSearch(`/${pluginId}/editor/${params.file}/${locale}`, { cacheTimeout: 0 })();
 
   useEffect(() => {
     if (!data?.server) return;

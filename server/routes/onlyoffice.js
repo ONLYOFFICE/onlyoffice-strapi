@@ -8,7 +8,7 @@
 module.exports = [
   {
     method: 'GET',
-    path: '/editor/:file',
+    path: '/editor/:file/:locale',
     handler: 'editor.getEditor',
   },
   {
