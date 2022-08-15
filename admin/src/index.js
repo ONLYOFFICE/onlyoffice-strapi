@@ -16,20 +16,22 @@ import pluginId, {
 } from './pluginId';
 import permissions from './permissions';
 
+import { getTrad } from './utils';
+
 export default {
   register(app) {
     app.createSettingSection(
       {
         id: pluginId,
         intlLabel: {
-          id: `${pluginId}.plugin.name`,
+          id: getTrad(`${pluginId}.plugin.name`),
           defaultMessage: 'ONLYOFFICE PLUGIN',
         },
       },
       [
         {
           intlLabel: {
-            id: `${pluginId}.plugin.name`,
+            id: getTrad(`${pluginId}.plugin.configuration`),
             defaultMessage: 'Configuration',
           },
           id: 'settings',
@@ -46,7 +48,7 @@ export default {
       to: `/plugins/${pluginId}`,
       icon: PluginIcon,
       intlLabel: {
-        id: `${pluginId}.plugin.displayName`,
+        id: getTrad(`${pluginId}.plugin.displayName`),
         defaultMessage: pluginDisplayName,
       },
       Component: async () => {
