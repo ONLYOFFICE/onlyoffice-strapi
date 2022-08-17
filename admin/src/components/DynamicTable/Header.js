@@ -64,7 +64,7 @@ const TableHead = ({ headers }) => {
             <Th
               key={name}
               action={
-                isSortable
+                isSortable && isSorted
                   ? (
                   <IconButton
                     label={sortLabel}
