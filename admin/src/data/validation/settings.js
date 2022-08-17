@@ -5,17 +5,12 @@
  */
 import { isValidURL } from '../../utils';
 
-export const validateSettings = async (settings) => {
-  const errors = {};
+export const buildValidateSettings = (errors) => {
+  return async (settings) => {
+    if (isValidURL(settings?.dsURL)) delete errors.dsURL;
 
-  if (!isValidURL(settings?.dsURL)) {
-    errors.dsURL =
-      'Invalid Document Server Address. Use http(s)://<domain>.<zone>';
+    if (settings.dsSecret) delete errors.dsSecret;
+
+    return errors;
   }
-
-  if (!settings.dsSecret) {
-    errors.dsSecret = 'Please specify Document Server JWT';
-  }
-
-  return errors;
-};
+}

@@ -13,6 +13,8 @@
   "onlyoffice.settings.page.content.more": "詳細はこちら",
   "onlyoffice.settings.docserv-url": "ドキュメントサーバーのアドレス",
   "onlyoffice.settings.docserv-jwtsecret": "ドキュメントサーバーのJWT秘密鍵",
+  "onlyoffice.settings.errors.url": "Invalid Document Server Address. Use http(s)://<domain>.<zone>",
+  "onlyoffice.settings.errors.secret": "Please specify Document Server JWT",
   "onlyoffice.notification.api.unreachable": "ONLYOFFICE に接続できません",
   "onlyoffice.docserv-url.empty": "設定・トークンに問題が発生しました。後でもう一度お試しください。または、管理者にお問い合わせください。",
   "onlyoffice.label.edit": "ONLYOFFICEで編集する",

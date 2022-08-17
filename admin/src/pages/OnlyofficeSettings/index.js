@@ -31,7 +31,7 @@ import { OnlyofficeSettingsForm } from '../../components/Settings';
 import permissions from '../../permissions';
 import { fetchOnlyofficeSettings, useAuthentication } from '../../hooks';
 import { getTrad, sanitizeURL } from '../../utils';
-import { validateSettings } from '../../data/validation';
+import { buildValidateSettings } from '../../data/validation';
 import { SettingsInputScheme } from '../../data/layout';
 import { pluginId, pluginDisplayName } from '../../pluginId';
 
@@ -40,6 +40,16 @@ const OnlyofficeSettings = () => {
   const dispatchNotification = useNotification();
   const { formatMessage } = useIntl();
   const { data, isLoading, isError } = fetchOnlyofficeSettings();
+  const validateSettings = buildValidateSettings({
+    dsURL: formatMessage({
+      id: getTrad('onlyoffice.settings.errors.url'),
+      defaultMessage: 'Invalid Document Server Address. Use http(s)://<domain>.<zone>',
+    }),
+    dsSecret: formatMessage({
+      id: getTrad('onlyoffice.settings.errors.secret'),
+      defaultMessage: 'Please specify Document Server JWT',
+    }),
+  })
 
   const handleSubmit = async (data) => {
     data.dsURL = sanitizeURL(data.dsURL);

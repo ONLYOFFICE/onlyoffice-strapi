@@ -13,6 +13,8 @@
   "onlyoffice.settings.page.content.more": "MEHR ERFAHREN",
   "onlyoffice.settings.docserv-url": "Adresse vom Document Server",
   "onlyoffice.settings.docserv-jwtsecret": "Geheimer JWT-Schlüssel vom Document Server",
+  "onlyoffice.settings.errors.url": "Invalid Document Server Address. Use http(s)://<domain>.<zone>",
+  "onlyoffice.settings.errors.secret": "Please specify Document Server JWT",
   "onlyoffice.notification.api.unreachable": "ONLYOFFICE ist nicht zugänglich",
   "onlyoffice.docserv-url.empty": "Etwas ist bei den Einstellungen oder dem Token schiefgelaufen. Bitte später erneut versuchen oder sich an Ihren Administrator wenden.",
   "onlyoffice.label.edit": "Mit ONLYOFFICE bearbeiten",

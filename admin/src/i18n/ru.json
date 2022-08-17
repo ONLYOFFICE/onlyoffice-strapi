@@ -13,6 +13,8 @@
   "onlyoffice.settings.page.content.more": "УЗНАТЬ БОЛЬШЕ",
   "onlyoffice.settings.docserv-url": "Адрес сервера документов",
   "onlyoffice.settings.docserv-jwtsecret": "Секретный JWT ключ",
+  "onlyoffice.settings.errors.url": "Invalid Document Server Address. Use http(s)://<domain>.<zone>",
+  "onlyoffice.settings.errors.secret": "Please specify Document Server JWT",
   "onlyoffice.notification.api.unreachable": "ONLYOFFICE недоступен",
   "onlyoffice.docserv-url.empty": "Что-то не так с вашими настройками/токеном. Пожалуйста, попробуйте позже или сообщите об ошибке администратору.",
   "onlyoffice.label.edit": "Редактировать в ONLYOFFICE",

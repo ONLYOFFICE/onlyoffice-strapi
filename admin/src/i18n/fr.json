@@ -13,6 +13,8 @@
   "onlyoffice.settings.page.content.more": "EN SAVOIR PLUS",
   "onlyoffice.settings.docserv-url": "Adresse du serveur de document",
   "onlyoffice.settings.docserv-jwtsecret": "Clé secrète JWT du serveur de document",
+  "onlyoffice.settings.errors.url": "Invalid Document Server Address. Use http(s)://<domain>.<zone>",
+  "onlyoffice.settings.errors.secret": "Please specify Document Server JWT",
   "onlyoffice.notification.api.unreachable": "Impossible de joindre ONLYOFFICE",
   "onlyoffice.docserv-url.empty": "Une erreur s'est produite dans vos paramètres ou votre code d'accès. Veuillez réessayer plus tard ou contactez votre administrateur.",
   "onlyoffice.label.edit": "Modifier dans ONLYOFFICE",

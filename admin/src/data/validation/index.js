@@ -3,4 +3,4 @@
  *
  * MIT Licensed
  */
-export { validateSettings } from './settings';
+export { buildValidateSettings } from './settings';
