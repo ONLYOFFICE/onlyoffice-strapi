@@ -63,7 +63,7 @@ const HomePage = () => {
           title={pluginDisplayName}
           primaryAction={
             <SearchURLQuery
-              label={formatMessage({
+              placeholder={formatMessage({
                 id: getTrad('onlyoffice.files.list.files-search'),
                 defaultMessage: 'Search',
               })}
