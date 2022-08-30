@@ -27,5 +27,6 @@
   "onlyoffice.content.files-multiple": "{number} fichiers",
   "onlyoffice.table.sort": "Trier par {label}",
   "onlyoffice.editor.save-as.success": "Le document a été enregistré avec succès sous le nom de {filename}",
-  "onlyoffice.editor.save-as.error": "Un problème est survenu"
+  "onlyoffice.editor.save-as.error": "Un problème est survenu",
+  "onlyoffice.editor.config.error": "Erreur lors de la récupération de la configuration de l'éditeur"
 }

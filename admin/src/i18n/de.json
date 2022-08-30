@@ -27,5 +27,6 @@
   "onlyoffice.content.files-multiple": "{number} Dateien",
   "onlyoffice.table.sort": "Sortieren nach {label}",
   "onlyoffice.editor.save-as.success": "Dokument wurde erfolgreich als {filename} gespeichert",
-  "onlyoffice.editor.save-as.error": "Ein Fehler ist aufgetreten"
+  "onlyoffice.editor.save-as.error": "Ein Fehler ist aufgetreten",
+  "onlyoffice.editor.config.error": "Fehler beim Erhalten von Konfigurationen der Editoren"
 }

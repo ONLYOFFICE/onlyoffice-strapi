@@ -27,5 +27,6 @@
   "onlyoffice.content.files-multiple": "Файлов {number}",
   "onlyoffice.table.sort": "Сортировать по {label}",
   "onlyoffice.editor.save-as.success": "Документ был успешно сохранен как {filename}",
-  "onlyoffice.editor.save-as.error": "Что-то пошло не так"
+  "onlyoffice.editor.save-as.error": "Что-то пошло не так",
+  "onlyoffice.editor.config.error": "Ошибка при получении конфигурации редактора"
 }

@@ -27,5 +27,6 @@
   "onlyoffice.content.files-multiple": "{number} ファイル",
   "onlyoffice.table.sort": "{label}に並べ替え",
   "onlyoffice.editor.save-as.success": "ドキュメントは{filename}として正常に保存されました",
-  "onlyoffice.editor.save-as.error": "問題が発生しました"
+  "onlyoffice.editor.save-as.error": "問題が発生しました",
+  "onlyoffice.editor.config.error": "エディタ設定取得エラー"
 }

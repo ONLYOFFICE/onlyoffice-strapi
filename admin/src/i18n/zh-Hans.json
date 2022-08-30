@@ -27,5 +27,6 @@
   "onlyoffice.content.files-multiple": "{number} 文件",
   "onlyoffice.table.sort": "排序 {label}",
   "onlyoffice.editor.save-as.success": "文件已另存为 {filename}",
-  "onlyoffice.editor.save-as.error": "出错了"
+  "onlyoffice.editor.save-as.error": "出错了",
+  "onlyoffice.editor.config.error": "获取编辑器配置的错误"
 }
