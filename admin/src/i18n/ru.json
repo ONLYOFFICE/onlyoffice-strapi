@@ -13,8 +13,8 @@
   "onlyoffice.settings.page.content.more": "УЗНАТЬ БОЛЬШЕ",
   "onlyoffice.settings.docserv-url": "Адрес сервера документов",
   "onlyoffice.settings.docserv-jwtsecret": "Секретный JWT ключ",
-  "onlyoffice.settings.errors.url": "Invalid Document Server Address. Use http(s)://<domain>.<zone>",
-  "onlyoffice.settings.errors.secret": "Please specify Document Server JWT",
+  "onlyoffice.settings.errors.url": "Недопустимый адрес сервера документов. Используйте http(s)://<домен>.<зона>",
+  "onlyoffice.settings.errors.secret": "Укажите JWT ключ сервера документов",
   "onlyoffice.notification.api.unreachable": "ONLYOFFICE недоступен",
   "onlyoffice.docserv-url.empty": "Что-то не так с вашими настройками/токеном. Пожалуйста, попробуйте позже или сообщите об ошибке администратору.",
   "onlyoffice.label.edit": "Редактировать в ONLYOFFICE",
@@ -23,9 +23,10 @@
   "onlyoffice.table.ext": "Тип",
   "onlyoffice.table.size": "Размер",
   "onlyoffice.table.updatedAt": "Последнее изменение",
-  "onlyoffice.content.files-single": "{number} file",
-  "onlyoffice.content.files-multiple": "{number} файлов",
+  "onlyoffice.content.files-single": "{number} файл",
+  "onlyoffice.content.files-multiple": "Файлов {number}",
   "onlyoffice.table.sort": "Сортировать по {label}",
   "onlyoffice.editor.save-as.success": "Документ был успешно сохранен как {filename}",
-  "onlyoffice.editor.save-as.error": "Что-то пошло не так"
+  "onlyoffice.editor.save-as.error": "Что-то пошло не так",
+  "onlyoffice.editor.config.error": "Ошибка при получении конфигурации редактора"
 }

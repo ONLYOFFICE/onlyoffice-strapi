@@ -13,8 +13,8 @@
   "onlyoffice.settings.page.content.more": "詳細はこちら",
   "onlyoffice.settings.docserv-url": "ドキュメントサーバーのアドレス",
   "onlyoffice.settings.docserv-jwtsecret": "ドキュメントサーバーのJWT秘密鍵",
-  "onlyoffice.settings.errors.url": "Invalid Document Server Address. Use http(s)://<domain>.<zone>",
-  "onlyoffice.settings.errors.secret": "Please specify Document Server JWT",
+  "onlyoffice.settings.errors.url": "ドキュメントサーバーのアドレスが無効です。http(s)://<ドメイン>.<ゾーン>を使用してください。",
+  "onlyoffice.settings.errors.secret": "ドキュメントサーバのJWTを指定してください。",
   "onlyoffice.notification.api.unreachable": "ONLYOFFICE に接続できません",
   "onlyoffice.docserv-url.empty": "設定・トークンに問題が発生しました。後でもう一度お試しください。または、管理者にお問い合わせください。",
   "onlyoffice.label.edit": "ONLYOFFICEで編集する",
@@ -23,9 +23,10 @@
   "onlyoffice.table.ext": "タイプ",
   "onlyoffice.table.size": "サイズ",
   "onlyoffice.table.updatedAt": "上一次更改",
-  "onlyoffice.content.files-single": "{number} file",
+  "onlyoffice.content.files-single": "{number} ファイル",
   "onlyoffice.content.files-multiple": "{number} ファイル",
   "onlyoffice.table.sort": "{label}に並べ替え",
   "onlyoffice.editor.save-as.success": "ドキュメントは{filename}として正常に保存されました",
-  "onlyoffice.editor.save-as.error": "問題が発生しました"
+  "onlyoffice.editor.save-as.error": "問題が発生しました",
+  "onlyoffice.editor.config.error": "エディタ設定取得エラー"
 }

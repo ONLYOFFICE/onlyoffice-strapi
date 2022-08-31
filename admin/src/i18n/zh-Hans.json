@@ -13,8 +13,8 @@
   "onlyoffice.settings.page.content.more": "了解更多",
   "onlyoffice.settings.docserv-url": "文档服务器地址",
   "onlyoffice.settings.docserv-jwtsecret": "文档服务器JWT秘钥",
-  "onlyoffice.settings.errors.url": "Invalid Document Server Address. Use http(s)://<domain>.<zone>",
-  "onlyoffice.settings.errors.secret": "Please specify Document Server JWT",
+  "onlyoffice.settings.errors.url": "无效的文件服务器地址。请使用http(s)://<domain>.<zone>",
+  "onlyoffice.settings.errors.secret": "请指定文件服务器的JWT",
   "onlyoffice.notification.api.unreachable": "无法联系到ONLYOFFICE",
   "onlyoffice.docserv-url.empty": "设置或令牌出错了。请稍后再试或联系您的 管理员。",
   "onlyoffice.label.edit": "在ONLYOFFICE中编辑",
@@ -23,9 +23,10 @@
   "onlyoffice.table.ext": "類型",
   "onlyoffice.table.size": "大小",
   "onlyoffice.table.updatedAt": "最終更新",
-  "onlyoffice.content.files-single": "{number} file",
+  "onlyoffice.content.files-single": "{number} 文件",
   "onlyoffice.content.files-multiple": "{number} 文件",
   "onlyoffice.table.sort": "排序 {label}",
   "onlyoffice.editor.save-as.success": "文件已另存为 {filename}",
-  "onlyoffice.editor.save-as.error": "出错了"
+  "onlyoffice.editor.save-as.error": "出错了",
+  "onlyoffice.editor.config.error": "获取编辑器配置的错误"
 }
