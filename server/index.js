@@ -1,8 +1,8 @@
 /*
-* (c) Copyright Ascensio System SIA 2022
-*
-* MIT Licensed
-*/
+ * (c) Copyright Ascensio System SIA 2022
+ *
+ * MIT Licensed
+ */
 'use strict';
 
 const controllers = require('./controllers');
