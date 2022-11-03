@@ -1,5 +1,9 @@
 # Change Log
 
+## Added
+
+- new i18n phrases
+
 ## 1.1.0
 
 ## Changed

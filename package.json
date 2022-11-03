@@ -41,7 +41,7 @@
     "lint-staged": "^13.0.3"
   },
   "lint-staged": {
-    "*.{css,less,scss,html,json,jsx,js}": [
+    "*.{css,less,scss,html,json,jsx,js,md}": [
       "npx eslint . --fix"
     ]
   },
