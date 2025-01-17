@@ -1,4 +1,4 @@
-# Strapi ONLYOFFICE integration plugin
+# ONLYOFFICE plugin for Strapi
 
 This app enables users to edit office documents from [Strapi](https://strapi.io/) using ONLYOFFICE Docs packaged as Document Server - [Community or Enterprise Edition](#onlyoffice-docs-editions).
 
@@ -19,7 +19,7 @@ To install Enterprise Edition, follow the instructions [here](https://helpcenter
 
 Community Edition vs Enterprise Edition comparison can be found [here](#onlyoffice-docs-editions).
 
-## Installing Strapi ONLYOFFICE integration plugin
+## Installing ONLYOFFICE plugin for Strapi
 
 1. You need to change the Strapi middlewares file: `strapi/config/middlewares.js`.
 
@@ -60,14 +60,14 @@ Community Edition vs Enterprise Edition comparison can be found [here](#onlyoffi
    npm run develop
    ```
 
-## Configuring Strapi ONLYOFFICE integration plugin
+## Configuring ONLYOFFICE plugin for Strapi
 
 You can configure ONLYOFFICE app via Strapi Dashboard -> Settings -> Global settings -> ONLYOFFICE. On the settings page, enter:
 
 - **Document server address**: The URL of the installed ONLYOFFICE Document Server.
 - **Document server JWT secret key**: Starting from version 7.2, JWT is enabled by default and the secret key is generated automatically to restrict the access to ONLYOFFICE Docs and for security reasons and data integrity. Specify your own secret key on the Strapi settings page. In the ONLYOFFICE Docs [config file](https://api.onlyoffice.com/editors/signature/), specify the same secret key and enable the validation..
 
-## Using Strapi ONLYOFFICE integration plugin
+## Using ONLYOFFICE plugin for Strapi
 
 Users are able to view, edit, and co-author documents added to the Strapi Media Library. Documents available for viewing/editing can be found and sorted on the ONLYOFFICE file page within Strapi. The editor opens by clicking on the file name.
 
