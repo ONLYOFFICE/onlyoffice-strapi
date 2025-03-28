@@ -18,6 +18,12 @@
     "lint": "npx eslint .",
     "test:unit": "jest --verbose"
   },
+  "files": [
+    "admin",
+    "server",
+    "strapi-admin.js",
+    "strapi-server.js"
+  ],
   "dependencies": {
     "byte-size": "^7.0.1",
     "mime-types": "^2.1.35"
