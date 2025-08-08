@@ -1,5 +1,5 @@
 /*
- * (c) Copyright Ascensio System SIA 2023
+ * (c) Copyright Ascensio System SIA 2025
  *
  * MIT Licensed
  */
@@ -17,12 +17,6 @@ import { makeFile } from '../model';
 const { CREATED_BY_ATTRIBUTE } = contentTypesUtils.constants;
 
 export default ({ strapi }) => ({
-  /**
-   * Validates user permissions and returns a file model instance
-   * @param {object} ability
-   * @param {string} id
-   * @returns File model instance
-   */
   async checkAccessAndGetFileInfo(ability, id) {
     const file = await strapi.plugin('upload').service('upload').findOne(id, [CREATED_BY_ATTRIBUTE]);
 
@@ -30,13 +24,10 @@ export default ({ strapi }) => ({
       throw new Error('Not found');
     }
 
-    // For Strapi v5, we need to check permissions differently
-    // The ability object should contain the user's permissions
     if (!ability) {
       throw new Error('No permission ability provided');
     }
 
-    // Check if user can read upload files
     const canRead = await this.allowedFileAccess(ability, 'plugin::upload.read');
     if (!canRead) {
       throw new Error('Forbidden');
@@ -45,23 +36,13 @@ export default ({ strapi }) => ({
     return makeFile({ ...file });
   },
 
-  /**
-   * Validates user ability to perform actions
-   * @param {*} ability
-   * @param {*} action
-   * @returns Boolean flag isAllowed
-   */
   async allowedFileAccess(ability, action) {
     try {
-      // In Strapi v5, we check permissions directly on the ability object
       if (!ability) {
         return false;
       }
 
-      // Check if the ability has the required permission
-      // For upload permissions, we need to check if the user has access to the upload plugin
       if (action.includes('plugin::upload')) {
-        // Check if user has access to upload plugin
         return ability.can(action) || ability.can('plugin::upload.read');
       }
 
@@ -72,11 +53,6 @@ export default ({ strapi }) => ({
     }
   },
 
-  /**
-   * Downloads a new file and persists the file to Strapi upload plugin
-   * @param {object} fileInfo
-   * @param {string} url
-   */
   async createFile(fileInfo, url, user = {}) {
     const response = await axios({
       method: 'GET',
@@ -129,38 +105,43 @@ export default ({ strapi }) => ({
     }
   },
 
-  /**
-   * Downloads file changes and persists the file to Strapi upload plugin
-   * @param {object} fileInfo
-   * @param {string} url
-   */
   async updateFile(fileInfo, url) {
     const response = await axios({
       method: 'GET',
       responseType: 'arraybuffer',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: mime.lookup(url),
-      },
       url,
     });
 
-    // Calculate file size in bytes
     const fileSize = parseInt(response.headers?.['content-length']) || response.data?.length || 0;
+    const fileName = fileInfo.name || path.basename(url);
+    const tempFilePath = path.join(os.tmpdir(), `${Date.now()}_${fileName}`);
+    const uploadService = strapi.service('plugin::upload.upload');
 
-    // Update the file using entity service with new file data
-    const updatedFile = await strapi.entityService.update('plugin::upload.file', fileInfo.id, {
-      data: {
-        size: parseFloat(fileSize), // Convert to decimal for Strapi
-        updatedAt: new Date(),
-      },
-      files: {
-        buffer: Buffer.from(response.data),
-        name: fileInfo.name,
-        type: mime.lookup(url) || 'application/octet-stream',
-      },
-    });
+    fs.writeFileSync(tempFilePath, Buffer.from(response.data));
 
-    return updatedFile;
+    try {
+      const updatedFile = await uploadService.replace(fileInfo.id, {
+        data: {
+          fileInfo: {
+            name: fileName,
+            size: fileSize,
+          }
+        },
+        file: {
+          filepath: tempFilePath,
+          originalFilename: fileName,
+          mimetype: mime.lookup(url) || fileInfo.mime || 'application/octet-stream',
+          size: fileSize,
+        }
+      });
+
+      return updatedFile;
+    } finally {
+      try {
+        fs.unlinkSync(tempFilePath);
+      } catch (error) {
+        console.error('Failed to clean up temporary file:', error);
+      }
+    }
   }
 });

@@ -1,16 +1,11 @@
 /*
- * (c) Copyright Ascensio System SIA 2023
+ * (c) Copyright Ascensio System SIA 2025
  *
  * MIT Licensed
  */
 import jwt from 'jsonwebtoken';
 
 export default ({ strapi }) => ({
-  /**
-   * Extracts DSJwt secret and verifies tokens
-   * @param {string} token
-   * @returns Verified and decoded JWT payload
-   */
   async verifyDocumentServerToken(token) {
     const secret = await strapi.plugin('onlyoffice').service('settings').getSettings('dsSecret');
 

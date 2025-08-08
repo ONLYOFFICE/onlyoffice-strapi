@@ -1,5 +1,5 @@
 /*
- * (c) Copyright Ascensio System SIA 2023
+ * (c) Copyright Ascensio System SIA 2025
  *
  * MIT Licensed
  */
@@ -18,8 +18,15 @@ export default {
         return ctx.forbidden(null, 'Authentication required');
       }
 
-      const file = await strapi.plugin('onlyoffice').service('file').checkAccessAndGetFileInfo(ability, ctx.params.file);
-      const dtoken = await strapi.plugin('users-permissions').services.jwt.issue({ id: ctx.params.file }, { expiresIn: '3m' });
+      const [file, dtoken] = await Promise.all([
+        strapi.plugin('onlyoffice').service('file').checkAccessAndGetFileInfo(ability, ctx.params.file),
+        strapi.plugin('users-permissions').services.jwt.issue({ id: ctx.params.file }, { expiresIn: '3m' }),
+      ]);
+
+      const [userCanEdit, userCanDownload] = await Promise.all([
+        strapi.plugin('onlyoffice').service('file').allowedFileAccess(ability, 'plugin::upload.read'),
+        strapi.plugin('onlyoffice').service('file').allowedFileAccess(ability, 'plugin::upload.read'),
+      ]);
 
       const config = makeConfig({
         fileName: file.name,
@@ -27,8 +34,8 @@ export default {
         url: `${host}/onlyoffice/file?token=${dtoken}`,
         callback: `${host}/onlyoffice/callback`,
         user,
-        userCanEdit: await strapi.plugin('onlyoffice').service('file').allowedFileAccess(ability, 'plugin::upload.read'),
-        userCanDownload: await strapi.plugin('onlyoffice').service('file').allowedFileAccess(ability, 'plugin::upload.read'),
+        userCanEdit,
+        userCanDownload,
         lang: ctx.state.user.preferedLanguage || ctx.params.locale,
         docKey: `${ctx.params.file}_${file.hash}${file.updatedAt}`,
         type: detectAgent(ctx.header['user-agent']) || 'desktop',

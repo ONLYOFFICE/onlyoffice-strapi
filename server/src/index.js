@@ -1,11 +1,9 @@
-/**
- * Application methods
+/*
+ * (c) Copyright Ascensio System SIA 2025
+ *
+ * MIT Licensed
  */
 import bootstrap from './bootstrap';
-
-/**
- * Plugin server methods
- */
 import config from './config';
 import controllers from './controllers';
 import routes from './routes';

@@ -1,5 +1,5 @@
 /*
- * (c) Copyright Ascensio System SIA 2023
+ * (c) Copyright Ascensio System SIA 2025
  *
  * MIT Licensed
  */
@@ -14,11 +14,6 @@ export default ({ strapi }) => ({
     return strapi.store({ type: 'plugin', name: 'onlyoffice' });
   },
 
-  /**
-   * Validates access to the Document server and checks version (>7)
-   * @param {object} Document server settings
-   * @returns Boolean validation flag
-   */
   async validateDocumentServerVersion({ dsURL, dsSecret }) {
     if (!isValidURL(dsURL)) return false;
 
@@ -36,10 +31,6 @@ export default ({ strapi }) => ({
     }
   },
 
-  /**
-   * Persists new Document server settings
-   * @param {object} body
-   */
   async updateSettings(body) {
     const settings = makeSettings({ ...body });
     const valid = await this.validateDocumentServerVersion({ ...settings });
@@ -51,11 +42,6 @@ export default ({ strapi }) => ({
     await this.getStore().set({ key: 'editor', value: settings });
   },
 
-  /**
-   * Extracts settings by key
-   * @param {string} key
-   * @returns settings by key
-   */
   async getSettings(key = null) {
     const info = await this.getStore().get({ key: 'editor' });
 

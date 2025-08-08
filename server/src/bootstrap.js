@@ -1,3 +1,8 @@
+/*
+ * (c) Copyright Ascensio System SIA 2025
+ *
+ * MIT Licensed
+ */
 const bootstrap = async ({ strapi }) => {
   const pluginStore = strapi.store({
     environment: '',

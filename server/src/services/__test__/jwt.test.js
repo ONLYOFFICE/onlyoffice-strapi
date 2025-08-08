@@ -1,10 +1,10 @@
 /*
- * (c) Copyright Ascensio System SIA 2023
+ * (c) Copyright Ascensio System SIA 2025
  *
  * MIT Licensed
  */
-import jwt from '../jwt';
 import jsonwebtoken from 'jsonwebtoken';
+import jwt from '../jwt';
 
 const storeSet = jest.fn();
 global.strapi = {
