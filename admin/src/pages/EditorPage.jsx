@@ -22,7 +22,7 @@ const EditorFrame = styled.div`
   z-index: 2;
 `;
 
-const OnlyofficeEditor = () => {
+const EditorPage = () => {
   const params = useQueryParams();
   const navigate = useNavigate();
   const { toggleNotification } = useNotification();
@@ -167,4 +167,4 @@ const OnlyofficeEditor = () => {
   );
 };
 
-export default memo(OnlyofficeEditor);
+export default memo(EditorPage);

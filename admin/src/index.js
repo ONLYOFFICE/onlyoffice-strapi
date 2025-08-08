@@ -24,7 +24,7 @@ export default {
           id: 'settings',
           to: `plugins/${PLUGIN_ID}/settings`,
           Component: async () => {
-            return import('./pages/OnlyofficeSettings');
+            return import('./pages/SettingsPage');
           },
           permissions: permissions.settings,
         },

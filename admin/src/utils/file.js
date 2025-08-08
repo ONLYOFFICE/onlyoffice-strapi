@@ -112,7 +112,7 @@ export const getFileFavicon = (ext) => {
       : PRESENTATION_EXTS.includes(normalizedExt)
         ? slide
         : word;
-}
+};
 
 export const sanitizeFile = (file) => {
   if (file.size) file.size = formatFileSize(file.size);

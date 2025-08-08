@@ -21,7 +21,7 @@ import { Page, useNotification, Layouts } from '@strapi/strapi/admin';
 
 import SettingsForm from '../components/SettingsForm';
 
-import { fetchOnlyofficeSettings, useAuthentication } from '../hooks';
+import { fetchSettings, useAuthentication } from '../hooks';
 
 import { getTrad, sanitizeURL } from '../utils';
 
@@ -182,10 +182,10 @@ SettingsFormWrapper.propTypes = {
   authHeaders: PropTypes.object.isRequired,
 };
 
-const OnlyofficeSettings = () => {
+const SettingsPage = () => {
   const { toggleNotification } = useNotification();
   const { formatMessage } = useIntl();
-  const { data, isLoading, isError } = fetchOnlyofficeSettings();
+  const { data, isLoading, isError } = fetchSettings();
   const authHeaders = useAuthentication();
 
   if (isError) {
@@ -228,4 +228,4 @@ const OnlyofficeSettings = () => {
   );
 };
 
-export default OnlyofficeSettings;
+export default SettingsPage;

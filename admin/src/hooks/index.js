@@ -10,6 +10,6 @@ import useQueryParams from './useQueryParams';
 
 import { PLUGIN_ID } from '../pluginId';
 
-const fetchOnlyofficeSettings = useSearch(`/${PLUGIN_ID}/settings`, { cacheTime: 0 });
+const fetchSettings = useSearch(`/${PLUGIN_ID}/settings`, { cacheTime: 0 });
 
-export { fetchOnlyofficeSettings, useSearch, usePermissions, useAuthentication, useQueryParams };
+export { fetchSettings, useSearch, usePermissions, useAuthentication, useQueryParams };

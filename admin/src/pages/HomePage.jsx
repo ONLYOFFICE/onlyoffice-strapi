@@ -7,8 +7,8 @@ import { Layouts, Page, SearchInput } from '@strapi/strapi/admin';
 import FileTable from '../components/FileTable';
 import PaginationFooter from '../components/FileTableFooter';
 
-import { useSearch, usePermissions } from '../hooks';
 import { getTrad, sanitizeFile, STRAPI_FILE_FILTER } from '../utils';
+import { useSearch, usePermissions } from '../hooks';
 import { FileHeaders } from '../data/layout';
 
 const HomePage = () => {

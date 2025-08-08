@@ -6,7 +6,7 @@ import { Routes, Route } from 'react-router-dom';
 import { EmptyStateLayout, DesignSystemProvider } from '@strapi/design-system';
 
 import HomePage from './HomePage';
-import OnlyofficeEditor from './OnlyofficeEditor';
+import EditorPage from './EditorPage';
 
 import { getTrad } from '../utils';
 
@@ -31,7 +31,7 @@ const App = () => {
       <DesignSystemProvider theme={theme}>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/editor" element={<OnlyofficeEditor />} />
+          <Route path="/editor" element={<EditorPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </DesignSystemProvider>
