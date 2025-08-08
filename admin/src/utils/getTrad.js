@@ -3,8 +3,8 @@
  *
  * MIT Licensed
  */
-import pluginId from '../pluginId';
+import { PLUGIN_ID } from '../pluginId';
 
-const getTrad = (id) => `${pluginId}.${id}`;
+const getTrad = (id) => `${PLUGIN_ID}.${id}`;
 
 export default getTrad;

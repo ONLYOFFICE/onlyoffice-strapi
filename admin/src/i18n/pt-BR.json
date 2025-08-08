@@ -28,5 +28,13 @@
   "onlyoffice.table.sort": "Classificar em {label}",
   "onlyoffice.editor.save-as.success": "O documento foi salvo com sucesso como {filename}",
   "onlyoffice.editor.save-as.error": "Algo deu errado",
-  "onlyoffice.editor.config.error": "Erro ao obter a configuração do editor"
+  "onlyoffice.editor.config.error": "Erro ao obter a configuração do editor",
+  "onlyoffice.editor.title": "ONLYOFFICE - {filename}",
+  "onlyoffice.table.empty": "No files available",
+  "onlyoffice.settings.menu.title": "ONLYOFFICE Settings",
+  "onlyoffice.pagination.entries-per-page": "{size} entries per page",
+  "onlyoffice.pagination.previous": "Previous",
+  "onlyoffice.pagination.next": "Next",
+  "onlyoffice.pagination.page-of": "Page {current} of {total}",
+  "onlyoffice.not-found": "Not found"
 }

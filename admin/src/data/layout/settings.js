@@ -9,7 +9,7 @@ export const SettingsInputScheme = [
     required: true,
     type: 'text',
     label: {
-      id: 'onlyoffice.settings.docserv-url',
+      id: 'settings.docserv-url',
       defaultMessage: 'Document Server Address',
     },
   },
@@ -18,7 +18,7 @@ export const SettingsInputScheme = [
     required: true,
     type: 'password',
     label: {
-      id: 'onlyoffice.settings.docserv-jwtsecret',
+      id: 'settings.docserv-jwtsecret',
       defaultMessage: 'JWT Secret',
     },
   },

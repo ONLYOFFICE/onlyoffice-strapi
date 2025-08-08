@@ -16,8 +16,6 @@ export function isValidURL(string) {
 }
 
 export function sanitizeURL(url) {
-  if (url.endsWith('/')) {
-    return sanitizeURL(url.substring(0, url.length - 1));
-  }
+  if (url.endsWith('/')) { return sanitizeURL(url.substring(0, url.length - 1)); }
   return url;
 }

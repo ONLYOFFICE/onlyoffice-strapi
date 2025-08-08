@@ -5,8 +5,7 @@
  */
 import axios from 'axios';
 
-import { useAuthentication } from '../hooks';
-import { pluginId } from '../pluginId';
+import { PLUGIN_ID } from '../pluginId';
 
 export const innerAlert = (message) => {
   if (console && console.log) {
@@ -24,6 +23,28 @@ export const onError = (e) => {
   };
 };
 
+const getAuthHeaders = () => {
+  try {
+    const cookies = document.cookie.split(';');
+    const jwtCookie = cookies.find(cookie => cookie.trim().startsWith('jwtToken='));
+
+    if (jwtCookie) {
+      return {
+        Authorization: `Bearer ${jwtCookie.split('=')[1]}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      };
+    }
+  } catch (error) {
+    console.warn('Failed to get jwt token from cookie:', error);
+  }
+
+  return {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  };
+};
+
 export const buildOnRequestSave = (successCallback, failedCallback) => {
   return function onRequestSave(e) {
     const data = {
@@ -31,8 +52,8 @@ export const buildOnRequestSave = (successCallback, failedCallback) => {
       title: e?.data?.title,
     };
 
-    axios.post(`${window.location.origin}/${pluginId}/file/saveas`, data, {
-      headers: useAuthentication(),
+    axios.post(`${window.location.origin}/${PLUGIN_ID}/file/saveas`, data, {
+      headers: getAuthHeaders(),
     })
       .then((res) => successCallback(res))
       .catch((err) => failedCallback(err));

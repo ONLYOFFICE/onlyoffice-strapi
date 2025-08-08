@@ -31,6 +31,7 @@ const DOCUMENT_EXTS = [
   'xps',
   'oxps',
 ];
+
 const SPREADSHEET_EXTS = [
   'xls',
   'xlsx',
@@ -43,6 +44,7 @@ const SPREADSHEET_EXTS = [
   'ots',
   'csv',
 ];
+
 const PRESENTATION_EXTS = [
   'pps',
   'ppsx',
@@ -71,9 +73,7 @@ export const STRAPI_FILE_FILTER =
 
 export const formatFileSize = (bytes, decimals = 0) => {
   const { value, unit } = byteSize(bytes * 1000, { precision: decimals });
-  if (!unit) {
-    return bytes;
-  }
+  if (!unit) { return bytes; }
   return `${value}${unit.toUpperCase()}`;
 };
 
@@ -104,12 +104,12 @@ export const getFileType = (ext) => {
 };
 
 export const getFileFavicon = (ext) => {
-  const e = ext.toLowerCase().replace('.', '') || ext;
-  return DOCUMENT_EXTS.includes(e)
+  const normalizedExt = typeof ext === 'string' ? ext.toLowerCase().replace('.', '') : '';
+  return DOCUMENT_EXTS.includes(normalizedExt)
     ? word
-    : SPREADSHEET_EXTS.includes(e)
+    : SPREADSHEET_EXTS.includes(normalizedExt)
       ? cell
-      : PRESENTATION_EXTS.includes(e)
+      : PRESENTATION_EXTS.includes(normalizedExt)
         ? slide
         : word;
 }
@@ -117,5 +117,6 @@ export const getFileFavicon = (ext) => {
 export const sanitizeFile = (file) => {
   if (file.size) file.size = formatFileSize(file.size);
   if (file.ext) file.ext = file.ext.toString().toLowerCase().replace('.', '');
+  if (file.id) file.id = file.id.toString();
   return file;
 };
