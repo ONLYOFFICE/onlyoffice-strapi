@@ -1,3 +1,8 @@
+/*
+ * (c) Copyright Ascensio System SIA 2025
+ *
+ * MIT Licensed
+ */
 import React, { memo, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useIntl } from 'react-intl';

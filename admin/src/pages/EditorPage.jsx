@@ -1,3 +1,8 @@
+/*
+ * (c) Copyright Ascensio System SIA 2025
+ *
+ * MIT Licensed
+ */
 import React, { useEffect, useState, memo } from 'react';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';

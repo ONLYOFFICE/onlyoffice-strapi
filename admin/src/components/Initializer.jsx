@@ -1,3 +1,8 @@
+/*
+ * (c) Copyright Ascensio System SIA 2025
+ *
+ * MIT Licensed
+ */
 import { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 

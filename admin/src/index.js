@@ -1,3 +1,8 @@
+/*
+ * (c) Copyright Ascensio System SIA 2025
+ *
+ * MIT Licensed
+ */
 import { Initializer } from './components/Initializer';
 import PluginIcon from './components/PluginIcon';
 
