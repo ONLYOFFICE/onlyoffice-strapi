@@ -6,7 +6,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
-import { Flex, Box, TextInput } from '@strapi/design-system';
+import { Flex, Box, TextInput, Field } from '@strapi/design-system';
 import { Layouts } from '@strapi/strapi/admin';
 import { Form } from '@strapi/admin/strapi-admin';
 
@@ -27,21 +27,40 @@ const SettingsForm = ({
   const { formatMessage } = useIntl();
 
   const renderField = (entry) => (
-    <Box key={entry.name}>
-      <TextInput
+    <Box key={entry.name} style={{ width: '100%' }}>
+      <Field.Root
         name={entry.name}
+        id={entry.name}
         required={entry.required}
-        type={entry.type}
-        label={formatMessage({
-          id: getTrad(entry.label.id),
-          defaultMessage: entry.label.defaultMessage,
-        })}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        value={values[entry.name]}
         error={errors[entry.name]}
-        disabled={isSubmitting}
-      />
+        hint={entry.description
+          ? formatMessage({
+            id: getTrad(entry.description.id),
+            defaultMessage: entry.description.defaultMessage,
+          })
+          : undefined}
+        style={{ width: '100%' }}
+      >
+        <Field.Label>
+          {formatMessage({
+            id: getTrad(entry.label.id),
+            defaultMessage: entry.label.defaultMessage,
+          })}
+        </Field.Label>
+        <TextInput
+          name={entry.name}
+          type={entry.type}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values[entry.name]}
+          disabled={isSubmitting}
+          style={{ width: '100%' }}
+        />
+        <Box style={{ minHeight: '40px' }}>
+          {entry.description && <Field.Hint />}
+          <Field.Error />
+        </Box>
+      </Field.Root>
     </Box>
   );
 
