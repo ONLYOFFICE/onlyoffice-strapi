@@ -46,7 +46,7 @@ export default function useSearch(url, options = {}) {
       };
 
       loadData();
-    }, [url, options.enabled]);
+    }, [url, options.enabled, JSON.stringify(query), JSON.stringify(headers)]);
 
     return {
       data,

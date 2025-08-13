@@ -15,6 +15,7 @@ import {
   Tr,
 } from '@strapi/design-system';
 import { CaretUp, CaretDown } from '@strapi/icons';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import getTrad from '../utils/getTrad';
 import useQueryParams from '../hooks/useQueryParams';
@@ -33,6 +34,8 @@ SortIcon.propTypes = {
 };
 
 const TableHead = ({ headers = [] }) => {
+  const { search } = useLocation();
+  const navigate = useNavigate();
   const { formatMessage } = useIntl();
   const queryParams = useQueryParams();
   const [sortBy, sortOrder] = (queryParams?.sort || '').split(':');
@@ -43,10 +46,9 @@ const TableHead = ({ headers = [] }) => {
     const nextSortOrder = sortBy === name && sortOrder === Sort.ASC ? Sort.DESC : Sort.ASC;
     const nextSort = `${name}:${nextSortOrder}`;
 
-    const url = new URL(window.location);
-    url.searchParams.set('sort', nextSort);
-    window.history.pushState({}, '', url);
-    window.location.reload();
+    const params = new URLSearchParams(search);
+    params.set('sort', nextSort);
+    navigate({ search: `?${params.toString()}` });
   };
 
   const renderHeader = ({ name, metadatas: { sortable: isSortable, label } }) => {
