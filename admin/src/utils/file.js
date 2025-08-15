@@ -114,6 +114,17 @@ export const getFileFavicon = (ext) => {
         : word;
 };
 
+export const getFileIconType = (ext) => {
+  const e = ext.toLowerCase().replace('.', '');
+  return DOCUMENT_EXTS.includes(e)
+    ? 'word'
+    : SPREADSHEET_EXTS.includes(e)
+      ? 'cell'
+      : PRESENTATION_EXTS.includes(e)
+        ? 'slide'
+        : 'other';
+};
+
 export const sanitizeFile = (file) => {
   if (file.size) file.size = formatFileSize(file.size);
   if (file.ext) file.ext = file.ext.toString().toLowerCase().replace('.', '');

@@ -15,6 +15,7 @@ import {
   sanitizeFile,
   omitExt,
   STRAPI_FILE_FILTER,
+  getFileIconType,
 } from './file';
 
 export {
@@ -27,6 +28,7 @@ export {
   sanitizeFile,
   omitExt,
   STRAPI_FILE_FILTER,
+  getFileIconType,
   pipe,
   compose,
   Maybe,

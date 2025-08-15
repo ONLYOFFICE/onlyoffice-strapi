@@ -11,18 +11,22 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { Table, IconButton, Typography, Tbody, Tr, Td } from '@strapi/design-system';
 import { Page } from '@strapi/strapi/admin';
 import {
-  File as FileIcon,
-  FilePdf as FilePdfIcon,
-  FileError as FileErrorIcon,
+  FileError,
   Pencil,
   Eye,
 } from '@strapi/icons';
+
+import FileWord from './FileWord';
+import FileCell from './FileCell';
+import FileSlide from './FileSlide';
+import FilePdf from './FilePdf';
+import FileGeneric from './FileGeneric';
 
 import TableHead from './FileTableHeader';
 import TableRow from './FileTableRow';
 
 import { usePermissions } from '../hooks';
-import { getTrad, isFileEditable, isFileOpenable } from '../utils';
+import { getTrad, isFileEditable, isFileOpenable, getFileIconType } from '../utils';
 
 const EmptyState = ({ colSpan, isLoading }) => {
   const { formatMessage } = useIntl();
@@ -76,8 +80,19 @@ const FileTable = ({ headers, isLoading = false, rows = [] }) => {
   const { canUpdate } = usePermissions();
 
   const getFileIcon = (ext) => {
-    if (!isFileOpenable(ext)) return FileErrorIcon;
-    return ext === 'pdf' ? FilePdfIcon : FileIcon;
+    if (!isFileOpenable(ext)) return FileError;
+    if (ext === 'pdf') return FilePdf;
+    const iconType = getFileIconType(ext);
+    switch (iconType) {
+      case 'word':
+        return FileWord;
+      case 'cell':
+        return FileCell;
+      case 'slide':
+        return FileSlide;
+      default:
+        return FileGeneric;
+    }
   };
 
   const getActionIcon = (ext) => {
