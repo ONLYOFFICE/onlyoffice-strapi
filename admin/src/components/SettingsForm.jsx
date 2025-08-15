@@ -27,48 +27,38 @@ const SettingsForm = ({
   const { formatMessage } = useIntl();
 
   const renderField = (entry) => (
-    <Box key={entry.name} style={{ width: '100%' }}>
-      <Field.Root
-        name={entry.name}
-        id={entry.name}
-        required={entry.required}
-        error={errors[entry.name]}
-        hint={entry.description
-          ? formatMessage({
-            id: getTrad(entry.description.id),
-            defaultMessage: entry.description.defaultMessage,
-          })
-          : undefined}
-        style={{ width: '100%' }}
-      >
-        <Field.Label>
-          {formatMessage({
-            id: getTrad(entry.label.id),
-            defaultMessage: entry.label.defaultMessage,
-          })}
-        </Field.Label>
+    <Field.Root
+      key={entry.name}
+      name={entry.name}
+      id={entry.name}
+      required={entry.required}
+      error={errors[entry.name]}
+    >
+      <Field.Label>
+        {formatMessage({
+          id: getTrad(entry.label.id),
+          defaultMessage: entry.label.defaultMessage,
+        })}
+      </Field.Label>
+      <Box maxWidth="400px">
         <TextInput
           name={entry.name}
           type={entry.type}
           onChange={handleChange}
           onBlur={handleBlur}
-          value={values[entry.name]}
+          value={values[entry.name] || ''}
           disabled={isSubmitting}
-          style={{ width: '100%' }}
         />
-        <Box style={{ minHeight: '40px' }}>
-          {entry.description && <Field.Hint />}
-          <Field.Error />
-        </Box>
-      </Field.Root>
-    </Box>
+      </Box>
+      <Field.Error />
+    </Field.Root>
   );
 
   return (
     <Form onSubmit={handleSubmit}>
       {header}
       <Layouts.Content>
-        <Flex direction="column" gap={7}>
+        <Flex direction="column" alignItems="stretch" gap={6}>
           <Box
             background="neutral0"
             shadow="filterShadow"
@@ -76,15 +66,11 @@ const SettingsForm = ({
             paddingBottom={6}
             paddingLeft={7}
             paddingRight={7}
-            style={{ borderRadius: '4px' }}
+            hasRadius
           >
-            <Flex direction="column" gap={4}>
-              {info && (
-                <Flex direction="column" gap={1}>
-                  {info}
-                </Flex>
-              )}
-              <Flex direction="column" gap={4}>
+            <Flex direction="column" alignItems="stretch" gap={4}>
+              {info && info}
+              <Flex direction="column" alignItems="stretch" gap={4}>
                 {scheme.map(renderField)}
               </Flex>
             </Flex>
@@ -110,7 +96,7 @@ SettingsForm.propTypes = {
       }).isRequired,
       description: PropTypes.shape({
         id: PropTypes.string.isRequired,
-        defaultMessage: PropTypes.string.isRequired,
+        defaultMessage: PropTypes.string.defaultMessage,
       }),
     })
   ).isRequired,

@@ -15,8 +15,9 @@ import {
   Button,
   Typography,
   Link,
+  Box,
 } from '@strapi/design-system';
-import { Check } from '@strapi/icons';
+import { Check, ArrowRight } from '@strapi/icons';
 import { Page, useNotification, Layouts } from '@strapi/strapi/admin';
 
 import SettingsForm from '../components/SettingsForm';
@@ -32,7 +33,7 @@ import permissions from '../permissions';
 
 import { PLUGIN_ID } from '../pluginId';
 
-const SettingsHeader = ({ formatMessage, errors, isSubmitting, handleSubmit }) => (
+const SettingsHeader = ({ formatMessage, errors, isSubmitting, handleSubmit, isValid, values }) => (
   <Layouts.Header
     title="ONLYOFFICE"
     subtitle={formatMessage({
@@ -43,7 +44,7 @@ const SettingsHeader = ({ formatMessage, errors, isSubmitting, handleSubmit }) =
       <Button
         type='submit'
         startIcon={<Check />}
-        disabled={!!Object.keys(errors).length || isSubmitting}
+        disabled={!isValid || isSubmitting || !values.dsURL || !values.dsSecret}
         loading={isSubmitting}
         onClick={handleSubmit}
       >
@@ -61,34 +62,40 @@ SettingsHeader.propTypes = {
   errors: PropTypes.object.isRequired,
   isSubmitting: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  isValid: PropTypes.bool.isRequired,
+  values: PropTypes.object.isRequired,
 };
 
 const SettingsInfo = ({ formatMessage }) => (
   <>
-    <h2>
-      <Typography variant="delta">
-        {formatMessage({
-          id: getTrad('settings.page.content.header'),
-          defaultMessage: 'Document server configuration',
-        })}
-      </Typography>
-    </h2>
-    <Typography>
+    <Typography variant="delta" tag="h2">
       {formatMessage({
-        id: getTrad('settings.page.content.subheader'),
-        defaultMessage:
-          'The plugin which enables the users to edit office documents from Strapi using ONLYOFFICE Document Server,' +
-          'allows multiple users to collaborate in real time and to save back those changes to Strapi.',
+        id: getTrad('settings.page.content.header'),
+        defaultMessage: 'Document server configuration',
       })}
     </Typography>
-    <div>
-      <Link href='https://github.com/ONLYOFFICE/onlyoffice-strapi'>
+    <Box paddingTop={3}>
+      <Typography>
         {formatMessage({
-          id: getTrad('settings.page.content.more'),
-          defaultMessage: 'LEARN MORE',
+          id: getTrad('settings.page.content.subheader'),
+          defaultMessage:
+            'The plugin which enables the users to edit office documents from Strapi using ONLYOFFICE Document Server,' +
+            'allows multiple users to collaborate in real time and to save back those changes to Strapi.',
         })}
-      </Link>
-    </div>
+      </Typography>
+      <Box paddingTop={1}>
+        <Link
+          href='https://github.com/ONLYOFFICE/onlyoffice-strapi'
+          endIcon={<ArrowRight />}
+          style={{ fontSize: '11px' }}
+        >
+          {formatMessage({
+            id: getTrad('settings.page.content.more'),
+            defaultMessage: 'Learn more',
+          })}
+        </Link>
+      </Box>
+    </Box>
   </>
 );
 
@@ -142,7 +149,8 @@ const SettingsFormWrapper = ({ data, formatMessage, toggleNotification, authHead
       initialValues={data || {}}
       onSubmit={handleSubmit}
       validate={validateSettings}
-      validateOnChange={false}
+      validateOnChange={true}
+      validateOnBlur={true}
     >
       {({
         values,
@@ -151,6 +159,7 @@ const SettingsFormWrapper = ({ data, formatMessage, toggleNotification, authHead
         handleBlur,
         handleSubmit,
         isSubmitting,
+        isValid,
       }) => (
         <SettingsForm
           header={
@@ -159,6 +168,8 @@ const SettingsFormWrapper = ({ data, formatMessage, toggleNotification, authHead
               errors={errors}
               isSubmitting={isSubmitting}
               handleSubmit={handleSubmit}
+              isValid={isValid}
+              values={values}
             />
           }
           info={<SettingsInfo formatMessage={formatMessage} />}
