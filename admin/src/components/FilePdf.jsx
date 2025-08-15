@@ -1,3 +1,8 @@
+/*
+ * (c) Copyright Ascensio System SIA 2025
+ *
+ * MIT Licensed
+ */
 import React from 'react';
 
 const FilePdf = () => (
