@@ -39,6 +39,12 @@
     "watch:link": "strapi-plugin watch:link",
     "verify": "strapi-plugin verify"
   },
+  "files": [
+    "admin",
+    "server",
+    "strapi-admin.js",
+    "strapi-server.js"
+  ],
   "dependencies": {
     "@onlyoffice/document-editor-react": "^2.1.0",
     "@strapi/design-system": "^2.0.0-rc.29",
