@@ -1,8 +1,14 @@
 # Change Log
 
+## 2.0.0
+
 ## Added
 
 - new i18n phrases
+
+## Changed
+
+- compatible with Strapi v5
 
 ## 1.1.0
 
