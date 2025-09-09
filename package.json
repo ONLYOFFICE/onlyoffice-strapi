@@ -25,7 +25,8 @@
     "url": "git+https://github.com/ONLYOFFICE/onlyoffice-strapi.git"
   },
   "bugs": {
-    "url": "https://github.com/ONLYOFFICE/onlyoffice-strapi/issues"
+    "url": "https://github.com/ONLYOFFICE/onlyoffice-strapi/issues",
+    "email": "support@onlyoffice.com"
   },
   "homepage": "https://github.com/ONLYOFFICE/onlyoffice-strapi#readme",
   "scripts": {
