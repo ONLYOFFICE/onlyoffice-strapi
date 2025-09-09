@@ -1,16 +1,28 @@
 /*
- * (c) Copyright Ascensio System SIA 2023
+ * (c) Copyright Ascensio System SIA 2025
  *
  * MIT Licensed
  */
-import { auth } from '@strapi/helper-plugin';
+import { useAuth } from '@strapi/strapi/admin';
 
 const useAuthentication = () => {
-  return {
-    Authorization: `Bearer ${auth.getToken()}`,
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-  };
+  try {
+    const token = useAuth('useAuthentication', (state) => {
+      return state.token;
+    });
+
+    return {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
+  } catch (error) {
+    console.warn('Failed to get authentication token:', error);
+    return {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
+  }
 };
 
 export default useAuthentication;

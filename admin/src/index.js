@@ -1,43 +1,35 @@
 /*
- * (c) Copyright Ascensio System SIA 2023
+ * (c) Copyright Ascensio System SIA 2025
  *
  * MIT Licensed
  */
-import { prefixPluginTranslations } from '@strapi/helper-plugin';
-
-import Initializer from './components/Initializer';
+import { Initializer } from './components/Initializer';
 import PluginIcon from './components/PluginIcon';
 
-import pluginId, {
-  pluginName,
-  pluginDescription,
-  pluginRequired,
-  pluginDisplayName,
-} from './pluginId';
 import permissions from './permissions';
 
-import { getTrad } from './utils';
+import { PLUGIN_ID } from './pluginId';
 
 export default {
   register(app) {
     app.createSettingSection(
       {
-        id: pluginId,
+        id: PLUGIN_ID,
         intlLabel: {
-          id: getTrad(`${pluginId}.plugin.name`),
+          id: `${PLUGIN_ID}.plugin.name`,
           defaultMessage: 'ONLYOFFICE PLUGIN',
         },
       },
       [
         {
           intlLabel: {
-            id: getTrad(`${pluginId}.plugin.configuration`),
+            id: `${PLUGIN_ID}.plugin.configuration`,
             defaultMessage: 'Configuration',
           },
           id: 'settings',
-          to: `/settings/${pluginId}`,
+          to: `plugins/${PLUGIN_ID}/settings`,
           Component: async () => {
-            return import('./pages/OnlyofficeSettings');
+            return import('./pages/SettingsPage');
           },
           permissions: permissions.settings,
         },
@@ -45,54 +37,33 @@ export default {
     );
 
     app.addMenuLink({
-      to: `/plugins/${pluginId}`,
+      to: `plugins/${PLUGIN_ID}`,
       icon: PluginIcon,
       intlLabel: {
-        id: getTrad(`${pluginId}.plugin.displayName`),
-        defaultMessage: pluginDisplayName,
+        id: `${PLUGIN_ID}.plugin.name`,
+        defaultMessage: PLUGIN_ID,
       },
-      Component: async () => {
-        return await import('./pages/App');
-      },
-      permissions: permissions.pluginUpload,
+      Component: () => import('./pages/App'),
     });
 
     app.registerPlugin({
-      blockerComponent: null,
-      blockerComponentProps: {},
-      description: pluginDescription,
-      injectedComponents: [],
-      isRequired: pluginRequired,
-      layout: null,
-      preventComponentRendering: false,
-      id: pluginId,
+      id: PLUGIN_ID,
       initializer: Initializer,
       isReady: false,
-      pluginName,
+      name: PLUGIN_ID,
     });
   },
 
-  bootstrap() {},
-
   async registerTrads({ locales }) {
-    const importedTrads = await Promise.all(
-      locales.map((locale) => {
-        return import(`./i18n/${locale}.json`)
-          .then(({ default: data }) => {
-            return {
-              data: prefixPluginTranslations(data, pluginId),
-              locale,
-            };
-          })
-          .catch(() => {
-            return {
-              data: {},
-              locale,
-            };
-          });
+    return Promise.all(
+      locales.map(async (locale) => {
+        try {
+          const { default: data } = await import(`./i18n/${locale}.json`);
+          return { data, locale };
+        } catch {
+          return { data: {}, locale };
+        }
       })
     );
-
-    return Promise.resolve(importedTrads);
   },
 };

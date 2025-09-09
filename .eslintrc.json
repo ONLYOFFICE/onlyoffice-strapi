@@ -12,6 +12,11 @@
     "sourceType": "module"
   },
   "plugins": ["react"],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "ignorePatterns": ["package.json", "**/*.json"],
   "rules": {
     "semi": "off",

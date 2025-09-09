@@ -28,5 +28,13 @@
   "onlyoffice.table.sort": "{label}に並べ替え",
   "onlyoffice.editor.save-as.success": "ドキュメントは{filename}として正常に保存されました",
   "onlyoffice.editor.save-as.error": "問題が発生しました",
-  "onlyoffice.editor.config.error": "エディタ設定取得エラー"
+  "onlyoffice.editor.config.error": "エディタ設定取得エラー",
+  "onlyoffice.editor.title": "ONLYOFFICE - {filename}",
+  "onlyoffice.table.empty": "No files available",
+  "onlyoffice.settings.menu.title": "ONLYOFFICE Settings",
+  "onlyoffice.pagination.entries-per-page": "{size} entries per page",
+  "onlyoffice.pagination.previous": "Previous",
+  "onlyoffice.pagination.next": "Next",
+  "onlyoffice.pagination.page-of": "Page {current} of {total}",
+  "onlyoffice.not-found": "Not found"
 }

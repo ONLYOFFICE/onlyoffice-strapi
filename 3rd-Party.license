@@ -35,3 +35,47 @@ License File:   lint.license
 Mime-types    - The ultimate javascript content-type utility. (https://github.com/jshttp/mime-types)
 License:        MIT
 License File:   mime-types.license
+
+Document-editor-react - React component for ONLYOFFICE Document Server. (https://github.com/ONLYOFFICE/document-editor-react)
+License:        Apache-2.0
+License File:   editor.license
+
+Strapi-design-system - Strapi.io's design system. (https://github.com/strapi/design-system)
+License:        MIT
+License File:   strapi-design.license
+
+Strapi-icons   - Strapi icon library. (https://github.com/strapi/design-system)
+License:        MIT
+License File:   strapi-design.license
+
+React-intl      - The monorepo home to all of the FormatJS related libraries, most notably react-intl. (https://github.com/formatjs/formatjs)
+License:        BSD-3-Clause
+License File:   react-intl.license
+
+React           - The library for web and native user interfaces. (https://github.com/facebook/react)
+License:        MIT
+License File:   react.license
+
+React-dom       - React package for working with the DOM. (https://github.com/facebook/react)
+License:        MIT
+License File:   react.license
+
+React-router-dom - Declarative routing for React. (https://github.com/remix-run/react-router)
+License:        MIT
+License File:   react-router.license
+
+Styled-components - Visual primitives for the component age. (https://github.com/styled-components/styled-components)
+License:        MIT
+License File:   styled.license
+
+Strapi          - Strapi is the leading open-source headless CMS. (https://github.com/strapi/strapi)
+License:        MIT
+License File:   strapi.license
+
+Strapi-sdk-plugin - CLI toolkit for developing a Strapi plugin. (https://github.com/strapi/sdk-plugin)
+License:        MIT
+License File:   strapi-sdk.license
+
+Prettier       - An opinionated code formatter. (https://github.com/prettier/prettier)
+License:        MIT
+License File:   prettier.license
