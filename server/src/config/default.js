@@ -7,7 +7,7 @@
 export default {
   openapi: '3.0.0',
   info: {
-    version: '1.1.0',
+    version: '2.0.0',
     title: 'ONLYOFFICE',
     description:
       'The ONLYOFFICE plugin allows users to view, edit, and co-author office documents, spreadsheets, and presentations added to the Strapi Media Library using ONLYOFFICE Docs.',
