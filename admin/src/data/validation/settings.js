@@ -5,11 +5,13 @@
  */
 import { isValidURL } from '../../utils';
 
-export const buildValidateSettings = (errors) => {
+export const buildValidateSettings = (errorMessages) => {
   return async (settings) => {
-    if (isValidURL(settings?.dsURL)) delete errors.dsURL;
+    const errors = {};
 
-    if (settings.dsSecret) delete errors.dsSecret;
+    if (!settings?.dsURL || !isValidURL(settings.dsURL)) { errors.dsURL = errorMessages.dsURL; }
+
+    if (!settings?.dsSecret || settings.dsSecret.trim().length === 0) { errors.dsSecret = errorMessages.dsSecret; }
 
     return errors;
   }
