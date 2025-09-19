@@ -13,7 +13,7 @@
   "onlyoffice.settings.page.content.more": "VÍCE INFORMACÍ",
   "onlyoffice.settings.docserv-url": "Adresa dokumentového serveru",
   "onlyoffice.settings.docserv-jwtsecret": "JWT Secret",
-  "onlyoffice.settings.errors.url": "Invalid Document Server Address. Použijte http(s)://<doména>.<zóna>",
+  "onlyoffice.settings.errors.url": "Neplatná adresa dokumentového serveru. Použijte http(s)://<doména>.<zóna>",
   "onlyoffice.settings.errors.secret": "Zadejte prosím JWT serveru dokumentu",
   "onlyoffice.notification.api.unreachable": "ONLYOFFICE nelze dosáhnout",
   "onlyoffice.docserv-url.empty": "Něco je špatně s vaším nastavením/tokenem. Zkuste to prosím později nebo se obraťte na svého správce.",
