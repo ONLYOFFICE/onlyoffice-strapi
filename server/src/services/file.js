@@ -42,10 +42,6 @@ export default ({ strapi }) => ({
         return false;
       }
 
-      if (action.includes('plugin::upload')) {
-        return ability.can(action) || ability.can('plugin::upload.read');
-      }
-
       return ability.can(action);
     } catch (error) {
       console.error('Permission check error:', error);
