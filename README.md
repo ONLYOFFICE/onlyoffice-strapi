@@ -62,10 +62,10 @@ Community Edition vs Enterprise Edition comparison can be found [here](#onlyoffi
 
 ## Configuring ONLYOFFICE plugin for Strapi
 
-You can configure ONLYOFFICE app via Strapi Dashboard -> Settings -> Global settings -> ONLYOFFICE. On the settings page, enter:
+You can configure ONLYOFFICE app via Strapi -> Settings -> ONLYOFFICE PLUGIN -> Configuration. On the settings page, enter:
 
 - **Document server address**: The URL of the installed ONLYOFFICE Document Server.
-- **Document server JWT secret key**: Starting from version 7.2, JWT is enabled by default and the secret key is generated automatically to restrict the access to ONLYOFFICE Docs and for security reasons and data integrity. Specify your own secret key on the Strapi settings page. In the ONLYOFFICE Docs [config file](https://api.onlyoffice.com/docs/docs-api/additional-api/signature/), specify the same secret key and enable the validation..
+- **JWT Secret**: Starting from version 7.2, JWT is enabled by default and the secret key is generated automatically to restrict the access to ONLYOFFICE Docs and for security reasons and data integrity. Specify your own secret key on the Strapi settings page. In the ONLYOFFICE Docs [config file](https://api.onlyoffice.com/docs/docs-api/additional-api/signature/), specify the same secret key and enable the validation..
 
 ## Using ONLYOFFICE plugin for Strapi
 

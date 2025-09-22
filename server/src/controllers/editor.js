@@ -24,7 +24,7 @@ export default {
       ]);
 
       const [userCanEdit, userCanDownload] = await Promise.all([
-        strapi.plugin('onlyoffice').service('file').allowedFileAccess(ability, 'plugin::upload.read'),
+        strapi.plugin('onlyoffice').service('file').allowedFileAccess(ability, 'plugin::upload.assets.update'),
         strapi.plugin('onlyoffice').service('file').allowedFileAccess(ability, 'plugin::upload.read'),
       ]);
 
@@ -37,7 +37,7 @@ export default {
         userCanEdit,
         userCanDownload,
         lang: ctx.state.user.preferedLanguage || ctx.params.locale,
-        docKey: `${ctx.params.file}_${file.hash}${file.updatedAt}`,
+        docKey: `${file.hash}${file.updatedAt}`,
         type: detectAgent(ctx.header['user-agent']) || 'desktop',
       });
 
