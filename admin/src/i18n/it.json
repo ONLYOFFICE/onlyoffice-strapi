@@ -30,11 +30,11 @@
   "onlyoffice.editor.save-as.error": "Qualcosa è andato storto",
   "onlyoffice.editor.config.error": "Si è verificato un errore durante il recupero della configurazione dell'editor",
   "onlyoffice.editor.title": "ONLYOFFICE - {filename}",
-  "onlyoffice.table.empty": "No files available",
-  "onlyoffice.settings.menu.title": "ONLYOFFICE Settings",
-  "onlyoffice.pagination.entries-per-page": "{size} entries per page",
-  "onlyoffice.pagination.previous": "Previous",
-  "onlyoffice.pagination.next": "Next",
-  "onlyoffice.pagination.page-of": "Page {current} of {total}",
-  "onlyoffice.not-found": "Not found"
+  "onlyoffice.table.empty": "Nessun file disponibile",
+  "onlyoffice.settings.menu.title": "Impostazioni ONLYOFFICE",
+  "onlyoffice.pagination.entries-per-page": "{size} voci per pagina",
+  "onlyoffice.pagination.previous": "Precedente",
+  "onlyoffice.pagination.next": "Prossimo",
+  "onlyoffice.pagination.page-of": "Pagina {current} di {total}",
+  "onlyoffice.not-found": "Non trovato"
 }
