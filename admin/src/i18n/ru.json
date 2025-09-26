@@ -24,7 +24,7 @@
   "onlyoffice.table.size": "Размер",
   "onlyoffice.table.updatedAt": "Последнее изменение",
   "onlyoffice.content.files-single": "{number} файл",
-  "onlyoffice.content.files-multiple": "Файлов {number}",
+  "onlyoffice.content.files-multiple": "{number} файлов",
   "onlyoffice.table.sort": "Сортировать по {label}",
   "onlyoffice.editor.save-as.success": "Документ был успешно сохранен как {filename}",
   "onlyoffice.editor.save-as.error": "Что-то пошло не так",
