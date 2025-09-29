@@ -3,18 +3,18 @@
  *
  * MIT Licensed
  */
-export default function buildMakeConfig({ getFileType, generateDocKey, isValidUrl, isFileSupported, isFileEditable }) {
+export default function buildMakeConfig({ getFileType, isValidUrl, isFileSupported, isFileEditable }) {
   return function makeConfig({
     fileName,
     fileExt,
     url,
     callback,
     user,
+    docKey,
     type = 'desktop',
     userCanEdit = false,
     userCanDownload = false,
     lang = 'en',
-    docKey = generateDocKey(),
   }) {
     if (!fileName) {
       throw new Error('ONLYOFFICE Config expects a valid file name');

@@ -29,15 +29,15 @@ export default {
       ]);
 
       const config = makeConfig({
-        fileName: file.name,
-        fileExt: file.ext.replace('.', ''),
+        fileName: file.name.toLowerCase(),
+        fileExt: file.ext.replace('.', '').toLowerCase(),
         url: `${host}/onlyoffice/file?token=${dtoken}`,
         callback: `${host}/onlyoffice/callback`,
         user,
         userCanEdit,
         userCanDownload,
         lang: ctx.state.user.preferedLanguage || ctx.params.locale,
-        docKey: `${file.hash}${file.updatedAt}`,
+        docKey: file.hash,
         type: detectAgent(ctx.header['user-agent']) || 'desktop',
       });
 

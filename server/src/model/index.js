@@ -10,7 +10,7 @@ import buildMakeFile from './file';
 import { isValidURL } from '../utils';
 import { isFileEditable, isFileSupported, getFileType } from '../utils/file';
 
-const makeConfig = buildMakeConfig({ isFileEditable, isFileSupported, getFileType, generateDocKey: () => {}, isValidUrl: isValidURL });
+const makeConfig = buildMakeConfig({ isFileEditable, isFileSupported, getFileType, isValidUrl: isValidURL });
 const makeSettings = buildMakeSettings({ isValidUrl: isValidURL });
 const makeFile = buildMakeFile();
 
