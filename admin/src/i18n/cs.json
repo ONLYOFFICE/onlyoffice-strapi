@@ -30,11 +30,11 @@
   "onlyoffice.editor.save-as.error": "Něco se pokazilo",
   "onlyoffice.editor.config.error": "Chyba při získávání konfigurace editoru",
   "onlyoffice.editor.title": "ONLYOFFICE - {filename}",
-  "onlyoffice.table.empty": "No files available",
-  "onlyoffice.settings.menu.title": "ONLYOFFICE Settings",
-  "onlyoffice.pagination.entries-per-page": "{size} entries per page",
-  "onlyoffice.pagination.previous": "Previous",
-  "onlyoffice.pagination.next": "Next",
-  "onlyoffice.pagination.page-of": "Page {current} of {total}",
-  "onlyoffice.not-found": "Not found"
+  "onlyoffice.table.empty": "Žádné soubory k dispozici",
+  "onlyoffice.settings.menu.title": "Nastavení ONLYOFFICE",
+  "onlyoffice.pagination.entries-per-page": "{size} položek na stránku",
+  "onlyoffice.pagination.previous": "Předchozí",
+  "onlyoffice.pagination.next": "Následující",
+  "onlyoffice.pagination.page-of": "Stránka {current} z {total}",
+  "onlyoffice.not-found": "Nenalezeno"
 }
