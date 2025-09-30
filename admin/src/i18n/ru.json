@@ -24,9 +24,17 @@
   "onlyoffice.table.size": "Размер",
   "onlyoffice.table.updatedAt": "Последнее изменение",
   "onlyoffice.content.files-single": "{number} файл",
-  "onlyoffice.content.files-multiple": "Файлов {number}",
+  "onlyoffice.content.files-multiple": "{number} файлов",
   "onlyoffice.table.sort": "Сортировать по {label}",
   "onlyoffice.editor.save-as.success": "Документ был успешно сохранен как {filename}",
   "onlyoffice.editor.save-as.error": "Что-то пошло не так",
-  "onlyoffice.editor.config.error": "Ошибка при получении конфигурации редактора"
+  "onlyoffice.editor.config.error": "Ошибка при получении конфигурации редактора",
+  "onlyoffice.editor.title": "ONLYOFFICE - {filename}",
+  "onlyoffice.table.empty": "Нет доступных файлов",
+  "onlyoffice.settings.menu.title": "Настройки ONLYOFFICE",
+  "onlyoffice.pagination.entries-per-page": "{size} записей на странице",
+  "onlyoffice.pagination.previous": "Назад",
+  "onlyoffice.pagination.next": "Вперед",
+  "onlyoffice.pagination.page-of": "Страница {current} из {total}",
+  "onlyoffice.not-found": "Не найдено"
 }

@@ -1,5 +1,5 @@
 /*
- * (c) Copyright Ascensio System SIA 2022
+ * (c) Copyright Ascensio System SIA 2025
  *
  * MIT Licensed
  */
@@ -7,8 +7,9 @@ import useSearch from './useSearch';
 import usePermissions from './usePermissions';
 import useAuthentication from './useAuthentication';
 import useQueryParams from './useQueryParams';
-import { pluginId } from '../pluginId';
 
-const fetchOnlyofficeSettings = useSearch(`/${pluginId}/settings`, { cacheTime: 0 });
+import { PLUGIN_ID } from '../pluginId';
 
-export { fetchOnlyofficeSettings, useSearch, usePermissions, useAuthentication, useQueryParams };
+const fetchSettings = useSearch(`/${PLUGIN_ID}/settings`, { cacheTime: 0 });
+
+export { fetchSettings, useSearch, usePermissions, useAuthentication, useQueryParams };

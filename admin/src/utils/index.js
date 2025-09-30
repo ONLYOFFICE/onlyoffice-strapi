@@ -1,5 +1,5 @@
 /*
- * (c) Copyright Ascensio System SIA 2022
+ * (c) Copyright Ascensio System SIA 2025
  *
  * MIT Licensed
  */
@@ -15,6 +15,7 @@ import {
   sanitizeFile,
   omitExt,
   STRAPI_FILE_FILTER,
+  getFileIconType,
 } from './file';
 
 export {
@@ -27,6 +28,7 @@ export {
   sanitizeFile,
   omitExt,
   STRAPI_FILE_FILTER,
+  getFileIconType,
   pipe,
   compose,
   Maybe,

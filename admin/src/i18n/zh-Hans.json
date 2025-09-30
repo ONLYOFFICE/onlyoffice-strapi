@@ -28,5 +28,13 @@
   "onlyoffice.table.sort": "排序 {label}",
   "onlyoffice.editor.save-as.success": "文件已另存为 {filename}",
   "onlyoffice.editor.save-as.error": "出错了",
-  "onlyoffice.editor.config.error": "获取编辑器配置的错误"
+  "onlyoffice.editor.config.error": "获取编辑器配置的错误",
+  "onlyoffice.editor.title": "ONLYOFFICE - {filename}",
+  "onlyoffice.table.empty": "没有可用文件",
+  "onlyoffice.settings.menu.title": "ONLYOFFICE 设置",
+  "onlyoffice.pagination.entries-per-page": "每页{size}个条目",
+  "onlyoffice.pagination.previous": "上一页",
+  "onlyoffice.pagination.next": "下一页",
+  "onlyoffice.pagination.page-of": "第{current}页，共{total}页",
+  "onlyoffice.not-found": "未找到"
 }

@@ -1,10 +1,10 @@
 /*
- * (c) Copyright Ascensio System SIA 2022
+ * (c) Copyright Ascensio System SIA 2025
  *
  * MIT Licensed
  */
-import pluginId from '../pluginId';
+import { PLUGIN_ID } from '../pluginId';
 
-const getTrad = (id) => `${pluginId}.${id}`;
+const getTrad = (id) => `${PLUGIN_ID}.${id}`;
 
 export default getTrad;

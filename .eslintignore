@@ -1,5 +1,5 @@
-.cache
-build
-**/node_modules/**
-package.json
-i18n
+dist
+**/*.md
+AUTHORS.md
+CHANGELOG.md
+README.md

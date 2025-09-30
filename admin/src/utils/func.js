@@ -1,5 +1,5 @@
 /*
- * (c) Copyright Ascensio System SIA 2022
+ * (c) Copyright Ascensio System SIA 2025
  *
  * MIT Licensed
  */
@@ -20,4 +20,12 @@ export class Maybe {
     const value = func(this.value);
     return new Maybe(value);
   };
+
+  get value() {
+    return this._value;
+  }
+
+  set value(val) {
+    this._value = val;
+  }
 }

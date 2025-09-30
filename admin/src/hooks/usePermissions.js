@@ -1,14 +1,17 @@
 /*
- * (c) Copyright Ascensio System SIA 2022
+ * (c) Copyright Ascensio System SIA 2025
  *
  * MIT Licensed
  */
 import { useMemo } from 'react';
-import { useRBAC } from '@strapi/helper-plugin';
+import { useRBAC } from '@strapi/strapi/admin';
+
 import permissions from '../permissions';
 
 const usePermissions = () => {
-  const pluginPermissions = useMemo(() => permissions, []);
+  const pluginPermissions = useMemo(() => {
+    return Object.values(permissions).flat();
+  }, []);
   const { allowedActions, isLoading } = useRBAC(pluginPermissions);
 
   return { ...allowedActions, isLoading };
