@@ -1,6 +1,6 @@
 {
   "name": "onlyoffice-strapi",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "The ONLYOFFICE plugin allows users to view, edit, and co-author office documents, spreadsheets, and presentations added to the Strapi Media Library using ONLYOFFICE Docs.",
   "type": "commonjs",
   "license": "MIT",
@@ -100,8 +100,8 @@
     }
   },
   "engines": {
-    "node": ">=14.19.1 <=22.0.0",
-    "npm": ">=6.0.0 <=10.5.1"
+    "node": ">=18.0.0 <=22.x.x",
+    "npm": ">=6.0.0"
   },
   "exports": {
     "./package.json": "./package.json",
