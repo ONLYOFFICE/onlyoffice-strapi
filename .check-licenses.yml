@@ -1,0 +1,183 @@
+---
+- - :approve
+  - "@strapi/admin"
+  - :who:
+    :why: MIT
+    :versions:
+    - 5.20.0
+    :when: 2025-11-19 07:50:16.002450700 Z
+- - :approve
+  - "@strapi/cloud-cli"
+  - :who:
+    :why: MIT
+    :versions:
+    - 5.20.0
+    :when: 2025-11-19 07:50:40.641884800 Z
+- - :approve
+  - "@strapi/content-manager"
+  - :who:
+    :why: MIT
+    :versions:
+    - 5.20.0
+    :when: 2025-11-19 07:50:50.009659100 Z
+- - :approve
+  - "@strapi/content-releases"
+  - :who:
+    :why: MIT
+    :versions:
+    - 5.20.0
+    :when: 2025-11-19 07:51:03.886021000 Z
+- - :approve
+  - "@strapi/content-type-builder"
+  - :who:
+    :why: MIT
+    :versions:
+    - 5.20.0
+    :when: 2025-11-19 07:53:56.140770900 Z
+- - :approve
+  - "@strapi/core"
+  - :who:
+    :why: MIT
+    :versions:
+    - 5.20.0
+    :when: 2025-11-19 07:54:07.491255400 Z
+- - :approve
+  - "@strapi/data-transfer"
+  - :who:
+    :why: MIT
+    :versions:
+    - 5.20.0
+    :when: 2025-11-19 07:54:16.271883100 Z
+- - :approve
+  - "@strapi/database"
+  - :who:
+    :why: MIT
+    :versions:
+    - 5.20.0
+    :when: 2025-11-19 07:54:28.149191200 Z
+- - :approve
+  - "@strapi/email"
+  - :who:
+    :why: MIT
+    :versions:
+    - 5.20.0
+    :when: 2025-11-19 07:54:38.468759600 Z
+- - :approve
+  - "@strapi/generators"
+  - :who:
+    :why: MIT
+    :versions:
+    - 5.20.0
+    :when: 2025-11-19 07:54:48.225303600 Z
+- - :approve
+  - "@strapi/i18n"
+  - :who:
+    :why: MIT
+    :versions:
+    - 5.20.0
+    :when: 2025-11-19 07:54:57.701891700 Z
+- - :approve
+  - "@strapi/openapi"
+  - :who:
+    :why: MIT
+    :versions:
+    - 5.20.0
+    :when: 2025-11-19 07:55:13.329961300 Z
+- - :approve
+  - "@strapi/pack-up"
+  - :who:
+    :why: MIT
+    :versions:
+    - 5.1.0
+    :when: 2025-11-19 07:55:26.650237900 Z
+- - :approve
+  - "@strapi/permissions"
+  - :who:
+    :why: MIT
+    :versions:
+    - 5.20.0
+    :when: 2025-11-19 07:55:39.140901400 Z
+- - :approve
+  - "@strapi/provider-email-sendmail"
+  - :who:
+    :why: MIT
+    :versions:
+    - 5.20.0
+    :when: 2025-11-19 07:55:50.672203200 Z
+- - :approve
+  - "@strapi/provider-upload-local"
+  - :who:
+    :why: MIT
+    :versions:
+    - 5.20.0
+    :when: 2025-11-19 07:56:03.947350000 Z
+- - :approve
+  - "@strapi/review-workflows"
+  - :who:
+    :why: MIT
+    :versions:
+    - 5.20.0
+    :when: 2025-11-19 07:56:15.584673800 Z
+- - :approve
+  - "@strapi/sdk-plugin"
+  - :who:
+    :why: MIT
+    :versions:
+    - 5.3.2
+    :when: 2025-11-19 07:56:33.055421300 Z
+- - :approve
+  - "@strapi/strapi"
+  - :who:
+    :why: MIT
+    :versions:
+    - 5.20.0
+    :when: 2025-11-19 07:56:47.003069600 Z
+- - :approve
+  - "@strapi/types"
+  - :who:
+    :why: MIT
+    :versions:
+    - 5.20.0
+    :when: 2025-11-19 07:56:57.446584800 Z
+- - :approve
+  - "@strapi/typescript-utils"
+  - :who:
+    :why: MIT
+    :versions:
+    - 5.20.0
+    :when: 2025-11-19 07:57:10.015208000 Z
+- - :approve
+  - "@strapi/upload"
+  - :who:
+    :why: MIT
+    :versions:
+    - 5.20.0
+    :when: 2025-11-19 07:57:21.329582700 Z
+- - :approve
+  - "@strapi/utils"
+  - :who:
+    :why: MIT
+    :versions:
+    - 5.20.0
+    :when: 2025-11-19 07:57:34.849313200 Z
+- - :approve
+  - only
+  - :who:
+    :why: MIT
+    :versions:
+    - 0.0.2
+    :when: 2025-11-19 07:58:14.429089300 Z
+- - :approve
+  - pause
+  - :who:
+    :why: MIT
+    :versions:
+    - 0.0.1
+    :when: 2025-11-19 07:58:45.403044100 Z
+- - :approve
+  - "@strapi/logger"
+  - :who:
+    :why: MIT
+    :versions:
+    - 5.20.0
+    :when: 2025-11-19 08:04:36.092615400 Z
