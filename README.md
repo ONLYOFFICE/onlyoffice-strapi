@@ -1,8 +1,14 @@
 # ONLYOFFICE plugin for Strapi
 
-This plugin allows users to edit and co-author office files added to the [Strapi](https://strapi.io/) Media Library using ONLYOFFICE Docs.
+This plugin allows users to edit and co-author office files added to the [Strapi](https://strapi.io/) Media Library using [ONLYOFFICE Docs](https://www.onlyoffice.com/docs).
 
-## Features ⭐️
+<p align="center">
+  <a href="https://www.onlyoffice.com/office-for-strapi">
+    <img width="800" src="https://static-site.onlyoffice.com/public/images/templates/office-for-strapi/hero/screen1.png" alt="ONLYOFFICE for Strapi">
+  </a>
+</p>
+
+## Features ✨
 
 The plugin allows to:
 
@@ -11,9 +17,9 @@ The plugin allows to:
 
 ## Installing ONLYOFFICE Docs
 
-To be able to work with office files within Strapi, you will need an instance of [ONLYOFFICE Docs](https://www.onlyoffice.com/office-suite.aspx). You can install the self-hosted version of the editors or opt for ONLYOFFICE Docs Cloud which doesn't require downloading and installation.
+To be able to work with office files within Strapi, you will need an instance of [ONLYOFFICE Docs](https://www.onlyoffice.com/docs). You can install the self-hosted version of the editors or opt for ONLYOFFICE Docs Cloud which doesn't require downloading and installation.
 
-### Self-hosted editors
+### Self-hosted editors 🖥️
 
 You can install free Community version of ONLYOFFICE Docs or scalable Enterprise Edition.
 
@@ -23,9 +29,9 @@ To install Enterprise Edition, follow the instructions [here](https://helpcenter
 
 Community Edition vs Enterprise Edition comparison can be found [here](#onlyoffice-docs-editions).
 
-### ONLYOFFICE Docs Cloud
+### ONLYOFFICE Docs Cloud ☁️
 
-To get ONLYOFFICE Docs Cloud, get started [here](https://www.onlyoffice.com/docs-registration.aspx).
+To get ONLYOFFICE Docs Cloud, get started [here](https://www.onlyoffice.com/docs-registration).
 
 ## Plugin installation 📥
 
@@ -73,7 +79,7 @@ To get ONLYOFFICE Docs Cloud, get started [here](https://www.onlyoffice.com/docs
 You can configure the ONLYOFFICE plugin via Strapi -> Settings -> ONLYOFFICE PLUGIN -> Configuration. On the settings page, enter:
 
 - **Document server address**: The URL of the installed ONLYOFFICE Docs.
-- **JWT Secret**: Starting from version 7.2, JWT is enabled by default and the secret key is generated automatically to restrict the access to ONLYOFFICE Docs and for security reasons and data integrity. Specify your own secret key on the Strapi settings page. In the ONLYOFFICE Docs [config file](https://api.onlyoffice.com/docs/docs-api/additional-api/signature/), specify the same secret key and enable the validation.
+- **JWT Secret**: Enabled by default to protect the editors from unauthorized access. If setting a custom secret key, ensure it matches the one in the ONLYOFFICE Docs [config file](https://api.onlyoffice.com/docs/docs-api/additional-api/signature/) for proper validation.
 
 ## Using ONLYOFFICE plugin for Strapi 📝
 
@@ -129,8 +135,8 @@ The table below will help you make the right choice.
 | **Document Editor features** | **Community Edition** | **Enterprise Edition** |
 | Font and paragraph formatting   | + | + |
 | Object insertion                | + | + |
-| Adding Content control          | + | + | 
-| Editing Content control         | + | + | 
+| Adding Content control          | + | + |
+| Editing Content control         | + | + |
 | Layout tools                    | + | + |
 | Table of contents               | + | + |
 | Navigation panel                | + | + |
@@ -170,6 +176,9 @@ The table below will help you make the right choice.
 
 \* If supported by DMS.
 
-## Need help? Feedback & Support 💡
+## Need help? User Feedback and Support 💡
 
-In case of technical problems, the best way to get help is to submit your issues [here](https://github.com/ONLYOFFICE/onlyoffice-strapi/issues). Alternatively, you can contact ONLYOFFICE team via [community.onlyoffice.com](https://community.onlyoffice.com) or [feedback.onlyoffice.com](https://feedback.onlyoffice.com/forums/966080-your-voice-matters).
+* **🐞 Found a bug?** Please report it by creating an [issue](https://github.com/ONLYOFFICE/onlyoffice-strapi/issues).
+* **❓ Have a question?** Ask our community and developers on the [ONLYOFFICE Forum](https://community.onlyoffice.com).
+* **👨‍💻 Need help for developers?** Check our [API documentation](https://api.onlyoffice.com).
+* **💡 Want to suggest a feature?** Share your ideas on our [feedback platform](https://feedback.onlyoffice.com/forums/966080-your-voice-matters).
