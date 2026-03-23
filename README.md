@@ -8,7 +8,7 @@ This plugin allows users to edit and co-author office files added to the [Strapi
   </a>
 </p>
 
-## Features ✨ 
+## Features ✨
 
 The plugin allows to:
 
@@ -135,8 +135,8 @@ The table below will help you make the right choice.
 | **Document Editor features** | **Community Edition** | **Enterprise Edition** |
 | Font and paragraph formatting   | + | + |
 | Object insertion                | + | + |
-| Adding Content control          | + | + | 
-| Editing Content control         | + | + | 
+| Adding Content control          | + | + |
+| Editing Content control         | + | + |
 | Layout tools                    | + | + |
 | Table of contents               | + | + |
 | Navigation panel                | + | + |
