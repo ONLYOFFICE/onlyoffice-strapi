@@ -54,7 +54,7 @@
     "react-intl": "^7.1.11"
   },
   "peerDependencies": {
-    "@strapi/sdk-plugin": "^5.3.2",
+    "@strapi/sdk-plugin": "^6.1.1",
     "@strapi/strapi": "^5.20.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -64,7 +64,7 @@
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
-    "@strapi/sdk-plugin": "^5.3.2",
+    "@strapi/sdk-plugin": "^6.1.1",
     "@strapi/strapi": "^5.20.0",
     "commitizen": "^4.3.1",
     "cz-conventional-changelog": "^3.3.0",
